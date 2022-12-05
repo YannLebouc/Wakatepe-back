@@ -25,7 +25,7 @@ class Category
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=128, nullable=true)
+     * @ORM\Column(type="string", length=128, nullable=true, unique=true)
      */
     private $slug;
 
@@ -35,7 +35,7 @@ class Category
     private $picture;
 
     /**
-     * @ORM\Column(type="boolean", options={"default":"1"})
+     * @ORM\Column(type="boolean")
      */
     private $isActive;
 
@@ -63,6 +63,7 @@ class Category
     {
         $this->offer = new ArrayCollection();
         $this->wish = new ArrayCollection();
+        $this->isActive = true;
     }
 
     public function getId(): ?int

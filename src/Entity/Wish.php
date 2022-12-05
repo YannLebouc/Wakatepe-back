@@ -40,7 +40,7 @@ class Wish
     private $description;
 
     /**
-     * @ORM\Column(type="boolean", options={"default":"1"})
+     * @ORM\Column(type="boolean")
      */
     private $isActive;
 
@@ -78,6 +78,7 @@ class Wish
     public function __construct()
     {
         $this->categories = new ArrayCollection();
+        $this->isActive = true;
     }
 
     public function getId(): ?int

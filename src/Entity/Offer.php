@@ -40,12 +40,12 @@ class Offer
     private $description;
 
     /**
-     * @ORM\Column(type="boolean", options={"default":"1"})
+     * @ORM\Column(type="boolean")
      */
     private $isActive;
 
     /**
-     * @ORM\Column(type="boolean", options={"default":"0"})
+     * @ORM\Column(type="boolean")
      */
     private $isLended;
 
@@ -83,6 +83,8 @@ class Offer
     public function __construct()
     {
         $this->categories = new ArrayCollection();
+        $this->isActive = true;
+        $this->isLended = false;
     }
 
     public function getId(): ?int
