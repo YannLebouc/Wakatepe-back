@@ -6,6 +6,8 @@ use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 /**
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
@@ -16,36 +18,44 @@ class Category
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"wish_read"})
+     * 
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=64)
+     * @Groups({"wish_read"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=128, nullable=true, unique=true)
+     * @Groups({"wish_read"})
      */
     private $slug;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"wish_read"})
      */
     private $picture;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Groups({"wish_read"})
      */
     private $isActive;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"wish_read"})
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"wish_read"})
      */
     private $updatedAt;
 

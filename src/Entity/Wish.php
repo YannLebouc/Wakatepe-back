@@ -6,6 +6,8 @@ use App\Repository\WishRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 /**
  * @ORM\Entity(repositoryClass=WishRepository::class)
@@ -16,62 +18,84 @@ class Wish
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"wish_browse"})
+     * @Groups({"wish_read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=128)
+     * @Groups({"wish_browse"})
+     * @Groups({"wish_read"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"wish_browse"})
+     * @Groups({"wish_read"})
      */
     private $zipcode;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"wish_browse"})
+     * @Groups({"wish_read"})
      */
     private $picture;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"wish_browse"})
+     * @Groups({"wish_read"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Groups({"wish_browse"})
+     * @Groups({"wish_read"})
      */
     private $isActive;
 
     /**
      * @ORM\Column(type="string", length=16)
+     * @Groups({"wish_browse"})
+     * @Groups({"wish_read"})
      */
     private $type;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     * @Groups({"wish_browse"})
+     * @Groups({"wish_read"})
      */
     private $isReported;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"wish_browse"})
+     * @Groups({"wish_read"})
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"wish_browse"})
+     * @Groups({"wish_read"})
      */
     private $updatedAt;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="wish")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"wish_read"})
      */
     private $user;
 
     /**
      * @ORM\ManyToMany(targetEntity=Category::class, mappedBy="wish")
+     * @Groups({"wish_read"})
      */
     private $categories;
 
