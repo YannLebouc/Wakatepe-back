@@ -6,6 +6,8 @@ use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 /**
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
@@ -16,16 +18,24 @@ class Category
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * 
+     * @Groups({"browse_offer"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=64)
+     * 
+     * @Groups({"browse_offer"})
+     * @Groups({"read_offer"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=128, nullable=true)
+     * 
+     * @Groups({"browse_offer"})
+     * @Groups({"read_offer"})
      */
     private $slug;
 
@@ -35,7 +45,7 @@ class Category
     private $picture;
 
     /**
-     * @ORM\Column(type="boolean", options={"default":"1"})
+     * @ORM\Column(type="boolean")
      */
     private $isActive;
 
@@ -63,6 +73,7 @@ class Category
     {
         $this->offer = new ArrayCollection();
         $this->wish = new ArrayCollection();
+        $this->isActive = true;
     }
 
     public function getId(): ?int

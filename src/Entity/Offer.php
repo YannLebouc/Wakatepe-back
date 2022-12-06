@@ -6,9 +6,12 @@ use App\Repository\OfferRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 /**
  * @ORM\Entity(repositoryClass=OfferRepository::class)
+ * 
  */
 class Offer
 {
@@ -16,31 +19,46 @@ class Offer
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * 
+     * @Groups({"browse_offer"})
+     * @Groups({"read_offer"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=128)
+     * 
+     * @Groups({"browse_offer"})
+     * @Groups({"read_offer"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="integer")
+     * 
+     * @Groups({"browse_offer"})
+     * @Groups({"read_offer"})
      */
     private $zipcode;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * 
+     * @Groups({"browse_offer"})
+     * @Groups({"read_offer"})
      */
     private $picture;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * 
+     * @Groups({"browse_offer"})
+     * @Groups({"read_offer"})
      */
     private $description;
 
     /**
-     * @ORM\Column(type="boolean", options={"default":"1"})
+     * @ORM\Column(type="boolean")
      */
     private $isActive;
 
@@ -51,11 +69,16 @@ class Offer
 
     /**
      * @ORM\Column(type="string", length=16)
+     * 
+     * @Groups({"browseOffer"})
+     * @Groups({"read_offer"})
      */
     private $type;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     * 
+     * @Groups({"read_offer"})
      */
     private $isReported;
 
@@ -72,17 +95,23 @@ class Offer
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="offer")
      * @ORM\JoinColumn(nullable=false)
+     * 
+     * @Groups({"read_offer"})
      */
     private $user;
 
     /**
      * @ORM\ManyToMany(targetEntity=Category::class, mappedBy="offer")
+     * 
+     * @Groups({"browse_offer"})
      */
     private $categories;
 
     public function __construct()
     {
         $this->categories = new ArrayCollection();
+        $this->isActive = true;
+        $this->isLended = false;
     }
 
     public function getId(): ?int

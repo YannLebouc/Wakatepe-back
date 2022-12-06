@@ -1,0 +1,42 @@
+
+En tant qu'utilisateur je veux pouvoir accéder à la liste de mes offres
+  /users/{id}/offers
+
+
+@group
+
+  browse_offer
+    Offer
+      id
+      title
+      zipcode
+      picture
+      desscription
+      type
+    Category
+      id
+      name
+      slug
+
+  read_offer
+    Offer
+      id
+      title
+      zipcode
+      picture
+      description
+      type
+      dates
+      is_reported
+    Category
+      id
+      name
+      slug
+    User
+      id
+      email
+      role
+      alias
+      phoneNumber
+      picture
+    
