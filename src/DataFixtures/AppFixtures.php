@@ -51,7 +51,7 @@ class AppFixtures extends Fixture
         }
         
         $offers = [];
-        for ($i = 0; $i <= 20; $i++) { 
+        for ($i = 0; $i <= 30; $i++) { 
             $offer = new Offer();
             $offer->setTitle('Offre #' . $i);
             $offer->setDescription('Description de l\'offre #' . $i);
@@ -65,7 +65,7 @@ class AppFixtures extends Fixture
         }
 
         $wishes = [];
-        for ($i = 0; $i <= 20; $i++) { 
+        for ($i = 0; $i <= 30; $i++) { 
             $wish = new Wish();
             $wish->setTitle('Demande #' . $i);
             $wish->setDescription('Description de la demande #' . $i);
@@ -79,12 +79,28 @@ class AppFixtures extends Fixture
         }
         
         $categories = [];
-        for ($i = 0; $i <= 15; $i++) { 
+        for ($i = 0; $i <= 10; $i++) { 
             $category = new Category();
             $category->setName('La belle catégorie' . $i);
             $category->setSlug($this->slugger->slug($category->getName()));
             $category->setPicture('https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Michael_Youn_2018.jpg/220px-Michael_Youn_2018.jpg');
             $category->setCreatedAt(new DateTime());
+
+            for ($j = 0; $j < rand(1, 3); $j++) { 
+                $offersInCategory = [];
+                $wishesInCategory = [];
+                $newOffer = $offers[rand(0, count($offers)-1)];
+                $newWish = $wishes[rand(0, count($wishes)-1)];
+
+                if (!in_array($newOffer, $offersInCategory)) {
+                    $category->addOffer($newOffer);
+                    $offersInCategory[] = $newOffer;
+                }
+                if (!in_array($newWish, $wishesInCategory)) {
+                    $category->addWish($newWish);
+                    $wishesInCategory[] = $newWish;
+                }
+            }
 
             $manager->persist($category);
             $categories[] = $category;
