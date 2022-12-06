@@ -26,12 +26,14 @@ class Category
     /**
      * @ORM\Column(type="string", length=64)
      * @Groups({"wish_read"})
+     * @Groups({"wish_browse"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=128, nullable=true, unique=true)
      * @Groups({"wish_read"})
+     * @Groups({"wish_browse"})
      */
     private $slug;
 

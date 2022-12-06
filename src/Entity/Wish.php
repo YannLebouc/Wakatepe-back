@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
@@ -27,6 +28,7 @@ class Wish
      * @ORM\Column(type="string", length=128)
      * @Groups({"wish_browse"})
      * @Groups({"wish_read"})
+     * @Assert\NotBlank
      */
     private $title;
 
@@ -53,8 +55,6 @@ class Wish
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"wish_browse"})
-     * @Groups({"wish_read"})
      */
     private $isActive;
 
@@ -67,7 +67,6 @@ class Wish
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
-     * @Groups({"wish_browse"})
      * @Groups({"wish_read"})
      */
     private $isReported;
@@ -95,6 +94,8 @@ class Wish
 
     /**
      * @ORM\ManyToMany(targetEntity=Category::class, mappedBy="wish")
+     *     
+     * @Groups({"wish_browse"})
      * @Groups({"wish_read"})
      */
     private $categories;

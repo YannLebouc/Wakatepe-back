@@ -33,6 +33,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="json")
+     * @Groups({"wish_read"})
      */
     private $roles = [];
 
