@@ -1,3 +1,5 @@
-#♣ GET http://localhost:8080/api/offers
+# GET http://localhost:8080/api/offers
 
-GET http://localhost:8080/api/offers/{id<\d+>}
+GET http://localhost:8080/api/offers/15
+
+# GET http://localhost:8080/api/users/22/offers

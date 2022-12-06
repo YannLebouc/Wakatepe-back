@@ -2,7 +2,7 @@
 
 namespace App\Controller\Api;
 
-use App\Entity\Offer;
+use App\Entity\User;
 use App\Repository\OfferRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -10,12 +10,31 @@ use Symfony\Component\HttpFoundation\Response as HttpFoundationResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 
-class OfferController extends AbstractController
+class UserController extends AbstractController
 {
   /**
-   * @Route("/api/offers", name="app_api_offers_browse", methods={"GET"})
+   * @Route("/api/users/{id<\d+>/offers}", name="app_api_users_offers_browse")
    */
-  public function browse(OfferRepository $offerRepository): JsonResponse
+  public function read(User $user): JsonResponse
+  {
+    return $this->json(
+      $user,
+      HttpFoundationResponse::HTTP_OK,
+      [],
+      [
+        "groups" =>
+        [
+          "app_api_users_offers_browse"
+        ]
+      ]
+    );
+  }
+
+
+  /**
+   * @Route("/api/users/{id<\d+>}/offers", name="app_api_users_offers_browse")
+   */
+  public function pasbrowse(User $user, OfferRepository $offerRepository): JsonResponse
   {
     return $this->json(
       $offerRepository->findAll(),
@@ -24,28 +43,7 @@ class OfferController extends AbstractController
       [
         "groups" =>
         [
-          "offer_browse"
-        ]
-      ]
-    );
-  }
-
-  /**
-   * @Route("/api/offers/{id<\d+>}", name="app_api_offers_read", methods={"GET"})
-   */
-  public function read(Offer $offer = null): JsonResponse
-  {
-    if (!$offer) {
-      return $this->json(['erreur' => 'la demande n\'a pas été trouvée'], HttpFoundationResponse::HTTP_NOT_FOUND);
-    }
-    return $this->json(
-      $offer,
-      HttpFoundationResponse::HTTP_OK,
-      [],
-      [
-        "groups" =>
-        [
-          "offer_read"
+          "browse_user"
         ]
       ]
     );

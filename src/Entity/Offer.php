@@ -20,40 +20,40 @@ class Offer
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * 
-     * @Groups({"browse_offer"})
-     * @Groups({"read_offer"})
+     * @Groups({"offer_browse"})
+     * @Groups({"offer_read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=128)
      * 
-     * @Groups({"browse_offer"})
-     * @Groups({"read_offer"})
+     * @Groups({"offer_browse"})
+     * @Groups({"offer_read"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="integer")
      * 
-     * @Groups({"browse_offer"})
-     * @Groups({"read_offer"})
+     * @Groups({"offer_browse"})
+     * @Groups({"offer_read"})
      */
     private $zipcode;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * 
-     * @Groups({"browse_offer"})
-     * @Groups({"read_offer"})
+     * @Groups({"offer_browse"})
+     * @Groups({"offer_read"})
      */
     private $picture;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      * 
-     * @Groups({"browse_offer"})
-     * @Groups({"read_offer"})
+     * @Groups({"offer_browse"})
+     * @Groups({"offer_read"})
      */
     private $description;
 
@@ -70,25 +70,31 @@ class Offer
     /**
      * @ORM\Column(type="string", length=16)
      * 
-     * @Groups({"browseOffer"})
-     * @Groups({"read_offer"})
+     * @Groups({"offer_browse"})
+     * @Groups({"offer_read"})
      */
     private $type;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
      * 
-     * @Groups({"read_offer"})
+     * @Groups({"offer_read"})
      */
     private $isReported;
 
     /**
      * @ORM\Column(type="datetime")
+     * 
+     * @Groups({"offer_read"})
+     * 
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * 
+     * @Groups({"offer_read"})
+     * 
      */
     private $updatedAt;
 
@@ -96,14 +102,15 @@ class Offer
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="offer")
      * @ORM\JoinColumn(nullable=false)
      * 
-     * @Groups({"read_offer"})
+     * @Groups({"offer_read"})
      */
     private $user;
 
     /**
      * @ORM\ManyToMany(targetEntity=Category::class, mappedBy="offer")
      * 
-     * @Groups({"browse_offer"})
+     * @Groups({"offer_read"})
+     * @Groups({"offer_browse"})
      */
     private $categories;
 
