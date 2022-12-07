@@ -63,7 +63,7 @@ class Offer
     private $isActive;
 
     /**
-     * @ORM\Column(type="boolean", options={"default":"0"})
+     * @ORM\Column(type="boolean")
      */
     private $isLended;
 

@@ -33,8 +33,7 @@ class Category
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=128, nullable=true)
-     * 
+     * @ORM\Column(type="string", length=128, nullable=true, unique=true)
      * @Groups({"offer_browse"})
      * @Groups({"offer_read"})
      */
