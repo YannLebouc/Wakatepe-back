@@ -40,7 +40,7 @@ class Category
     private $slug;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255)q
      */
     private $picture;
 
@@ -68,6 +68,12 @@ class Category
      * @ORM\ManyToMany(targetEntity=Wish::class, inversedBy="categories")
      */
     private $wish;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=MainCategory::class, inversedBy="categories")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $mainCategory;
 
     public function __construct()
     {
@@ -197,6 +203,18 @@ class Category
     public function removeWish(Wish $wish): self
     {
         $this->wish->removeElement($wish);
+
+        return $this;
+    }
+
+    public function getMainCategory(): ?MainCategory
+    {
+        return $this->mainCategory;
+    }
+
+    public function setMainCategory(?MainCategory $mainCategory): self
+    {
+        $this->mainCategory = $mainCategory;
 
         return $this;
     }

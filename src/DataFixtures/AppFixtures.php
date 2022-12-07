@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Category;
+use App\Entity\MainCategory;
 use App\Entity\Offer;
 use App\Entity\User;
 use App\Entity\Wish;
@@ -34,9 +35,9 @@ class AppFixtures extends Fixture
         ];
 
         $users = [];
-        for ($i = 0; $i < 10; $i++) { 
+        for ($i = 0; $i < 10; $i++) {
             $user = new User();
-            $user->setEmail('otroc'. $i . '@oclock.io');
+            $user->setEmail('otroc' . $i . '@oclock.io');
             $user->setPassword('$2y$13$KZqO0hqpmYtiMYAEJMKKVefvwf4D/GcIGuT6TQHj7xFX7kl71BKFa');
             $user->setRoles(['ROLE_ADMIN', 'ROLE_MANAGER']);
             $user->setAlias('User' . $i);
@@ -45,52 +46,63 @@ class AppFixtures extends Fixture
             $user->setZipcode('33600');
             $user->setPicture('https://upload.wikimedia.org/wikipedia/commons/1/1e/Michel_Sardou_2014.jpg');
             $user->setCreatedAt(new DateTime());
-            
+
             $manager->persist($user);
             $users[] = $user;
         }
-        
+
         $offers = [];
-        for ($i = 0; $i <= 30; $i++) { 
+        for ($i = 0; $i <= 30; $i++) {
             $offer = new Offer();
             $offer->setTitle('Offre #' . $i);
             $offer->setDescription('Description de l\'offre #' . $i);
             $offer->setZipcode('33000');
             $offer->setType($types[rand(0, 1)]);
             $offer->setCreatedAt(new DateTime());
-            $offer->setUser($users[rand(0, count($users)-1)]);
+            $offer->setUser($users[rand(0, count($users) - 1)]);
 
             $manager->persist($offer);
             $offers[] = $offer;
         }
 
         $wishes = [];
-        for ($i = 0; $i <= 30; $i++) { 
+        for ($i = 0; $i <= 30; $i++) {
             $wish = new Wish();
             $wish->setTitle('Demande #' . $i);
             $wish->setDescription('Description de la demande #' . $i);
             $wish->setZipcode('33000');
             $wish->setType($types[rand(0, 1)]);
             $wish->setCreatedAt(new DateTime());
-            $wish->setUser($users[rand(0, count($users)-1)]);
+            $wish->setUser($users[rand(0, count($users) - 1)]);
 
             $manager->persist($wish);
             $wishes[] = $wish;
         }
-        
+
+        $mainCategories = [];
+        for ($i = 0; $i <= 5; $i++) {
+            $mainCategory = new MainCategory();
+            $mainCategory->setName('La grosse catégorie' . $i);
+            $mainCategory->setSlug($this->slugger->slug($mainCategory->getName()));
+            $mainCategory->setCreatedAt(new DateTime());
+
+            $manager->persist($mainCategory);
+            $mainCategories[] = $mainCategory;
+        }
+
         $categories = [];
-        for ($i = 0; $i <= 10; $i++) { 
+        for ($i = 0; $i <= 15; $i++) {
             $category = new Category();
             $category->setName('La belle catégorie' . $i);
             $category->setSlug($this->slugger->slug($category->getName()));
             $category->setPicture('https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Michael_Youn_2018.jpg/220px-Michael_Youn_2018.jpg');
             $category->setCreatedAt(new DateTime());
 
-            for ($j = 0; $j < rand(1, 3); $j++) { 
+            for ($j = 0; $j < rand(1, 3); $j++) {
                 $offersInCategory = [];
                 $wishesInCategory = [];
-                $newOffer = $offers[rand(0, count($offers)-1)];
-                $newWish = $wishes[rand(0, count($wishes)-1)];
+                $newOffer = $offers[rand(0, count($offers) - 1)];
+                $newWish = $wishes[rand(0, count($wishes) - 1)];
 
                 if (!in_array($newOffer, $offersInCategory)) {
                     $category->addOffer($newOffer);
@@ -102,6 +114,15 @@ class AppFixtures extends Fixture
                 }
             }
 
+            for ($k = 0; $k <= rand(1, 2) ; $k++) { 
+                $categoriesMainCat = [];
+                $newMainCat = $mainCategories[rand(0, count($mainCategories) -1)];
+
+                if (!in_array($newMainCat, $categoriesMainCat)) {
+                    $category->setMainCategory($newMainCat);
+                    $categoriesMainCat[] = $newMainCat;
+                }
+            }
             $manager->persist($category);
             $categories[] = $category;
         }

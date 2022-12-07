@@ -7,8 +7,41 @@ asked by, 0N user, 11 wish
 offer : offerCode, title, picture, description, zipcode, type, is_active, is_lended, is_reported
 belongs to, 0N category, 1N offer
 
-category : categoryCode, name, slug, picture, created_at, updated_at
+category : categoryCode, name, slug, picture, is_active
 contains, 1N wish, 0N category
 
-mainCategory : mainCategoryCode, name, slug, created_at, updated_at
-belongsTo, 0N category, 0N mainCategory
+mainCategory : mainCategoryCode, name, slug
+hold, 0N mainCategory, 11 category
+
+
+Entité
+  MainCategory
+Propriété, Spécificité, Type      
+  id
+    primary key, auto increment, not null
+      int       
+  name
+    not null
+      string - varchar (64)
+  slug
+    nullable
+      string - varchar (255)
+  created_at
+    not null, default current_timestamp
+      timestamp
+  updated_at
+    nullable, default current_timestamp
+      timestamp
+
+
+Entité
+  MainCategory_Category
+Propriété, Spécificité, Type  
+  MainCategory_id
+    primary key, not null
+      entity
+  Category_id
+
+    primary key, not null
+      entity
+
