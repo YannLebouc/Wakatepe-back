@@ -1,0 +1,14 @@
+user : userCode, login, password, username, picture, role, firstname, lastname, phone_number, zipcode
+has, 11 offer, 0N user
+
+wish : wishCode, title, picture, description, zipcode, type, is_active, is_reported
+asked by, 0N user, 11 wish
+
+offer : offerCode, title, picture, description, zipcode, type, is_active, is_lended, is_reported
+belongs to, 0N category, 1N offer
+
+category : categoryCode, name, slug, picture, created_at, updated_at
+contains, 1N wish, 0N category
+
+mainCategory : mainCategoryCode, name, slug, created_at, updated_at
+belongsTo, 0N category, 0N mainCategory

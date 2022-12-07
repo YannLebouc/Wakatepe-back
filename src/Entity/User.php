@@ -29,6 +29,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="string", length=180, unique=true)
      * 
      * @Groups({"offer_read"})
+     * @Groups({"user_offer_browse"})
+     * @Groups({"user_read"})
      */
     private $email;
 
@@ -95,7 +97,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\OneToMany(targetEntity=Offer::class, mappedBy="user", orphanRemoval=true)
      * 
-     * 
+     * @Groups({"user_offer_browse"})
      */
     private $offer;
 
