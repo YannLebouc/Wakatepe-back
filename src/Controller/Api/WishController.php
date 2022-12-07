@@ -134,7 +134,7 @@ class WishController extends AbstractController
            $editedWish = $serializerInterface->deserialize($jsonContent, Wish::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $wish]);
        } catch (\Exception $e) {
             return $this->json(
-                "Les données JSON envoyées n'ont pas pu être interprêtées",
+                "Les données envoyées n'ont pas pu être interprêtées",
                 HttpFoundationResponse::HTTP_BAD_REQUEST
             );
        }
@@ -166,5 +166,21 @@ class WishController extends AbstractController
     );
     }
 
-    
+    /**
+     * @Route("/api/wishes/{id<\d+>}", name="app_api_wishes_delete", methods={"DELETE"})
+     */
+    public function delete(?Wish $wish, Request $request, EntityManagerInterface $doctrine, SerializerInterface $serializerInterface): JsonResponse
+    {
+        if (!$wish) {
+            return $this->json('Il n\'existe pas de souhait pour cet ID');
+           }
+
+        $doctrine->remove($wish);
+        $doctrine->flush();
+
+        return $this->json(
+            'l\'annonce "' . $wish->getTitle() . '" a bien été supprimée.',
+            HttpFoundationResponse::HTTP_OK
+        );
+    }
 }
