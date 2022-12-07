@@ -4,14 +4,18 @@ namespace App\Controller\Api;
 
 use App\Entity\Wish;
 use App\Repository\WishRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\BrowserKit\Response;
+use Symfony\Component\Form\Extension\Core\DataTransformer\DateTimeToStringTransformer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response as HttpFoundationResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Constraints\Date;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class WishController extends AbstractController
@@ -37,7 +41,7 @@ class WishController extends AbstractController
     /**
      * @Route("/api/wishes/{id<\d+>}", name="app_api_wishes_read", methods={"GET"})
      */
-    public function read(Wish $wish = null): JsonResponse
+    public function read(?Wish $wish): JsonResponse
     {
         if (!$wish) {
             return $this->json(['erreur' => 'la demande n\'a pas été trouvée'], HttpFoundationResponse::HTTP_NOT_FOUND);
@@ -56,7 +60,6 @@ class WishController extends AbstractController
     }
 
     /**
-     * Undocumented function
      * @Route("/api/wishes", name="app_api_wishes_add", methods={"POST"})
      * 
      * @param Request $request
@@ -70,7 +73,8 @@ class WishController extends AbstractController
         Request $request,
         SerializerInterface $serializerInterface,
         ValidatorInterface $validatorInterface,
-        EntityManagerInterface $doctrine)
+        EntityManagerInterface $doctrine
+    )
     {
         $jsonContent = $request->getContent();
 
@@ -91,6 +95,10 @@ class WishController extends AbstractController
                 HttpFoundationResponse::HTTP_UNPROCESSABLE_ENTITY
             );
         }
+        
+        // $newDate = new DateTime();
+        // $dateTimeTransformer = new DateTimeToStringTransformer();
+        // $newWish->setCreatedAt($dateTimeTransformer->transform($newDate));
 
         $doctrine->persist($newWish);
         $doctrine->flush();
@@ -104,4 +112,59 @@ class WishController extends AbstractController
             ["groups" => ["wish_read"]]
         );
     }
+
+    /**
+     * @Route("/api/wishes/{id<\d+>}", name="app_api_wishes_edit", methods={"PUT", "PATCH"})
+     */
+    public function edit(
+        ?Wish $wish,
+        Request $request,
+        EntityManagerInterface $doctrine,
+        ValidatorInterface $validatorInterface,
+        SerializerInterface $serializerInterface
+    )
+    {
+       if (!$wish) {
+        return $this->json('Il n\'existe pas de souhait pour cet ID');
+       }
+
+       $jsonContent = $request->getContent();
+       
+       try {
+           $editedWish = $serializerInterface->deserialize($jsonContent, Wish::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $wish]);
+       } catch (\Exception $e) {
+            return $this->json(
+                "Les données JSON envoyées n'ont pas pu être interprêtées",
+                HttpFoundationResponse::HTTP_BAD_REQUEST
+            );
+       }
+
+       $errors = $validatorInterface->validate($editedWish);
+       if (count($errors) > 0) {
+           $errorsString = (string) $errors;
+           return $this->json(
+               $errorsString,
+               HttpFoundationResponse::HTTP_UNPROCESSABLE_ENTITY
+           );
+       }
+
+       $wish->setUpdatedAt(new DateTime());
+       $doctrine->flush();
+
+       return $this->json(
+        $wish,
+        HttpFoundationResponse::HTTP_PARTIAL_CONTENT,
+        [
+            "Location" => $this->generateUrl("app_api_wishes_read", ["id" => $wish->getId()])
+        ],
+        [
+            "groups" => 
+            [
+                "wish_read"
+            ]
+        ]
+    );
+    }
+
+    
 }

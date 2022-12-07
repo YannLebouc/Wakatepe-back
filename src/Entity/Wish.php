@@ -3,12 +3,13 @@
 namespace App\Entity;
 
 use App\Repository\WishRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
-
+use Symfony\Component\Validator\Constraints\Date;
 
 /**
  * @ORM\Entity(repositoryClass=WishRepository::class)
@@ -104,6 +105,7 @@ class Wish
     {
         $this->categories = new ArrayCollection();
         $this->isActive = true;
+        $this->createdAt = new DateTime();
     }
 
     public function getId(): ?int
