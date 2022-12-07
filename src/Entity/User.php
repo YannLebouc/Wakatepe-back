@@ -10,7 +10,6 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  */
@@ -20,21 +19,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * 
+     * @Groups({"wish_read"})
      * @Groups({"offer_read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * 
+     * @Groups({"wish_read"})
      * @Groups({"offer_read"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="json")
-     * 
+     * @Groups({"wish_read"})
      * @Groups({"offer_read"})
      */
     private $roles = [];
@@ -47,14 +46,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * 
+     * @Groups({"wish_read"})
      * @Groups({"offer_read"})
      */
     private $alias;
 
     /**
      * @ORM\Column(type="string", length=32, nullable=true)
-     * 
+     * @Groups({"wish_read"})
      * @Groups({"offer_read"})
      */
     private $phoneNumber;
@@ -77,7 +76,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * 
+     * @Groups({"wish_read"})
      * @Groups({"offer_read"})
      */
     private $picture;

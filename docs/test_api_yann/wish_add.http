@@ -1,0 +1,11 @@
+POST http://localhost:8081/api/wishes HTTP/1.1
+Content-Type: application/json
+
+{
+    "title": "titre",
+    "zipcode": 64000,
+    "description": "Ceci est une description de test",
+    "type": "temporaire",
+    "createdAt": "2018-12-10T13:45:00.000Z",
+    "user": 65
+}
