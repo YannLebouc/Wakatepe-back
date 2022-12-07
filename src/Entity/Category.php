@@ -19,12 +19,15 @@ class Category
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * @Groups({"wish_read"})
-     * 
+     * @Groups({"offer_browse"})
+     * @Groups({"offer_read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=64)
+     * @Groups({"offer_browse"})
+     * @Groups({"offer_read"})
      * @Groups({"wish_read"})
      * @Groups({"wish_browse"})
      */
@@ -32,6 +35,8 @@ class Category
 
     /**
      * @ORM\Column(type="string", length=128, nullable=true, unique=true)
+     * @Groups({"offer_browse"})
+     * @Groups({"offer_read"})
      * @Groups({"wish_read"})
      * @Groups({"wish_browse"})
      */

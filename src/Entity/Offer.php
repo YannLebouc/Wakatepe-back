@@ -6,9 +6,12 @@ use App\Repository\OfferRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 /**
  * @ORM\Entity(repositoryClass=OfferRepository::class)
+ * 
  */
 class Offer
 {
@@ -16,26 +19,41 @@ class Offer
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * 
+     * @Groups({"offer_browse"})
+     * @Groups({"offer_read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=128)
+     * 
+     * @Groups({"offer_browse"})
+     * @Groups({"offer_read"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="integer")
+     * 
+     * @Groups({"offer_browse"})
+     * @Groups({"offer_read"})
      */
     private $zipcode;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * 
+     * @Groups({"offer_browse"})
+     * @Groups({"offer_read"})
      */
     private $picture;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * 
+     * @Groups({"offer_browse"})
+     * @Groups({"offer_read"})
      */
     private $description;
 
@@ -51,32 +69,48 @@ class Offer
 
     /**
      * @ORM\Column(type="string", length=16)
+     * 
+     * @Groups({"offer_browse"})
+     * @Groups({"offer_read"})
      */
     private $type;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     * 
+     * @Groups({"offer_read"})
      */
     private $isReported;
 
     /**
      * @ORM\Column(type="datetime")
+     * 
+     * @Groups({"offer_read"})
+     * 
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * 
+     * @Groups({"offer_read"})
+     * 
      */
     private $updatedAt;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="offer")
      * @ORM\JoinColumn(nullable=false)
+     * 
+     * @Groups({"offer_read"})
      */
     private $user;
 
     /**
      * @ORM\ManyToMany(targetEntity=Category::class, mappedBy="offer")
+     * 
+     * @Groups({"offer_read"})
+     * @Groups({"offer_browse"})
      */
     private $categories;
 
