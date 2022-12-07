@@ -44,25 +44,25 @@ class Category
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"wish_read"})
+     * 
      */
     private $picture;
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"wish_read"})
+     * 
      */
     private $isActive;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"wish_read"})
+     * 
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     * @Groups({"wish_read"})
+     * 
      */
     private $updatedAt;
 
