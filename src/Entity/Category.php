@@ -76,6 +76,12 @@ class Category
      */
     private $wish;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=MainCategory::class, inversedBy="categories")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $mainCategory;
+
     public function __construct()
     {
         $this->offer = new ArrayCollection();
@@ -204,6 +210,18 @@ class Category
     public function removeWish(Wish $wish): self
     {
         $this->wish->removeElement($wish);
+
+        return $this;
+    }
+
+    public function getMainCategory(): ?MainCategory
+    {
+        return $this->mainCategory;
+    }
+
+    public function setMainCategory(?MainCategory $mainCategory): self
+    {
+        $this->mainCategory = $mainCategory;
 
         return $this;
     }

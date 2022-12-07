@@ -6,7 +6,7 @@ En tant qu'utilisateur je veux pouvoir accéder à la liste de mes offres
 
 @group
 
-  app_api_users_offers_browse
+ user_offer_browse
     Offer
       id
       title

@@ -22,6 +22,7 @@ class Offer
      * 
      * @Groups({"offer_browse"})
      * @Groups({"offer_read"})
+     * @Groups({"user_offer_browse"})
      */
     private $id;
 
@@ -30,6 +31,7 @@ class Offer
      * 
      * @Groups({"offer_browse"})
      * @Groups({"offer_read"})
+     * @Groups({"user_offer_browse"})
      */
     private $title;
 
