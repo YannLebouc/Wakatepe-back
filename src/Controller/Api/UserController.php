@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response as HttpFoundationResponse;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -132,7 +133,8 @@ class UserController extends AbstractController
         Request $request,
         SerializerInterface $serializerInterface,
         ValidatorInterface $validatorInterface,
-        EntityManagerInterface $doctrine
+        EntityManagerInterface $doctrine,
+        UserPasswordHasherInterface $passwordHasher
     )
     {
         $jsonContent = $request->getContent();
@@ -156,6 +158,9 @@ class UserController extends AbstractController
         }
         
         $newUser->setPicture('https://upload.wikimedia.org/wikipedia/commons/1/1e/Michel_Sardou_2014.jpg');
+        $hashedPassword = $passwordHasher->hashPassword($newUser, $newUser->getPassword());
+        $newUser->setPassword($hashedPassword);
+
         $doctrine->persist($newUser);
         $doctrine->flush();
 

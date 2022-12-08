@@ -2,6 +2,6 @@ POST http://localhost:8081/api/login_check
 content-type: application/json
 
 {
-    "username":"otroc7@oclock.io",
-    "password":"otroc"
+    "username":"test3@oclock.io",
+    "password":"testmotdepassehash"
 }
