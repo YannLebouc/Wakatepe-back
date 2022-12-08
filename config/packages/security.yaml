@@ -11,6 +11,20 @@ security:
                 class: App\Entity\User
                 property: email
     firewalls:
+        # la partie login de Lexik
+        login:
+            pattern: ^/api/login
+            stateless: true
+            json_login:
+                check_path: /api/login_check
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+        
+        # zone d'intervention du JWT
+        api:
+            pattern:   ^/api
+            stateless: true
+            jwt: ~
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
@@ -23,12 +37,12 @@ security:
 
             # https://symfony.com/doc/current/security/impersonating_user.html
             # switch_user: true
-
-    # Easy way to control access for large sections of your site
-    # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        # on ouvre la route de login
+        - { path: ^/api/login, roles: PUBLIC_ACCESS }
+        # on ferme toutes les routes /api
+        # à vous de bien définir cette partie
+        - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
 
 when@test:
     security:
