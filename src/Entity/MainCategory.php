@@ -18,16 +18,25 @@ class MainCategory
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * 
+     * @Groups({"mainCategory_category_browse"})
+     * 
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=64)
+     * 
+     * @Groups({"mainCategory_category_browse"})
+     * 
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=64, nullable=true)
+     * 
+     * @Groups({"mainCategory_category_browse"})
+     * 
      */
     private $slug;
 
