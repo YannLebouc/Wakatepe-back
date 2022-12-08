@@ -30,6 +30,7 @@ class Category
      * @Groups({"offer_read"})
      * @Groups({"wish_read"})
      * @Groups({"wish_browse"})
+     * @Groups({"current_user_offers"})
      */
     private $name;
 
@@ -39,6 +40,7 @@ class Category
      * @Groups({"offer_read"})
      * @Groups({"wish_read"})
      * @Groups({"wish_browse"})
+     * 
      */
     private $slug;
 
