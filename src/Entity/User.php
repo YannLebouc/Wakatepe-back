@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -21,6 +22,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="integer")
      * @Groups({"wish_read"})
      * @Groups({"offer_read"})
+     * @Groups({"users_read"})
+     * 
      */
     private $id;
 
@@ -30,6 +33,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Groups({"offer_read"})
      * @Groups({"user_offer_browse"})
      * @Groups({"user_read"})
+     * @Groups({"users_read"})
      */
     private $email;
 
@@ -37,6 +41,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="json")
      * @Groups({"wish_read"})
      * @Groups({"offer_read"})
+     * @Groups({"users_read"})
      */
     private $roles = [];
 
@@ -50,6 +55,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="string", length=255)
      * @Groups({"wish_read"})
      * @Groups({"offer_read"})
+     * @Groups({"users_read"})
      */
     private $alias;
 
@@ -57,22 +63,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="string", length=32, nullable=true)
      * @Groups({"wish_read"})
      * @Groups({"offer_read"})
+     * @Groups({"users_read"})
      */
     private $phoneNumber;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"users_read"})
      */
     private $zipcode;
 
     /**
      * @ORM\Column(type="string", length=64)
-     * 
+     * @Groups({"users_read"})
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=128)
+     * @Groups({"users_read"})
      */
     private $lastname;
 
@@ -80,16 +89,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="string", length=255)
      * @Groups({"wish_read"})
      * @Groups({"offer_read"})
+     * @Groups({"users_read"})
      */
     private $picture;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"users_read"})
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"users_read"})
      */
     private $updatedAt;
 
@@ -109,6 +121,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->offer = new ArrayCollection();
         $this->wish = new ArrayCollection();
+        $this->setCreatedAt(new DateTime());
     }
 
     public function getId(): ?int

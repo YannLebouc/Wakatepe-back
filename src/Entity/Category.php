@@ -31,6 +31,7 @@ class Category
      * @Groups({"wish_read"})
      * @Groups({"wish_browse"})
      * @Groups({"current_user_offers"})
+     * @Groups({"current_user_wishes"})
      */
     private $name;
 
