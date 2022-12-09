@@ -106,7 +106,7 @@ class UserController extends AbstractController
         if (!$user) {
             return $this->json('la demande n\'a pas été trouvée', HttpFoundationResponse::HTTP_NOT_FOUND);
         }
-        dd($user);
+
         return $this->json(
             $user,
             HttpFoundationResponse::HTTP_OK,
