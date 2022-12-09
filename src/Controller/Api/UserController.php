@@ -4,8 +4,11 @@ namespace App\Controller\Api;
 
 use App\Entity\User;
 use App\Repository\OfferRepository;
+use App\Repository\UserRepository;
 use App\Repository\WishRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use PHPUnit\Util\Json;
+use ProxyManager\Factory\RemoteObject\Adapter\JsonRpc;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -192,6 +195,23 @@ class UserController extends AbstractController
                 "groups" =>
                 [
                     "user_offer_browse"
+                ]
+            ]
+        );
+    }
+
+    /**
+     * @Route("/api/users", name="app_api_users_browse", methods={"GET"})
+     */
+    public function browse(UserRepository $userRepository): JsonResponse
+    {
+        return $this->json(
+            $userRepository->findAll(),
+            HttpFoundationResponse::HTTP_OK,
+            [],
+            [
+                "groups" => [
+                    "users_browse"
                 ]
             ]
         );
