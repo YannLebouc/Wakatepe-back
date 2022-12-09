@@ -95,15 +95,31 @@ class UserController extends AbstractController
                 ]
             ]
         );
-
- /**
-   * @Route("/api/users/{id<\d+>}/offers", name="app_api_users_offers", methods={"GET"})
-   */
-  public function userOfferBrowse(?User $user): JsonResponse
-  {
-    if (!$user) {
-      return $this->json('la demande n\'a pas été trouvée', HttpFoundationResponse::HTTP_NOT_FOUND);
     }
+
+    
+    /**
+     * @Route("/api/users/{id<\d+>}/offers", name="app_api_users_offers", methods={"GET"})
+     */
+    public function userOfferBrowse(?User $user): JsonResponse
+    {
+        if (!$user) {
+            return $this->json('la demande n\'a pas été trouvée', HttpFoundationResponse::HTTP_NOT_FOUND);
+        }
+        dd($user);
+        return $this->json(
+            $user,
+            HttpFoundationResponse::HTTP_OK,
+            [],
+            [
+                "groups" =>
+                [
+                    "user_offer_browse"
+                ]
+            ]
+        );
+    }
+
 
     /**
      * @Route("/api/users", name="app_api_users_add", methods={"POST"})
@@ -121,8 +137,7 @@ class UserController extends AbstractController
         ValidatorInterface $validatorInterface,
         EntityManagerInterface $doctrine,
         UserPasswordHasherInterface $passwordHasher
-    )
-    {
+    ) {
         $jsonContent = $request->getContent();
 
         try {
@@ -142,7 +157,7 @@ class UserController extends AbstractController
                 HttpFoundationResponse::HTTP_UNPROCESSABLE_ENTITY
             );
         }
-        
+
         $newUser->setPicture('https://upload.wikimedia.org/wikipedia/commons/1/1e/Michel_Sardou_2014.jpg');
         $hashedPassword = $passwordHasher->hashPassword($newUser, $newUser->getPassword());
         $newUser->setPassword($hashedPassword);
