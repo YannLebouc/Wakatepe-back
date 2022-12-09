@@ -43,7 +43,7 @@ class WishController extends AbstractController
     public function read(?Wish $wish): JsonResponse
     {
         if (!$wish) {
-            return $this->json(['erreur' => 'la demande n\'a pas été trouvée'], HttpFoundationResponse::HTTP_NOT_FOUND);
+            return $this->json(["erreur" => "la demande n\'a pas été trouvée"], HttpFoundationResponse::HTTP_NOT_FOUND);
         }
         return $this->json(
             $wish,
@@ -81,7 +81,7 @@ class WishController extends AbstractController
             $newWish = $serializerInterface->deserialize($jsonContent, Wish::class, 'json');
         } catch (\Exception $e) {
             return $this->json(
-                "Les données JSON envoyées n'ont pas pu être interprêtées",
+                ["erreur" => "Les données JSON envoyées n'ont pas pu être interprêtées"],
                 HttpFoundationResponse::HTTP_BAD_REQUEST
             );
         }
@@ -131,7 +131,7 @@ class WishController extends AbstractController
     )
     {
        if (!$wish) {
-        return $this->json('Il n\'existe pas de souhait pour cet ID');
+        return $this->json(["erreur" => "Il n'existe pas de souhait pour cet ID"]);
        }
 
        $jsonContent = $request->getContent();
@@ -140,7 +140,7 @@ class WishController extends AbstractController
            $editedWish = $serializerInterface->deserialize($jsonContent, Wish::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $wish]);
        } catch (\Exception $e) {
             return $this->json(
-                "Les données envoyées n'ont pas pu être interprêtées",
+                ["erreur" => "Les données envoyées n'ont pas pu être interprêtées"],
                 HttpFoundationResponse::HTTP_BAD_REQUEST
             );
        }
@@ -178,7 +178,7 @@ class WishController extends AbstractController
     public function delete(?Wish $wish, Request $request, EntityManagerInterface $doctrine, SerializerInterface $serializerInterface): JsonResponse
     {
         if (!$wish) {
-            return $this->json('Il n\'existe pas de souhait pour cet ID');
+            return $this->json(['erreur' => 'Il n\'existe pas de souhait pour cet ID']);
            }
 
         $doctrine->remove($wish);

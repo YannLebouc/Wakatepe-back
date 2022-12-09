@@ -13,7 +13,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class MainCategoryController extends AbstractController
 {
-
   /**
    * Retrieves a list of MainCategory
    * 
@@ -64,3 +63,6 @@ class MainCategoryController extends AbstractController
     );
   }
 }
+
+}
+

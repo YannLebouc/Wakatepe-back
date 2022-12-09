@@ -34,12 +34,12 @@ class UserController extends AbstractController
         // deprecated version
 
         if (!$security->getToken()) {
-            return $this->json('Le token fournit n\'est pas valide ou il n\'existe pas', HttpFoundationResponse::HTTP_BAD_REQUEST);
+            return $this->json(["erreur" => "Le token fournit n\'est pas valide ou il n\'existe pas"], HttpFoundationResponse::HTTP_BAD_REQUEST);
         }
         $token = $security->getToken();
 
         if (!$token->getUser()) {
-            return $this->json('Il y a eu un problème lors de la récupération de votre profil', HttpFoundationResponse::HTTP_NOT_FOUND);
+            return $this->json(["erreur" => "Il y a eu un problème lors de la récupération de votre profil"], HttpFoundationResponse::HTTP_NOT_FOUND);
         }
         $user = $token->getUser();
 
@@ -73,12 +73,12 @@ class UserController extends AbstractController
         // deprecated version
 
         if (!$security->getToken()) {
-            return $this->json('Le token fournit n\'est pas valide ou il n\'existe pas', HttpFoundationResponse::HTTP_BAD_REQUEST);
+            return $this->json(["erreur" => "Le token fournit n\'est pas valide ou il n\'existe pas"], HttpFoundationResponse::HTTP_BAD_REQUEST);
         }
         $token = $security->getToken();
 
         if (!$token->getUser()) {
-            return $this->json('Il y a eu un problème lors de la récupération de votre profil', HttpFoundationResponse::HTTP_NOT_FOUND);
+            return $this->json(["erreur" => "Il y a eu un problème lors de la récupération de votre profil"], HttpFoundationResponse::HTTP_NOT_FOUND);
         }
         $user = $token->getUser();
 
@@ -104,7 +104,7 @@ class UserController extends AbstractController
     public function userOfferBrowse(?User $user): JsonResponse
     {
         if (!$user) {
-            return $this->json('la demande n\'a pas été trouvée', HttpFoundationResponse::HTTP_NOT_FOUND);
+            return $this->json(["erreur" => "la demande n\'a pas été trouvée"], HttpFoundationResponse::HTTP_NOT_FOUND);
         }
 
         return $this->json(
@@ -144,7 +144,7 @@ class UserController extends AbstractController
             $newUser = $serializerInterface->deserialize($jsonContent, User::class, 'json');
         } catch (\Exception $e) {
             return $this->json(
-                "Les données JSON envoyées n'ont pas pu être interprêtées",
+                ["erreur" => "Les données JSON envoyées n'ont pas pu être interprêtées"],
                 HttpFoundationResponse::HTTP_BAD_REQUEST
             );
         }
