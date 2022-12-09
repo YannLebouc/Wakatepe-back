@@ -64,5 +64,5 @@ class MainCategoryController extends AbstractController
   }
 }
 
-}
+
 
