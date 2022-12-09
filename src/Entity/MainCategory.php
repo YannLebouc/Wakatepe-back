@@ -6,6 +6,8 @@ use App\Repository\MainCategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 /**
  * @ORM\Entity(repositoryClass=MainCategoryRepository::class)
@@ -16,16 +18,25 @@ class MainCategory
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * 
+     * @Groups({"mainCategory_category_browse"})
+     * 
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=64)
+     * 
+     * @Groups({"mainCategory_category_browse"})
+     * 
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=64, nullable=true)
+     * 
+     * @Groups({"mainCategory_category_browse"})
+     * 
      */
     private $slug;
 
@@ -41,6 +52,8 @@ class MainCategory
 
     /**
      * @ORM\OneToMany(targetEntity=Category::class, mappedBy="mainCategory")
+     * 
+     * @Groups({"mainCategory_category_browse"})
      */
     private $categories;
 

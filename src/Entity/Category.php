@@ -21,6 +21,8 @@ class Category
      * @Groups({"wish_read"})
      * @Groups({"offer_browse"})
      * @Groups({"offer_read"})
+     * @Groups({"mainCategory_category_browse"})
+     * 
      */
     private $id;
 
@@ -30,6 +32,8 @@ class Category
      * @Groups({"offer_read"})
      * @Groups({"wish_read"})
      * @Groups({"wish_browse"})
+     * @Groups({"mainCategory_category_browse"})
+     * 
      */
     private $name;
 
@@ -50,6 +54,8 @@ class Category
 
     /**
      * @ORM\Column(type="boolean")
+     * 
+     * @Groups({"mainCategory_category_browse"})
      * 
      */
     private $isActive;
