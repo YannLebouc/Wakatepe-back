@@ -13,12 +13,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
  /**
-   * @Route("/api/users/{id<\d+>}/offers", name="app_api_users_offers")
+   * @Route("/api/users/{id<\d+>}/offers", name="app_api_users_offers", methods={"GET"})
    */
   public function userOfferBrowse(?User $user): JsonResponse
   {
     if (!$user) {
-      return $this->json(['erreur' => 'la demande n\'a pas été trouvée'], HttpFoundationResponse::HTTP_NOT_FOUND);
+      return $this->json('la demande n\'a pas été trouvée', HttpFoundationResponse::HTTP_NOT_FOUND);
     }
     return $this->json(
       $user,
