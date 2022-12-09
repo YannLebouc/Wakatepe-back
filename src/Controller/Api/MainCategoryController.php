@@ -18,7 +18,7 @@ class MainCategoryController extends AbstractController
     public function mainCategoryCategoryBrowse(?MainCategory $mainCategory): JsonResponse
     {
         if (!$mainCategory) {
-          return $this->json('la MainCategory demandée n\'a pas été trouvée', HttpFoundationResponse::HTTP_NOT_FOUND);
+          return $this->json(["erreur" => "la MainCategory demandée n\'a pas été trouvée"], HttpFoundationResponse::HTTP_NOT_FOUND);
         }
         return $this->json(
           $mainCategory,

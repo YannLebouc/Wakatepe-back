@@ -79,10 +79,12 @@ class AppFixtures extends Fixture
             $wishes[] = $wish;
         }
 
+
+        $mainCategoriesName = ['Maison', 'Mode', 'Multimédia', 'Loisirs', 'divers'];
         $mainCategories = [];
-        for ($i = 0; $i <= 5; $i++) {
+        for ($i = 0; $i < count($mainCategoriesName); $i++) {
             $mainCategory = new MainCategory();
-            $mainCategory->setName('La grosse catégorie' . $i);
+            $mainCategory->setName($mainCategoriesName[$i]);
             $mainCategory->setSlug($this->slugger->slug($mainCategory->getName()));
             $mainCategory->setCreatedAt(new DateTime());
 
@@ -90,41 +92,81 @@ class AppFixtures extends Fixture
             $mainCategories[] = $mainCategory;
         }
 
+        $allCategories = 
+        [
+            '0' => 
+                [
+                    'Aménagement',
+                    'Electroménager',
+                    'Décoration',
+                    'Bricolage',
+                    'Jardinage',
+                    'Arts de la table'
+                ],
+            '1' => 
+                [
+                    'Vêtements',
+                    'Chaussures',
+                    'Accessoires et bagagerie',
+                    'Montres et bijoux',
+                    'Equipements bébé',
+                    'Vêtements bébé'
+                ],
+            '2' => 
+                [
+                    'Informatique',
+                    'Consoles et jeux vidéo',
+                    'Images et sons',
+                    'Téléphonie'
+                ],
+            '3' => 
+                [
+                    'DVD-Films',
+                    'CD-Musique',
+                    'Livres',
+                    'Vélos',
+                    'Sports et hobbies',
+                    'Instruments de musique',
+                    'Collections',
+                    'Jeux et jouets',
+                    'Vins et gastronomie'
+                ],
+            '4' => 
+                [
+                    'Autres'
+                ]
+        ];
+
+        
         $categories = [];
-        for ($i = 0; $i <= 15; $i++) {
-            $category = new Category();
-            $category->setName('La belle catégorie' . $i);
-            $category->setSlug($this->slugger->slug($category->getName()));
-            $category->setPicture('https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Michael_Youn_2018.jpg/220px-Michael_Youn_2018.jpg');
-            $category->setCreatedAt(new DateTime());
+        foreach ($allCategories as $cat => $catNames) {
+            for ($i = 0; $i < count($catNames); $i++) { 
+                $category = new Category();
+                $category->setName($catNames[$i]);
+                $category->setSlug($this->slugger->slug($category->getName()));
+                $category->setPicture('https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Michael_Youn_2018.jpg/220px-Michael_Youn_2018.jpg');
+                $category->setCreatedAt(new DateTime());
+                $category->setMainCategory($mainCategories[$cat]);
+                
+                for ($j = 0; $j < 2; $j++) {
+                    $offersInCategory = [];
+                    $wishesInCategory = [];
+                    $newOffer = $offers[rand(0, count($offers) - 1)];
+                    $newWish = $wishes[rand(0, count($wishes) - 1)];
+        
+                    if (!in_array($newOffer, $offersInCategory)) {
+                        $category->addOffer($newOffer);
+                        $offersInCategory[] = $newOffer;
+                    }
+                    if (!in_array($newWish, $wishesInCategory)) {
+                        $category->addWish($newWish);
+                        $wishesInCategory[] = $newWish;
+                    }
 
-            for ($j = 0; $j < rand(1, 3); $j++) {
-                $offersInCategory = [];
-                $wishesInCategory = [];
-                $newOffer = $offers[rand(0, count($offers) - 1)];
-                $newWish = $wishes[rand(0, count($wishes) - 1)];
-
-                if (!in_array($newOffer, $offersInCategory)) {
-                    $category->addOffer($newOffer);
-                    $offersInCategory[] = $newOffer;
-                }
-                if (!in_array($newWish, $wishesInCategory)) {
-                    $category->addWish($newWish);
-                    $wishesInCategory[] = $newWish;
-                }
-            }
-
-            for ($k = 0; $k <= rand(1, 2) ; $k++) { 
-                $categoriesMainCat = [];
-                $newMainCat = $mainCategories[rand(0, count($mainCategories) -1)];
-
-                if (!in_array($newMainCat, $categoriesMainCat)) {
-                    $category->setMainCategory($newMainCat);
-                    $categoriesMainCat[] = $newMainCat;
+                    $manager->persist($category);
+                    $categories[] = $category;
                 }
             }
-            $manager->persist($category);
-            $categories[] = $category;
         }
 
         $manager->flush();
