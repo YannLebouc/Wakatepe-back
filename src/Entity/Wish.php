@@ -22,6 +22,8 @@ class Wish
      * @ORM\Column(type="integer")
      * @Groups({"wish_browse"})
      * @Groups({"wish_read"})
+     * @Groups({"current_user_wishes"})
+     * 
      */
     private $id;
 
@@ -29,6 +31,7 @@ class Wish
      * @ORM\Column(type="string", length=128)
      * @Groups({"wish_browse"})
      * @Groups({"wish_read"})
+     * @Groups({"current_user_wishes"})
      * @Assert\NotBlank
      */
     private $title;
@@ -37,6 +40,7 @@ class Wish
      * @ORM\Column(type="integer")
      * @Groups({"wish_browse"})
      * @Groups({"wish_read"})
+     * @Groups({"current_user_wishes"})
      */
     private $zipcode;
 
@@ -44,6 +48,7 @@ class Wish
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"wish_browse"})
      * @Groups({"wish_read"})
+     * @Groups({"current_user_wishes"})
      */
     private $picture;
 
@@ -51,6 +56,7 @@ class Wish
      * @ORM\Column(type="text", nullable=true)
      * @Groups({"wish_browse"})
      * @Groups({"wish_read"})
+     * @Groups({"current_user_wishes"})
      */
     private $description;
 
@@ -63,6 +69,7 @@ class Wish
      * @ORM\Column(type="string", length=16)
      * @Groups({"wish_browse"})
      * @Groups({"wish_read"})
+     * @Groups({"current_user_wishes"})
      */
     private $type;
 
@@ -76,6 +83,7 @@ class Wish
      * @ORM\Column(type="datetime")
      * @Groups({"wish_browse"})
      * @Groups({"wish_read"})
+     * @Groups({"current_user_wishes"})
      */
     private $createdAt;
 
@@ -83,6 +91,7 @@ class Wish
      * @ORM\Column(type="datetime", nullable=true)
      * @Groups({"wish_browse"})
      * @Groups({"wish_read"})
+     * @Groups({"current_user_wishes"})
      */
     private $updatedAt;
 
@@ -98,6 +107,7 @@ class Wish
      *     
      * @Groups({"wish_browse"})
      * @Groups({"wish_read"})
+     * @Groups({"current_user_wishes"})
      */
     private $categories;
 

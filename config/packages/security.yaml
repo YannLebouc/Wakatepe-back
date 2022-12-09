@@ -40,6 +40,7 @@ security:
     access_control:
         # on ouvre la route de login
         - { path: ^/api/login, roles: PUBLIC_ACCESS }
+        - { path: ^/api/users, roles: PUBLIC_ACCESS, methods: [POST] }
         # on ferme toutes les routes /api
         # à vous de bien définir cette partie
         # - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }

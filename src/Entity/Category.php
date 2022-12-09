@@ -32,6 +32,8 @@ class Category
      * @Groups({"offer_read"})
      * @Groups({"wish_read"})
      * @Groups({"wish_browse"})
+     * @Groups({"current_user_offers"})
+     * @Groups({"current_user_wishes"})
      * @Groups({"mainCategory_category_browse"})
      * 
      */
@@ -43,6 +45,7 @@ class Category
      * @Groups({"offer_read"})
      * @Groups({"wish_read"})
      * @Groups({"wish_browse"})
+     * 
      */
     private $slug;
 

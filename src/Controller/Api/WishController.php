@@ -8,7 +8,6 @@ use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\BrowserKit\Response;
-use Symfony\Component\Form\Extension\Core\DataTransformer\DateTimeToStringTransformer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response as HttpFoundationResponse;
@@ -115,6 +114,13 @@ class WishController extends AbstractController
 
     /**
      * @Route("/api/wishes/{id<\d+>}", name="app_api_wishes_edit", methods={"PUT", "PATCH"})
+     *
+     * @param Wish|null $wish
+     * @param Request $request
+     * @param EntityManagerInterface $doctrine
+     * @param ValidatorInterface $validatorInterface
+     * @param SerializerInterface $serializerInterface
+     * @return JSON
      */
     public function edit(
         ?Wish $wish,

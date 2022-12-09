@@ -32,6 +32,7 @@ class Offer
      * @Groups({"offer_browse"})
      * @Groups({"offer_read"})
      * @Groups({"user_offer_browse"})
+     * @Groups({"current_user_offers"})
      */
     private $title;
 
@@ -40,6 +41,7 @@ class Offer
      * 
      * @Groups({"offer_browse"})
      * @Groups({"offer_read"})
+     * @Groups({"current_user_offers"})
      */
     private $zipcode;
 
@@ -48,6 +50,7 @@ class Offer
      * 
      * @Groups({"offer_browse"})
      * @Groups({"offer_read"})
+     * @Groups({"current_user_offers"})
      */
     private $picture;
 
@@ -56,6 +59,7 @@ class Offer
      * 
      * @Groups({"offer_browse"})
      * @Groups({"offer_read"})
+     * @Groups({"current_user_offers"})
      */
     private $description;
 
@@ -66,6 +70,7 @@ class Offer
 
     /**
      * @ORM\Column(type="boolean")
+     * 
      */
     private $isLended;
 
@@ -74,6 +79,7 @@ class Offer
      * 
      * @Groups({"offer_browse"})
      * @Groups({"offer_read"})
+     * @Groups({"current_user_offers"})
      */
     private $type;
 
@@ -86,7 +92,7 @@ class Offer
 
     /**
      * @ORM\Column(type="datetime")
-     * 
+     * @Groups({"current_user_offers"})
      * @Groups({"offer_read"})
      * 
      */
@@ -94,7 +100,7 @@ class Offer
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     * 
+     * @Groups({"current_user_offers"})
      * @Groups({"offer_read"})
      * 
      */
@@ -113,6 +119,7 @@ class Offer
      * 
      * @Groups({"offer_read"})
      * @Groups({"offer_browse"})
+     * @Groups({"current_user_offers"})
      */
     private $categories;
 
