@@ -47,7 +47,7 @@ class OfferController extends AbstractController
   public function read(Offer $offer = null): JsonResponse
   {
     if (!$offer) {
-      return $this->json('la demande n\'a pas été trouvée', HttpFoundationResponse::HTTP_NOT_FOUND);
+      return $this->json(["erreur" => "l'offre n\'a pas été trouvée"], HttpFoundationResponse::HTTP_NOT_FOUND);
     }
     return $this->json(
       $offer,
@@ -85,7 +85,7 @@ class OfferController extends AbstractController
       $newOffer = $serializerInterface->deserialize($jsonContent, Offer::class, 'json');
     } catch (\Exception $e) {
       return $this->json(
-        "Les données JSON envoyées n'ont pas pu être interprêtées",
+        ["erreur" => "Les données JSON envoyées n'ont pas pu être interprêtées"],
         HttpFoundationResponse::HTTP_BAD_REQUEST
       );
     }
@@ -131,7 +131,7 @@ class OfferController extends AbstractController
   ): JsonResponse
   {
     if (!$offer) {
-      return $this->json('Il n\'existe pas de souhait pour cet ID');
+      return $this->json(["erreur" => "Il n\'existe pas d'offre' pour cet ID"]);
     }
 
     $jsonContent = $request->getContent();
@@ -140,7 +140,7 @@ class OfferController extends AbstractController
       $editedOffer = $serializerInterface->deserialize($jsonContent, Offer::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $offer]);
     } catch (\Exception $e) {
       return $this->json(
-        "Les données envoyées n'ont pas pu être interprêtées",
+        ["erreur" => "Les données JSON envoyées n'ont pas pu être interprêtées"],
         HttpFoundationResponse::HTTP_BAD_REQUEST
       );
     }
@@ -182,14 +182,14 @@ class OfferController extends AbstractController
   public function delete(?Offer $offer, EntityManagerInterface $doctrine): JsonResponse
   {
     if (!$offer) {
-      return $this->json('Il n\'existe pas de souhait pour cet ID');
+      return $this->json(["erreur" => "Il n\'existe pas de souhait pour cet ID"]);
     }
 
     $doctrine->remove($offer);
     $doctrine->flush();
 
     return $this->json(
-      'l\'annonce "' . $offer->getTitle() . '" a bien été supprimée.',
+      ["validation" => "l'annonce " . $offer->getTitle() . " a bien été supprimée."],
       HttpFoundationResponse::HTTP_OK
     );
   }
