@@ -79,7 +79,6 @@ class AppFixtures extends Fixture
             $wishes[] = $wish;
         }
 
-
         $mainCategoriesName = ['Maison', 'Mode', 'Multimédia', 'Loisirs', 'divers'];
         $mainCategories = [];
         for ($i = 0; $i < count($mainCategoriesName); $i++) {

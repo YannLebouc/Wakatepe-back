@@ -97,7 +97,7 @@ class UserController extends AbstractController
         );
     }
 
-    
+
     /**
      * @Route("/api/users/{id<\d+>}/offers", name="app_api_users_offers", methods={"GET"})
      */
@@ -175,22 +175,25 @@ class UserController extends AbstractController
         );
     }
 
-    // /**
-    //  * @Route("/api/users/{id<\d+>}", name="app_api_users_read")
-    //  */
-    // public function read(User $user): JsonResponse
-    // {
-    //   return $this->json(
-    //     $user,
-    //     HttpFoundationResponse::HTTP_OK,
-    //     [],
-    //     [
-    //       "groups" =>
-    //       [
-    //         "user_offer_browse"
-    //       ]
-    //     ]
-    //   );
-    // }
+    /**
+     * @Route("/api/users/{id<\d+>}", name="app_api_users_read", methods={"GET"})
+     */
+    public function read(?User $user): JsonResponse
+    {
+        if (!$user) {
+            return $this->json(["erreur" => "L'utilisateur recherché n'existe pas"], HttpFoundationResponse::HTTP_NOT_FOUND);
+        }
 
+        return $this->json(
+            $user,
+            HttpFoundationResponse::HTTP_OK,
+            [],
+            [
+                "groups" =>
+                [
+                    "user_offer_browse"
+                ]
+            ]
+        );
+    }
 }
