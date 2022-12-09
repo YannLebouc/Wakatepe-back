@@ -23,6 +23,7 @@ class Offer
      * @Groups({"offer_browse"})
      * @Groups({"offer_read"})
      * @Groups({"user_offer_browse"})
+     * @Groups({"category_advertisement_browse"})
      */
     private $id;
 
@@ -33,6 +34,7 @@ class Offer
      * @Groups({"offer_read"})
      * @Groups({"user_offer_browse"})
      * @Groups({"current_user_offers"})
+     * @Groups({"category_advertisement_browse"})
      */
     private $title;
 
@@ -42,6 +44,7 @@ class Offer
      * @Groups({"offer_browse"})
      * @Groups({"offer_read"})
      * @Groups({"current_user_offers"})
+     * @Groups({"category_advertisement_browse"})
      */
     private $zipcode;
 
@@ -51,6 +54,7 @@ class Offer
      * @Groups({"offer_browse"})
      * @Groups({"offer_read"})
      * @Groups({"current_user_offers"})
+     * @Groups({"category_advertisement_browse"})
      */
     private $picture;
 
@@ -60,17 +64,21 @@ class Offer
      * @Groups({"offer_browse"})
      * @Groups({"offer_read"})
      * @Groups({"current_user_offers"})
+     * @Groups({"category_advertisement_browse"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="boolean")
+     * 
+     * @Groups({"category_advertisement_browse"})
      */
     private $isActive;
 
     /**
      * @ORM\Column(type="boolean")
      * 
+     * @Groups({"category_advertisement_browse"})
      */
     private $isLended;
 
@@ -80,6 +88,7 @@ class Offer
      * @Groups({"offer_browse"})
      * @Groups({"offer_read"})
      * @Groups({"current_user_offers"})
+     * @Groups({"category_advertisement_browse"})
      */
     private $type;
 
@@ -87,22 +96,25 @@ class Offer
      * @ORM\Column(type="boolean", nullable=true)
      * 
      * @Groups({"offer_read"})
+     * @Groups({"category_advertisement_browse"})
      */
     private $isReported;
 
     /**
      * @ORM\Column(type="datetime")
+     * 
      * @Groups({"current_user_offers"})
      * @Groups({"offer_read"})
-     * 
+     * @Groups({"category_advertisement_browse"})
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * 
      * @Groups({"current_user_offers"})
      * @Groups({"offer_read"})
-     * 
+     * @Groups({"category_advertisement_browse"})
      */
     private $updatedAt;
 
@@ -111,6 +123,7 @@ class Offer
      * @ORM\JoinColumn(nullable=false)
      * 
      * @Groups({"offer_read"})
+     * @Groups({"category_advertisement_browse"})
      */
     private $user;
 

@@ -23,7 +23,7 @@ class Wish
      * @Groups({"wish_browse"})
      * @Groups({"wish_read"})
      * @Groups({"current_user_wishes"})
-     * 
+     * @Groups({"category_advertisement_browse"})
      */
     private $id;
 
@@ -32,6 +32,7 @@ class Wish
      * @Groups({"wish_browse"})
      * @Groups({"wish_read"})
      * @Groups({"current_user_wishes"})
+     * @Groups({"category_advertisement_browse"})
      * @Assert\NotBlank
      */
     private $title;
@@ -41,6 +42,7 @@ class Wish
      * @Groups({"wish_browse"})
      * @Groups({"wish_read"})
      * @Groups({"current_user_wishes"})
+     * @Groups({"category_advertisement_browse"})
      */
     private $zipcode;
 
@@ -49,6 +51,7 @@ class Wish
      * @Groups({"wish_browse"})
      * @Groups({"wish_read"})
      * @Groups({"current_user_wishes"})
+     * @Groups({"category_advertisement_browse"})
      */
     private $picture;
 
@@ -57,11 +60,13 @@ class Wish
      * @Groups({"wish_browse"})
      * @Groups({"wish_read"})
      * @Groups({"current_user_wishes"})
+     * @Groups({"category_advertisement_browse"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Groups({"category_advertisement_browse"})
      */
     private $isActive;
 
@@ -70,12 +75,14 @@ class Wish
      * @Groups({"wish_browse"})
      * @Groups({"wish_read"})
      * @Groups({"current_user_wishes"})
+     * @Groups({"category_advertisement_browse"})
      */
     private $type;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
      * @Groups({"wish_read"})
+     * @Groups({"category_advertisement_browse"})
      */
     private $isReported;
 
@@ -84,6 +91,7 @@ class Wish
      * @Groups({"wish_browse"})
      * @Groups({"wish_read"})
      * @Groups({"current_user_wishes"})
+     * @Groups({"category_advertisement_browse"})
      */
     private $createdAt;
 
@@ -92,6 +100,7 @@ class Wish
      * @Groups({"wish_browse"})
      * @Groups({"wish_read"})
      * @Groups({"current_user_wishes"})
+     * @Groups({"category_advertisement_browse"})
      */
     private $updatedAt;
 
@@ -99,6 +108,7 @@ class Wish
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="wish")
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"wish_read"})
+     * @Groups({"category_advertisement_browse"})
      */
     private $user;
 
