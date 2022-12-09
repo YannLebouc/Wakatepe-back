@@ -1,17 +1,19 @@
 
-En tant qu'utilisateur je veux pouvoir accéder à la liste de mes offres
-  /users/{id}/offers
-  browse_user_offer
-  user_browse_offer
 
 @group
 
- user_offer_browse
+  mainCategory_category_browse
+    Category
+      id
+      name
+      is_active
+
+  user_offer_browse
     Offer
       id
       title
 
-  browse_offer
+  offer_browse
     Offer
       id
       title
@@ -24,7 +26,7 @@ En tant qu'utilisateur je veux pouvoir accéder à la liste de mes offres
       name
       slug
 
-  read_offer
+  offer_read
     Offer
       id
       title

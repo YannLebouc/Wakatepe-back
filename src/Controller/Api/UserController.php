@@ -18,28 +18,6 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class UserController extends AbstractController
 {
-    /**
-     * @Route("/api/users/{id<\d+>}/offers", name="app_api_users_offers", methods={"GET"})
-     */
-    public function userOfferBrowse(?User $user): JsonResponse
-    {
-        if (!$user) {
-            return $this->json(['erreur' => 'la demande n\'a pas été trouvée'], HttpFoundationResponse::HTTP_NOT_FOUND);
-        }
-
-        dd($user);
-        return $this->json(
-            $user,
-            HttpFoundationResponse::HTTP_OK,
-            [],
-            [
-                "groups" =>
-                [
-                    "user_offer_browse"
-                ]
-            ]
-        );
-    }
 
     /**
      * Retrieves a list of the offers belonging to the connected user thanks to the related jwttoken
@@ -117,6 +95,14 @@ class UserController extends AbstractController
                 ]
             ]
         );
+
+ /**
+   * @Route("/api/users/{id<\d+>}/offers", name="app_api_users_offers", methods={"GET"})
+   */
+  public function userOfferBrowse(?User $user): JsonResponse
+  {
+    if (!$user) {
+      return $this->json('la demande n\'a pas été trouvée', HttpFoundationResponse::HTTP_NOT_FOUND);
     }
 
     /**
