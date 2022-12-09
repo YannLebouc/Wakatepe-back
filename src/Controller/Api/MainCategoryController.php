@@ -17,7 +17,7 @@ class MainCategoryController extends AbstractController
   /**
    * Retrieves a list of MainCategory
    * 
-   * @Route("/api/maincategories", name="app_api_maincategories")
+   * @Route("/api/maincategories", name="app_api_maincategories", methods={"GET"})
    *
    * @param MainCategoryRepository $mainCategoryRepository
    * @return JsonResponse
