@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -37,6 +38,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Groups({"user_offer_browse"})
      * @Groups({"users_read"})
      * @Groups({"users_browse"})
+     * @Assert\NotBlank
+     * @Assert\NotNull
      */
     private $email;
 
@@ -51,6 +54,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\NotBlank
      */
     private $password;
 
@@ -60,6 +64,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Groups({"offer_read"})
      * @Groups({"users_read"})
      * @Groups({"category_advertisement_browse"})
+     * @Assert\NotBlank
+     * @Assert\NotNull
      */
     private $alias;
 
@@ -74,18 +80,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="integer")
      * @Groups({"users_read"})
+     * @Assert\NotBlank
+     * @Assert\NotNull
      */
     private $zipcode;
 
     /**
      * @ORM\Column(type="string", length=64)
      * @Groups({"users_read"})
+     * @Assert\NotBlank
+     * @Assert\NotNull
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=128)
      * @Groups({"users_read"})
+     * @Assert\NotBlank
+     * @Assert\NotNull
      */
     private $lastname;
 
@@ -94,6 +106,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Groups({"wish_read"})
      * @Groups({"offer_read"})
      * @Groups({"users_read"})
+     * @Assert\Image
      */
     private $picture;
 
