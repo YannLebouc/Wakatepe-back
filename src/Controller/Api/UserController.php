@@ -201,6 +201,41 @@ class UserController extends AbstractController
     }
 
     /**
+
+     * @Route("/api/users/current/profile", name="app_api_users_profile", methods={"GET"})
+     *
+     * @param Security $security
+     * @return JsonResponse
+     */
+    public function getMyProfile(Security $security): JsonResponse
+    {
+        // $user = $this->get('security.token_storage')->getToken()->getUser();
+        // deprecated version
+
+        if (!$security->getToken()) {
+            return $this->json(["erreur" => "Le token fournit n\'est pas valide ou il n\'existe pas"], HttpFoundationResponse::HTTP_BAD_REQUEST);
+        }
+        $token = $security->getToken();
+
+        if (!$token->getUser()) {
+            return $this->json(["erreur" => "Il y a eu un problème lors de la récupération de votre profil"], HttpFoundationResponse::HTTP_NOT_FOUND);
+        }
+
+        $user = $token->getUser();
+
+        // dd($user);
+
+        // $offers = $offerRepository->findBy(['user' => $user]);
+
+        return $this->json(
+            $user,
+            HttpFoundationResponse::HTTP_OK,
+            [],
+            [
+                'groups' =>
+                [
+                    'users_read'
+
      * @Route("/api/users", name="app_api_users_browse", methods={"GET"})
      */
     public function browse(UserRepository $userRepository): JsonResponse
@@ -212,6 +247,7 @@ class UserController extends AbstractController
             [
                 "groups" => [
                     "users_browse"
+
                 ]
             ]
         );
