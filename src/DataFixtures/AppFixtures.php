@@ -7,10 +7,10 @@ use App\Entity\MainCategory;
 use App\Entity\Offer;
 use App\Entity\User;
 use App\Entity\Wish;
+use App\Services\CustomSlugger;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-use Symfony\Component\String\Slugger\SluggerInterface;
 
 class AppFixtures extends Fixture
 {
@@ -18,11 +18,11 @@ class AppFixtures extends Fixture
     private $slugger;
 
     /**
-     * Construct used for dependency injection 
+     * Undocumented function
      *
-     * @param SluggerInterface $slugger
+     * @param MySlugger $slugger
      */
-    public function __construct(SluggerInterface $slugger)
+    public function __construct(CustomSlugger $slugger)
     {
         $this->slugger = $slugger;
     }
@@ -84,7 +84,7 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < count($mainCategoriesName); $i++) {
             $mainCategory = new MainCategory();
             $mainCategory->setName($mainCategoriesName[$i]);
-            $mainCategory->setSlug($this->slugger->slug($mainCategory->getName()));
+            $mainCategory->setSlug($this->slugger->slugToLower($mainCategory->getName()));
             $mainCategory->setCreatedAt(new DateTime());
 
             $manager->persist($mainCategory);
@@ -142,7 +142,7 @@ class AppFixtures extends Fixture
             for ($i = 0; $i < count($catNames); $i++) { 
                 $category = new Category();
                 $category->setName($catNames[$i]);
-                $category->setSlug($this->slugger->slug($category->getName()));
+                $category->setSlug($this->slugger->slugToLower($category->getName()));
                 $category->setPicture('https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Michael_Youn_2018.jpg/220px-Michael_Youn_2018.jpg');
                 $category->setCreatedAt(new DateTime());
                 $category->setMainCategory($mainCategories[$cat]);
