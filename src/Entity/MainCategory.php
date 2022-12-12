@@ -57,6 +57,8 @@ class MainCategory
      * @ORM\OneToMany(targetEntity=Category::class, mappedBy="mainCategory")
      * 
      * @Groups({"mainCategory_category_browse"})
+     * @Groups({"mainCategory_browse"})
+     * 
      */
     private $categories;
 

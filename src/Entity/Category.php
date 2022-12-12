@@ -18,16 +18,19 @@ class Category
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * 
      * @Groups({"wish_read"})
      * @Groups({"offer_browse"})
      * @Groups({"offer_read"})
      * @Groups({"mainCategory_category_browse"})
+     * @Groups({"mainCategory_browse"})
      * @Groups({"category_advertisement_browse"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=64)
+     * 
      * @Groups({"offer_browse"})
      * @Groups({"offer_read"})
      * @Groups({"wish_read"})
@@ -35,16 +38,19 @@ class Category
      * @Groups({"current_user_offers"})
      * @Groups({"current_user_wishes"})
      * @Groups({"mainCategory_category_browse"})
+     * @Groups({"mainCategory_browse"})
      * @Groups({"category_advertisement_browse"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=128, nullable=true, unique=true)
+     * 
      * @Groups({"offer_browse"})
      * @Groups({"offer_read"})
      * @Groups({"wish_read"})
      * @Groups({"wish_browse"})
+     * @Groups({"mainCategory_browse"})
      * @Groups({"category_advertisement_browse"})
      */
     private $slug;
@@ -59,7 +65,7 @@ class Category
      * @ORM\Column(type="boolean")
      * 
      * @Groups({"mainCategory_category_browse"})
-     * 
+     * @Groups({"mainCategory_browse"})
      */
     private $isActive;
 
@@ -79,6 +85,7 @@ class Category
      * @ORM\ManyToMany(targetEntity=Offer::class, inversedBy="categories")
      * 
      * @Groups({"category_advertisement_browse"})
+     * @Groups({"mainCategory_category_browse"})
      */
     private $offer;
 
@@ -86,6 +93,8 @@ class Category
      * @ORM\ManyToMany(targetEntity=Wish::class, inversedBy="categories")
      * 
      * @Groups({"category_advertisement_browse"})
+     * @Groups({"mainCategory_category_browse"})
+     * 
      */
     private $wish;
 
