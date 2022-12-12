@@ -201,7 +201,6 @@ class UserController extends AbstractController
     }
 
     /**
-
      * @Route("/api/users/current/profile", name="app_api_users_profile", methods={"GET"})
      *
      * @param Security $security
@@ -223,10 +222,6 @@ class UserController extends AbstractController
 
         $user = $token->getUser();
 
-        // dd($user);
-
-        // $offers = $offerRepository->findBy(['user' => $user]);
-
         return $this->json(
             $user,
             HttpFoundationResponse::HTTP_OK,
@@ -235,8 +230,16 @@ class UserController extends AbstractController
                 'groups' =>
                 [
                     'users_read'
-
+                ]
+            ]
+        );
+    }
+    
+    /**
+     * Undocumented function
      * @Route("/api/users", name="app_api_users_browse", methods={"GET"})
+     * @param UserRepository $userRepository
+     * @return JsonResponse
      */
     public function browse(UserRepository $userRepository): JsonResponse
     {
@@ -245,9 +248,9 @@ class UserController extends AbstractController
             HttpFoundationResponse::HTTP_OK,
             [],
             [
-                "groups" => [
+                "groups" =>
+                [
                     "users_browse"
-
                 ]
             ]
         );
