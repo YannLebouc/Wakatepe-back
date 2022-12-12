@@ -4,8 +4,11 @@ namespace App\Controller\Api;
 
 use App\Entity\User;
 use App\Repository\OfferRepository;
+use App\Repository\UserRepository;
 use App\Repository\WishRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use PHPUnit\Util\Json;
+use ProxyManager\Factory\RemoteObject\Adapter\JsonRpc;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -106,7 +109,7 @@ class UserController extends AbstractController
         if (!$user) {
             return $this->json(["erreur" => "la demande n\'a pas été trouvée"], HttpFoundationResponse::HTTP_NOT_FOUND);
         }
-        // dd($user);
+
         return $this->json(
             $user,
             HttpFoundationResponse::HTTP_OK,
@@ -198,6 +201,7 @@ class UserController extends AbstractController
     }
 
     /**
+
      * @Route("/api/users/current/profile", name="app_api_users_profile", methods={"GET"})
      *
      * @param Security $security
@@ -231,6 +235,19 @@ class UserController extends AbstractController
                 'groups' =>
                 [
                     'users_read'
+
+     * @Route("/api/users", name="app_api_users_browse", methods={"GET"})
+     */
+    public function browse(UserRepository $userRepository): JsonResponse
+    {
+        return $this->json(
+            $userRepository->findAll(),
+            HttpFoundationResponse::HTTP_OK,
+            [],
+            [
+                "groups" => [
+                    "users_browse"
+
                 ]
             ]
         );

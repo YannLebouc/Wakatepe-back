@@ -20,9 +20,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * 
      * @Groups({"wish_read"})
      * @Groups({"offer_read"})
      * @Groups({"users_read"})
+     * @Groups({"users_browse"})
+     * @Groups({"category_advertisement_browse"})
      * 
      */
     private $id;
@@ -32,8 +35,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Groups({"wish_read"})
      * @Groups({"offer_read"})
      * @Groups({"user_offer_browse"})
-     * @Groups({"user_read"})
      * @Groups({"users_read"})
+     * @Groups({"users_browse"})
      */
     private $email;
 
@@ -56,6 +59,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Groups({"wish_read"})
      * @Groups({"offer_read"})
      * @Groups({"users_read"})
+     * @Groups({"category_advertisement_browse"})
      */
     private $alias;
 
