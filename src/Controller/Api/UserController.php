@@ -201,7 +201,6 @@ class UserController extends AbstractController
     }
 
     /**
-
      * @Route("/api/users/current/profile", name="app_api_users_profile", methods={"GET"})
      *
      * @param Security $security
@@ -223,10 +222,6 @@ class UserController extends AbstractController
 
         $user = $token->getUser();
 
-        // dd($user);
-
-        // $offers = $offerRepository->findBy(['user' => $user]);
-
         return $this->json(
             $user,
             HttpFoundationResponse::HTTP_OK,
@@ -239,6 +234,7 @@ class UserController extends AbstractController
             ]
         );
     }
+    
     /**
      * Undocumented function
      * @Route("/api/users", name="app_api_users_browse", methods={"GET"})
