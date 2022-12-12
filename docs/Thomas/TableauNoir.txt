@@ -3,9 +3,14 @@
 @group
 
   mainCategory_category_browse
+    MainCategory
+      id
+      name
+      slug
     Category
       id
       name
+      slug
       is_active
 
   user_offer_browse

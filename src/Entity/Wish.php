@@ -24,6 +24,7 @@ class Wish
      * @Groups({"wish_read"})
      * @Groups({"current_user_wishes"})
      * @Groups({"category_advertisement_browse"})
+     * @Groups({"mainCategory_category_browse"})
      */
     private $id;
 
@@ -33,6 +34,8 @@ class Wish
      * @Groups({"wish_read"})
      * @Groups({"current_user_wishes"})
      * @Groups({"category_advertisement_browse"})
+     * @Groups({"mainCategory_category_browse"})
+     * 
      * @Assert\NotBlank
      */
     private $title;

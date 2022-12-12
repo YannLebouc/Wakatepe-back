@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class MainCategoryController extends AbstractController
 {
   /**
-   * Retrieves a list of MainCategory
+   * Retrieves a list of MainCategory and their affiliated Category
    * 
    * @Route("/api/maincategories", name="app_api_maincategories", methods={"GET"})
    *
@@ -38,7 +38,7 @@ class MainCategoryController extends AbstractController
 
 
   /**
-   * Retrieves a list of Category affiliated to a MainCategory
+   * Retrieves a list of Category and their advertisements affiliated to a MainCategory
    * 
    * @Route("/api/maincategories/{id<\d+>}/categories", name="app_api_maincategory_categories", methods={"GET"})
    *
@@ -62,6 +62,7 @@ class MainCategoryController extends AbstractController
       ]
     );
   }
+
 }
 
 
