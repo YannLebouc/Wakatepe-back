@@ -37,6 +37,9 @@ class Offer
      * @Groups({"current_user_offers"})
      * @Groups({"category_advertisement_browse"})
      * @Groups({"mainCategory_category_browse"})
+     * 
+     * @Assert\NotBlank
+     * @Assert\NotNull
      */
     private $title;
 
@@ -47,6 +50,9 @@ class Offer
      * @Groups({"offer_read"})
      * @Groups({"current_user_offers"})
      * @Groups({"category_advertisement_browse"})
+     * 
+     * @Assert\Positive
+     * @Assert\Length(max=5)
      */
     private $zipcode;
 
@@ -57,6 +63,8 @@ class Offer
      * @Groups({"offer_read"})
      * @Groups({"current_user_offers"})
      * @Groups({"category_advertisement_browse"})
+     * 
+     * @Assert\Image
      */
     private $picture;
 

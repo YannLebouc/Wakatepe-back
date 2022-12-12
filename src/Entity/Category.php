@@ -40,6 +40,9 @@ class Category
      * @Groups({"mainCategory_category_browse"})
      * @Groups({"mainCategory_browse"})
      * @Groups({"category_advertisement_browse"})
+     * 
+     * @Assert\NotBlank
+     * @Assert\NotNull
      */
     private $name;
 
@@ -58,6 +61,7 @@ class Category
     /**
      * @ORM\Column(type="string", length=255)
      * 
+     * @Assert\Image
      */
     private $picture;
 

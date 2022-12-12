@@ -33,11 +33,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * 
      * @Groups({"wish_read"})
      * @Groups({"offer_read"})
      * @Groups({"user_offer_browse"})
      * @Groups({"users_read"})
      * @Groups({"users_browse"})
+     * 
      * @Assert\NotBlank
      * @Assert\NotNull
      */
@@ -45,6 +47,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="json")
+     * 
      * @Groups({"wish_read"})
      * @Groups({"offer_read"})
      * @Groups({"users_read"})
@@ -54,16 +57,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * 
      * @Assert\NotBlank
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * 
      * @Groups({"wish_read"})
      * @Groups({"offer_read"})
      * @Groups({"users_read"})
      * @Groups({"category_advertisement_browse"})
+     * 
      * @Assert\NotBlank
      * @Assert\NotNull
      */
@@ -71,23 +77,32 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=32, nullable=true)
+     * 
      * @Groups({"wish_read"})
      * @Groups({"offer_read"})
      * @Groups({"users_read"})
+     * 
+     * @Assert\Positive
      */
     private $phoneNumber;
 
     /**
      * @ORM\Column(type="integer")
+     * 
      * @Groups({"users_read"})
+     * 
      * @Assert\NotBlank
      * @Assert\NotNull
+     * @Assert\Positive
+     * @Assert\Length(max=5)
      */
     private $zipcode;
 
     /**
      * @ORM\Column(type="string", length=64)
+     * 
      * @Groups({"users_read"})
+     * 
      * @Assert\NotBlank
      * @Assert\NotNull
      */
@@ -95,7 +110,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=128)
+     * 
      * @Groups({"users_read"})
+     * 
      * @Assert\NotBlank
      * @Assert\NotNull
      */
@@ -103,21 +120,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * 
      * @Groups({"wish_read"})
      * @Groups({"offer_read"})
      * @Groups({"users_read"})
+     * 
      * @Assert\Image
      */
     private $picture;
 
     /**
      * @ORM\Column(type="datetime")
+     * 
      * @Groups({"users_read"})
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * 
      * @Groups({"users_read"})
      */
     private $updatedAt;
