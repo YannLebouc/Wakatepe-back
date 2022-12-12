@@ -42,6 +42,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * 
      * @Assert\NotBlank
      * @Assert\NotNull
+     * @Assert\Email(message = "The email '{{ value }}' is not a valid email.")
      */
     private $email;
 
@@ -124,8 +125,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Groups({"wish_read"})
      * @Groups({"offer_read"})
      * @Groups({"users_read"})
-     * 
-     * @Assert\Image
      */
     private $picture;
 

@@ -39,6 +39,26 @@ class CategoryRepository extends ServiceEntityRepository
         }
     }
 
+
+    /**
+     * Returns an array of active Category objects
+     *
+     * @param [type] $true
+     * @return Category[] 
+     */
+    public function findByActiveCategory($true): array
+    {
+        return $this->createQueryBuilder('c')
+            // ->from('Category', 'c')
+            ->andWhere('c.isActive = :category_isActive')
+            ->setParameter('category_isActive', $true)
+         //    ->orderBy('m.id', 'ASC')
+         //    ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 //    /**
 //     * @return Category[] Returns an array of Category objects
 //     */
