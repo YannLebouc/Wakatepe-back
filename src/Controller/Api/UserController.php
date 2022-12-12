@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Repository\OfferRepository;
 use App\Repository\UserRepository;
 use App\Repository\WishRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Util\Json;
 use ProxyManager\Factory\RemoteObject\Adapter\JsonRpc;
@@ -16,6 +17,7 @@ use Symfony\Component\HttpFoundation\Response as HttpFoundationResponse;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -254,5 +256,59 @@ class UserController extends AbstractController
                 ]
             ]
         );
+    }
+
+    /**
+     * @Route("/api/users/current", name="app_api_user_edit", methods={"PUT", "PATCH"})
+     */
+    public function edit(
+        Security $security,
+        EntityManagerInterface $doctrine,
+        SerializerInterface $serializerInterface,
+        Request $request,
+        ValidatorInterface $validatorInterface,
+        UserPasswordHasherInterface $passwordHasher
+    ): JsonResponse
+    {
+        if (!$security->getToken()) {
+            return $this->json(["erreur" => "Le token fournit n\'est pas valide ou il n\'existe pas"], HttpFoundationResponse::HTTP_BAD_REQUEST);
+        }
+        $token = $security->getToken();
+
+        if (!$token->getUser()) {
+            return $this->json(["erreur" => "Il y a eu un problème lors de la récupération de votre profil"], HttpFoundationResponse::HTTP_NOT_FOUND);
+        }
+
+        $user = $token->getUser();
+        $jsonContent = $request->getContent();
+
+        try {
+            $editedUser = $serializerInterface->deserialize($jsonContent, User::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $user]);
+        } catch (\Exception $e) {
+            return $this->json(['erreur' => 'Les données envoyées n\'ont pas pu être intérprêtées'], HttpFoundationResponse::HTTP_BAD_REQUEST);
+        }
+
+        $errors = $validatorInterface->validate($editedUser);
+        if (count($errors) > 0) {
+            $errorsString = (string) $errors;
+            return $this->json(
+                $errorsString,
+                HttpFoundationResponse::HTTP_UNPROCESSABLE_ENTITY
+            );
+        }
+
+        $editedUser->setUpdatedAt(new DateTime());
+
+        $doctrine->flush();
+
+        return $this->json(
+            $user,
+            HttpFoundationResponse::HTTP_PARTIAL_CONTENT,
+            [],
+            [
+                "groups" => [
+                    "users_read"
+                ]
+            ]);
     }
 }
