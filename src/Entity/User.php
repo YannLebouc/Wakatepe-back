@@ -35,6 +35,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * 
      * @Groups({"wish_read"})
      * @Groups({"offer_read"})
      * @Groups({"user_offer_browse"})
@@ -44,11 +45,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Groups({"nelmio_edit_user"})
      * @Assert\NotBlank
      * @Assert\NotNull
+     * @Assert\Email(message = "The email '{{ value }}' is not a valid email.")
      */
     private $email;
 
     /**
      * @ORM\Column(type="json")
+     * 
      * @Groups({"wish_read"})
      * @Groups({"offer_read"})
      * @Groups({"users_read"})
@@ -59,6 +62,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * 
      * @Assert\NotBlank
      * @Groups({"nelmio_add_user"})
      */
@@ -66,10 +70,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * 
      * @Groups({"wish_read"})
      * @Groups({"offer_read"})
      * @Groups({"users_read"})
      * @Groups({"category_advertisement_browse"})
+     * 
      * @Groups({"nelmio_add_user"})
      * @Groups({"nelmio_edit_user"})
      * @Assert\NotBlank
@@ -79,9 +85,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=32, nullable=true)
+     * 
      * @Groups({"wish_read"})
      * @Groups({"offer_read"})
      * @Groups({"users_read"})
+     * 
+     * @Assert\Positive
      * @Groups({"nelmio_add_user"})
      * @Groups({"nelmio_edit_user"})
      */
@@ -89,17 +98,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="integer")
+     * 
      * @Groups({"users_read"})
+     * 
      * @Groups({"nelmio_add_user"})
      * @Groups({"nelmio_edit_user"})
      * @Assert\NotBlank
      * @Assert\NotNull
+     * @Assert\Positive
+     * @Assert\Length(max=5)
      */
     private $zipcode;
 
     /**
      * @ORM\Column(type="string", length=64)
+     * 
      * @Groups({"users_read"})
+     * 
      * @Groups({"nelmio_add_user"})
      * @Groups({"nelmio_edit_user"})
      * @Assert\NotBlank
@@ -109,7 +124,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=128)
+     * 
      * @Groups({"users_read"})
+     * 
      * @Groups({"nelmio_add_user"})
      * @Groups({"nelmio_edit_user"})
      * @Assert\NotBlank
@@ -119,23 +136,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * 
      * @Groups({"wish_read"})
      * @Groups({"offer_read"})
      * @Groups({"users_read"})
      * @Groups({"nelmio_add_user"})
      * @Groups({"nelmio_edit_user"})
-     * @Assert\Image
      */
     private $picture;
 
     /**
      * @ORM\Column(type="datetime")
+     * 
      * @Groups({"users_read"})
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * 
      * @Groups({"users_read"})
      */
     private $updatedAt;
