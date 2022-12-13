@@ -25,7 +25,7 @@ class CategoryController extends AbstractController
     {
         if (!$category) {
             return $this->json(['erreur' => 'la demande n\'a pas été trouvée'], HttpFoundationResponse::HTTP_NOT_FOUND);
-   }
+        }
 
         return $this->json(
             $category,
@@ -36,8 +36,39 @@ class CategoryController extends AbstractController
                 [
                     "category_advertisement_browse"
                 ]
-            ]);
+            ]
+        );
     }
+
+    /**
+     * Retieves a list of Offer affliliated to a Category
+     * 
+     * @Route("/api/categories/{id<\d+>}/offers", name="app_api_category_offers", methods={"GET"})
+     *
+     * @param Category|null $category
+     * @return jsonResponse
+     */
+    public function getCategoryOffers(?Category $category, CategoryRepository $categoryRepository): JsonResponse
+    {
+        if (!$category) {
+            return $this->json(['erreur' => 'la demande n\'a pas été trouvée'], HttpFoundationResponse::HTTP_NOT_FOUND);
+        }
+        $categoryId = $category->getId();
+        $offers = $categoryRepository->findAllOffers($categoryId);
+
+        return $this->json(
+            $offers,
+            HttpFoundationResponse::HTTP_OK,
+            [],
+            [
+                "groups" =>
+                [
+                    "category_offers"
+                ]
+            ]
+        );
+    }
+
 
 
     /**
@@ -47,15 +78,15 @@ class CategoryController extends AbstractController
      */
     public function findAllActiveCategories(CategoryRepository $categoryRepository): JsonResponse
     {
-      return $this->json(
-        $categoryRepository->dql(),
-        HttpFoundationResponse::HTTP_OK,
-        [],
-        [
-            "groups" => [
-                "category_browse"
+        return $this->json(
+            $categoryRepository->dql(),
+            HttpFoundationResponse::HTTP_OK,
+            [],
+            [
+                "groups" => [
+                    "category_browse"
+                ]
             ]
-        ]
-      );
+        );
     }
 }

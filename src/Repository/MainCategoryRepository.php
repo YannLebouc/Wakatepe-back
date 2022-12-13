@@ -39,7 +39,6 @@ class MainCategoryRepository extends ServiceEntityRepository
         }
     }
 
-    // feat - method findAllActiveCategories() and getAllMainCategoriesCategories() to retrieves some lists of active categories"
     /**
      */
     public function findAllActiveCategories()

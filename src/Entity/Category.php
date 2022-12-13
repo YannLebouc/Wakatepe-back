@@ -28,6 +28,7 @@ class Category
      * @Groups({"mainCategory_categories_advertisements"})
      * @Groups({"mainCategories_categories"})
      * @Groups({"category_advertisement_browse"})
+     * @Groups({"category_offers"})
      */
     private $id;
 
@@ -44,6 +45,7 @@ class Category
      * @Groups({"mainCategories_categories"})
      * @Groups({"category_advertisement_browse"})
      * @Groups({"category_browse"})
+     * @Groups({"category_offers"})
      * 
      * @Assert\NotBlank
      * @Assert\NotNull
@@ -94,6 +96,7 @@ class Category
      * 
      * @Groups({"category_advertisement_browse"})
      * @Groups({"mainCategory_categories_advertisements"})
+     * @Groups({"category_offers"})
      */
     private $offer;
 

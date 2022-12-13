@@ -27,6 +27,7 @@ class Offer
      * @Groups({"user_offer_browse"})
      * @Groups({"category_advertisement_browse"})
      * @Groups({"mainCategory_categories_advertisements"})
+     * @Groups({"category_offers"})
      */
     private $id;
 
@@ -39,6 +40,7 @@ class Offer
      * @Groups({"current_user_offers"})
      * @Groups({"category_advertisement_browse"})
      * @Groups({"mainCategory_categories_advertisements"})
+     * @Groups({"category_offers"})
      * 
      * @Assert\NotBlank
      * @Assert\NotNull
@@ -84,6 +86,7 @@ class Offer
      * @ORM\Column(type="boolean")
      * 
      * @Groups({"category_advertisement_browse"})
+     * 
      */
     private $isActive;
 
@@ -91,6 +94,7 @@ class Offer
      * @ORM\Column(type="boolean")
      * 
      * @Groups({"category_advertisement_browse"})
+     * 
      */
     private $isLended;
 

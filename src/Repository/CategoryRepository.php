@@ -42,6 +42,24 @@ class CategoryRepository extends ServiceEntityRepository
     /**
      * 
      */
+    public function findAllOffers($id)
+    {   
+        $query = $this->getEntityManager()->createQuery('SELECT c, o
+        FROM App\Entity\Category c
+        JOIN c.offer o
+        WHERE c.isActive = true
+        AND o.isActive = true
+        AND o.isLended = false 
+        AND c.id = '. $id .'
+        ');
+        $categoryOffers = $query->getResult();
+        return $categoryOffers;
+    }
+
+
+    /**
+     * 
+     */
     public function dql()
     {   
         // on veut la liste des catégories où isActive = true
