@@ -131,7 +131,7 @@ class UserController extends AbstractController
      *     description="Retrieves the inactive ads list of the connected user",
      *     @OA\JsonContent(
      *        type="array",
-     *        @OA\Items(ref=@Model(type=User::class, groups={"current_user_inactive_ads"}))
+     *        @OA\Items(ref=@Model(type=User::class, groups={"offer_read", "wish_read"}))
      *     )
      * )
      * 
@@ -143,7 +143,7 @@ class UserController extends AbstractController
      * @param UserRepository $userRepository
      * @return JsonResponse
      */
-    public function getUsersInactiveAds(UserRepository $userRepository): JsonResponse
+    public function getUsersInactiveAds(OfferRepository $offerRepository, WishRepository $wishRepository): JsonResponse
     {
 
         $user = $this->getUser();
@@ -152,16 +152,21 @@ class UserController extends AbstractController
             return $this->json(['erreur' => 'Erreur lors de la récupération du profil, merci de vous reconnecter'], HttpFoundationResponse::HTTP_NOT_FOUND);
         }
 
-        $ads = $userRepository->userInactiveAdverts($user->getId());
+        $wishes = $wishRepository->userInactiveWishes($user->getId());
+        $offers = $offerRepository->userInactiveOffers($user->getId());
 
         return $this->json(
-            $ads,
+            [
+                'wishes' => $wishes,
+                'offers' => $offers
+            ],
             HttpFoundationResponse::HTTP_OK,
             [],
             [
                 'groups' =>
                 [
-                    'current_user_inactive_ads'
+                    'wish_read',
+                    'offer_read'
                 ]
             ]
         );

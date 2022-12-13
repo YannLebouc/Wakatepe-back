@@ -39,6 +39,24 @@ class OfferRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * Retrieves a users inactive offers
+     *
+     * @param [id] $id
+     * @return array
+     */
+    public function userInactiveOffers($id) : array
+    {   
+        $query = $this->getEntityManager()->createQuery(
+            "SELECT o FROM App\Entity\Offer o
+            JOIN o.user u
+            WHERE u.id = $id 
+            AND o.isActive = false
+            ");
+
+        return $query->getResult();
+    }
+
 //    /**
 //     * @return Offer[] Returns an array of Offer objects
 //     */
