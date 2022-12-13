@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\Date;
+use OpenApi\Annotations as OA;
 
 /**
  * @ORM\Entity(repositoryClass=WishRepository::class)
@@ -37,6 +38,7 @@ class Wish
      * @Groups({"current_user_wishes"})
      * @Groups({"category_advertisement_browse"})
      * @Groups({"mainCategory_category_browse"})
+     * @Groups({"nelmio_add_wish"})
      * 
      * @Assert\NotBlank
      * @Assert\NotNull
@@ -50,6 +52,7 @@ class Wish
      * @Groups({"wish_read"})
      * @Groups({"current_user_wishes"})
      * @Groups({"category_advertisement_browse"})
+     * @Groups({"nelmio_add_wish"})
      * 
      * @Assert\Positive
      * @Assert\Length(max=5)
@@ -64,16 +67,17 @@ class Wish
      * @Groups({"current_user_wishes"})
      * @Groups({"category_advertisement_browse"})
      * 
-     * @Assert\Image
      */
     private $picture;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * 
      * @Groups({"wish_browse"})
      * @Groups({"wish_read"})
      * @Groups({"current_user_wishes"})
      * @Groups({"category_advertisement_browse"})
+     * @Groups({"nelmio_add_wish"})
      */
     private $description;
 
@@ -81,6 +85,7 @@ class Wish
      * @ORM\Column(type="boolean")
      * 
      * @Groups({"category_advertisement_browse"})
+     * @Groups({"nelmio_add_wish"})
      */
     private $isActive;
 
@@ -91,6 +96,7 @@ class Wish
      * @Groups({"wish_read"})
      * @Groups({"current_user_wishes"})
      * @Groups({"category_advertisement_browse"})
+     * @Groups({"nelmio_add_wish"})
      */
     private $type;
 
@@ -137,6 +143,8 @@ class Wish
      * @Groups({"wish_browse"})
      * @Groups({"wish_read"})
      * @Groups({"current_user_wishes"})
+     * @Groups({"nelmio_add_wish"})
+     * @OA\Property(type="array", @OA\Items(type="integer"))
      */
     private $categories;
 
@@ -144,7 +152,6 @@ class Wish
     {
         $this->categories = new ArrayCollection();
         $this->isActive = true;
-        $this->createdAt = new DateTime();
     }
 
     public function getId(): ?int

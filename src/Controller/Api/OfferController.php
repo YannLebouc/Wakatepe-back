@@ -251,7 +251,8 @@ class OfferController extends AbstractController
         );
     }
 
-    /** Deletes an offer
+    /** 
+     * Deletes an offer
      * @Route("/api/offers/{id<\d+>}", name="app_api_offers_delete", methods={"DELETE"})
      * 
      * @OA\Response(

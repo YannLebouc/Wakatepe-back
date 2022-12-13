@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use OpenApi\Annotations as OA;
 
 
 
@@ -151,6 +152,8 @@ class Offer
      * @Groups({"offer_read"})
      * @Groups({"offer_browse"})
      * @Groups({"current_user_offers"})
+     * @Groups({"nelmio_add_offer"})
+     * @OA\Property(type="array", @OA\Items(type="integer"))
      */
     private $categories;
 
