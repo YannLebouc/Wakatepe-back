@@ -28,6 +28,7 @@ class Category
      * @Groups({"mainCategory_category_browse"})
      * @Groups({"mainCategory_browse"})
      * @Groups({"category_advertisement_browse"})
+     * @Groups({"nelmio_add_wish"})
      */
     private $id;
 
@@ -43,6 +44,8 @@ class Category
      * @Groups({"mainCategory_category_browse"})
      * @Groups({"mainCategory_browse"})
      * @Groups({"category_advertisement_browse"})
+     * @Groups({"nelmio_add_offer"})
+     * 
      * 
      * @Assert\NotBlank
      * @Assert\NotNull
