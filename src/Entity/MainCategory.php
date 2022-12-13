@@ -21,7 +21,7 @@ class MainCategory
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * 
-     * @Groups({"mainCategory_browse"})
+     * @Groups({"mainCategories_categories"})
      * @Groups({"mainCategory_category_browse"})
      * 
      */
@@ -30,7 +30,7 @@ class MainCategory
     /**
      * @ORM\Column(type="string", length=64)
      * 
-     * @Groups({"mainCategory_browse"})
+     * @Groups({"mainCategories_categories"})
      * @Groups({"mainCategory_category_browse"})
      * 
      * @Assert\NotBlank
@@ -41,7 +41,7 @@ class MainCategory
     /**
      * @ORM\Column(type="string", length=64, nullable=true)
      * 
-     * @Groups({"mainCategory_browse"})
+     * @Groups({"mainCategories_categories"})
      * @Groups({"mainCategory_category_browse"})
      * 
      */
@@ -60,8 +60,8 @@ class MainCategory
     /**
      * @ORM\OneToMany(targetEntity=Category::class, mappedBy="mainCategory")
      * 
+     * @Groups({"mainCategories_categories"})
      * @Groups({"mainCategory_category_browse"})
-     * @Groups({"mainCategory_browse"})
      * 
      */
     private $categories;

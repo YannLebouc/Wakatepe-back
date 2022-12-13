@@ -39,7 +39,19 @@ class CategoryRepository extends ServiceEntityRepository
         }
     }
 
-
+    /**
+     * 
+     */
+    public function dql()
+    {   
+        // on veut la liste des catégories où isActive = true
+        $query = $this->getEntityManager()->createQuery('SELECT c
+        FROM App\Entity\Category c
+        WHERE c.isActive = true
+        ');
+        $activeCategories = $query->getResult();
+        return $activeCategories;
+    }
 
 
 //    /**

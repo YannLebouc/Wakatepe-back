@@ -40,5 +40,22 @@ class CategoryController extends AbstractController
     }
 
 
-
+    /**
+     * Retrieves a list of active categories
+     * 
+     * @Route("/api/categories/active", name="app_api_categories_active", methods={"GET"})
+     */
+    public function findAllActiveCategories(CategoryRepository $categoryRepository): JsonResponse
+    {
+      return $this->json(
+        $categoryRepository->dql(),
+        HttpFoundationResponse::HTTP_OK,
+        [],
+        [
+            "groups" => [
+                "category_browse"
+            ]
+        ]
+      );
+    }
 }

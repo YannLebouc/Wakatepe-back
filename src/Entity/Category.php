@@ -26,7 +26,7 @@ class Category
      * @Groups({"offer_browse"})
      * @Groups({"offer_read"})
      * @Groups({"mainCategory_category_browse"})
-     * @Groups({"mainCategory_browse"})
+     * @Groups({"mainCategories_categories"})
      * @Groups({"category_advertisement_browse"})
      */
     private $id;
@@ -41,8 +41,9 @@ class Category
      * @Groups({"current_user_offers"})
      * @Groups({"current_user_wishes"})
      * @Groups({"mainCategory_category_browse"})
-     * @Groups({"mainCategory_browse"})
+     * @Groups({"mainCategories_categories"})
      * @Groups({"category_advertisement_browse"})
+     * @Groups({"category_browse"})
      * 
      * @Assert\NotBlank
      * @Assert\NotNull
@@ -56,7 +57,7 @@ class Category
      * @Groups({"offer_read"})
      * @Groups({"wish_read"})
      * @Groups({"wish_browse"})
-     * @Groups({"mainCategory_browse"})
+     * @Groups({"mainCategories_categories"})
      * @Groups({"category_advertisement_browse"})
      */
     private $slug;
@@ -72,7 +73,6 @@ class Category
      * @ORM\Column(type="boolean")
      * 
      * @Groups({"mainCategory_category_browse"})
-     * @Groups({"mainCategory_browse"})
      */
     private $isActive;
 
