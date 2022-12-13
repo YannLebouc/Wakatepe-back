@@ -28,6 +28,7 @@ class Offer
      * @Groups({"user_offer_browse"})
      * @Groups({"category_advertisement_browse"})
      * @Groups({"mainCategory_category_browse"})
+     * @Groups({"current_user_inactive_ads"})
      */
     private $id;
 
@@ -41,6 +42,7 @@ class Offer
      * @Groups({"category_advertisement_browse"})
      * @Groups({"mainCategory_category_browse"})
      * @Groups({"nelmio_add_offer"})
+     * @Groups({"current_user_inactive_ads"})
      * 
      * @Assert\NotBlank
      * @Assert\NotNull
@@ -55,6 +57,7 @@ class Offer
      * @Groups({"current_user_offers"})
      * @Groups({"category_advertisement_browse"})
      * @Groups({"nelmio_add_offer"})
+     * @Groups({"current_user_inactive_ads"})
      *       
      * @Assert\Positive
      * @Assert\Length(max=5)
@@ -68,6 +71,7 @@ class Offer
      * @Groups({"offer_read"})
      * @Groups({"current_user_offers"})
      * @Groups({"category_advertisement_browse"})
+     * @Groups({"current_user_inactive_ads"})
      *       
      * @Assert\Image
      */
@@ -81,6 +85,7 @@ class Offer
      * @Groups({"current_user_offers"})
      * @Groups({"nelmio_add_offer"})
      * @Groups({"category_advertisement_browse"})
+     * @Groups({"current_user_inactive_ads"})
      * 
      */
     private $description;
@@ -90,6 +95,7 @@ class Offer
      * 
      * @Groups({"category_advertisement_browse"})
      * @Groups({"nelmio_add_offer"})
+     * @Groups({"current_user_inactive_ads"})
      */
     private $isActive;
 
@@ -108,6 +114,7 @@ class Offer
      * @Groups({"current_user_offers"})
      * @Groups({"category_advertisement_browse"})
      * @Groups({"nelmio_add_offer"})
+     * @Groups({"current_user_inactive_ads"})
      */
     private $type;
 
@@ -116,6 +123,7 @@ class Offer
      * 
      * @Groups({"offer_read"})
      * @Groups({"category_advertisement_browse"})
+     * @Groups({"current_user_inactive_ads"})
      */
     private $isReported;
 
@@ -125,6 +133,7 @@ class Offer
      * @Groups({"current_user_offers"})
      * @Groups({"offer_read"})
      * @Groups({"category_advertisement_browse"})
+     * @Groups({"current_user_inactive_ads"})
      */
     private $createdAt;
 
@@ -134,6 +143,7 @@ class Offer
      * @Groups({"current_user_offers"})
      * @Groups({"offer_read"})
      * @Groups({"category_advertisement_browse"})
+     * @Groups({"current_user_inactive_ads"})
      */
     private $updatedAt;
 

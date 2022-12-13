@@ -27,6 +27,7 @@ class Wish
      * @Groups({"current_user_wishes"})
      * @Groups({"category_advertisement_browse"})
      * @Groups({"mainCategory_category_browse"})
+     * @Groups({"current_user_inactive_ads"})
      */
     private $id;
 
@@ -39,6 +40,7 @@ class Wish
      * @Groups({"category_advertisement_browse"})
      * @Groups({"mainCategory_category_browse"})
      * @Groups({"nelmio_add_wish"})
+     * @Groups({"current_user_inactive_ads"})
      * 
      * @Assert\NotBlank
      * @Assert\NotNull
@@ -53,6 +55,7 @@ class Wish
      * @Groups({"current_user_wishes"})
      * @Groups({"category_advertisement_browse"})
      * @Groups({"nelmio_add_wish"})
+     * @Groups({"current_user_inactive_ads"})
      * 
      * @Assert\Positive
      * @Assert\Length(max=5)
@@ -66,6 +69,7 @@ class Wish
      * @Groups({"wish_read"})
      * @Groups({"current_user_wishes"})
      * @Groups({"category_advertisement_browse"})
+     * @Groups({"current_user_inactive_ads"})
      * 
      */
     private $picture;
@@ -78,6 +82,7 @@ class Wish
      * @Groups({"current_user_wishes"})
      * @Groups({"category_advertisement_browse"})
      * @Groups({"nelmio_add_wish"})
+     * @Groups({"current_user_inactive_ads"})
      */
     private $description;
 
@@ -86,6 +91,8 @@ class Wish
      * 
      * @Groups({"category_advertisement_browse"})
      * @Groups({"nelmio_add_wish"})
+     * @Groups({"current_user_inactive_ads"})
+     * 
      */
     private $isActive;
 
@@ -97,6 +104,7 @@ class Wish
      * @Groups({"current_user_wishes"})
      * @Groups({"category_advertisement_browse"})
      * @Groups({"nelmio_add_wish"})
+     * @Groups({"current_user_inactive_ads"})
      */
     private $type;
 
@@ -115,6 +123,7 @@ class Wish
      * @Groups({"wish_read"})
      * @Groups({"current_user_wishes"})
      * @Groups({"category_advertisement_browse"})
+     * @Groups({"current_user_inactive_ads"})
      */
     private $createdAt;
 
@@ -125,6 +134,7 @@ class Wish
      * @Groups({"wish_read"})
      * @Groups({"current_user_wishes"})
      * @Groups({"category_advertisement_browse"})
+     * @Groups({"current_user_inactive_ads"})
      */
     private $updatedAt;
 

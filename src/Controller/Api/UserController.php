@@ -41,7 +41,7 @@ class UserController extends AbstractController
      *     description="Retrieves the offers list of the connected user",
      *     @OA\JsonContent(
      *        type="array",
-     *        @OA\Items(ref=@Model(type=Offer::class, groups={"current_user_offers"}))
+     *        @OA\Items(ref=@Model(type=User::class, groups={"current_user_offers"}))
      *     )
      * )
      * 
@@ -50,10 +50,10 @@ class UserController extends AbstractController
      *     description="Nous avons eu un problème lors de la récupération de votre profil, merci de vous reconnecter"
      * )
      * 
-     * @param OfferRepository $offerRepository
+     * @param UserRepository $userRepository
      * @return JsonResponse
      */
-    public function getMyOffers(OfferRepository $offerRepository, UserRepository $userRepository): JsonResponse
+    public function getMyOffers(UserRepository $userRepository): JsonResponse
     {
         $user = $this->getUser();
 
@@ -62,7 +62,7 @@ class UserController extends AbstractController
         }
 
         $offers = $userRepository->userActiveOffers($user->getId());
-        
+
         return $this->json(
             $offers,
             HttpFoundationResponse::HTTP_OK,
@@ -86,7 +86,7 @@ class UserController extends AbstractController
      *     description="Retrieves the wishes list of the connected user",
      *     @OA\JsonContent(
      *        type="array",
-     *        @OA\Items(ref=@Model(type=Wish::class, groups={"current_user_wishes"}))
+     *        @OA\Items(ref=@Model(type=User::class, groups={"current_user_wishes"}))
      *     )
      * )
      * 
@@ -95,10 +95,10 @@ class UserController extends AbstractController
      *     description="Nous avons eu un problème lors de la récupération de votre profil, merci de vous reconnecter"
      * )     
      * 
-     * @param WishRepository $wishRepository
+     * @param UserRepository $userRepository
      * @return JsonResponse
      */
-    public function getMyWishes(WishRepository $wishRepository): JsonResponse
+    public function getMyWishes(UserRepository $userRepository): JsonResponse
     {
 
         $user = $this->getUser();
@@ -107,7 +107,7 @@ class UserController extends AbstractController
             return $this->json(['erreur' => 'Erreur lors de la récupération du profil, merci de vous reconnecter'], HttpFoundationResponse::HTTP_NOT_FOUND);
         }
 
-        $wishes = $wishRepository->findBy(['user' => $user]);
+        $wishes = $userRepository->userActiveOffers($user->getId());
 
         return $this->json(
             $wishes,
@@ -121,9 +121,54 @@ class UserController extends AbstractController
             ]
         );
     }
+    /**
+     * Retrieves a list of the inactive advertisement belonging to the connected user 
+     *
+     * @Route("/api/users/current/advertisements", name="app_api_current_user_ads", methods={"GET"})
+     * 
+     * @OA\Response(
+     *     response="200",
+     *     description="Retrieves the inactive ads list of the connected user",
+     *     @OA\JsonContent(
+     *        type="array",
+     *        @OA\Items(ref=@Model(type=User::class, groups={"current_user_inactive_ads"}))
+     *     )
+     * )
+     * 
+     * @OA\Response(
+     *     response=404,
+     *     description="Nous avons eu un problème lors de la récupération de votre profil, merci de vous reconnecter"
+     * )     
+     * 
+     * @param UserRepository $userRepository
+     * @return JsonResponse
+     */
+    public function getUsersInactiveAds(UserRepository $userRepository): JsonResponse
+    {
+
+        $user = $this->getUser();
+
+        if (!$user) {
+            return $this->json(['erreur' => 'Erreur lors de la récupération du profil, merci de vous reconnecter'], HttpFoundationResponse::HTTP_NOT_FOUND);
+        }
+
+        $ads = $userRepository->userInactiveAdverts($user->getId());
+
+        return $this->json(
+            $ads,
+            HttpFoundationResponse::HTTP_OK,
+            [],
+            [
+                'groups' =>
+                [
+                    'current_user_inactive_ads'
+                ]
+            ]
+        );
+    }
 
     /**
-     * Retrieves a list of the offers belonging to the connected user
+     * Retrieves a list of the offers belonging to a user thanks to its ID
      * @Route("/api/users/{id<\d+>}/offers", name="app_api_users_offers", methods={"GET"})
      * 
      * @OA\Response(
