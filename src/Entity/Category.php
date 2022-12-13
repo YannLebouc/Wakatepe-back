@@ -25,7 +25,7 @@ class Category
      * @Groups({"wish_read"})
      * @Groups({"offer_browse"})
      * @Groups({"offer_read"})
-     * @Groups({"mainCategory_category_browse"})
+     * @Groups({"mainCategory_categories_advertisements"})
      * @Groups({"mainCategories_categories"})
      * @Groups({"category_advertisement_browse"})
      */
@@ -40,7 +40,7 @@ class Category
      * @Groups({"wish_browse"})
      * @Groups({"current_user_offers"})
      * @Groups({"current_user_wishes"})
-     * @Groups({"mainCategory_category_browse"})
+     * @Groups({"mainCategory_categories_advertisements"})
      * @Groups({"mainCategories_categories"})
      * @Groups({"category_advertisement_browse"})
      * @Groups({"category_browse"})
@@ -59,6 +59,7 @@ class Category
      * @Groups({"wish_browse"})
      * @Groups({"mainCategories_categories"})
      * @Groups({"category_advertisement_browse"})
+     * @Groups({"mainCategory_categories_advertisements"})
      */
     private $slug;
 
@@ -92,7 +93,7 @@ class Category
      * @ORM\ManyToMany(targetEntity=Offer::class, inversedBy="categories")
      * 
      * @Groups({"category_advertisement_browse"})
-     * @Groups({"mainCategory_category_browse"})
+     * @Groups({"mainCategory_categories_advertisements"})
      */
     private $offer;
 
@@ -100,7 +101,7 @@ class Category
      * @ORM\ManyToMany(targetEntity=Wish::class, inversedBy="categories")
      * 
      * @Groups({"category_advertisement_browse"})
-     * @Groups({"mainCategory_category_browse"})
+     * @Groups({"mainCategory_categories_advertisements"})
      * 
      */
     private $wish;

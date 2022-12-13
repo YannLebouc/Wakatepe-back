@@ -39,7 +39,7 @@ class MainCategoryRepository extends ServiceEntityRepository
         }
     }
 
-
+    // feat - method findAllActiveCategories() and getAllMainCategoriesCategories() to retrieves some lists of active categories"
     /**
      */
     public function findAllActiveCategories()
@@ -53,14 +53,19 @@ class MainCategoryRepository extends ServiceEntityRepository
         return $activeCategories;
     }
 
-        /**
+    /**
      */
-    public function findAllActiveAdvertisements()
+    public function findAllActiveAdvertisements($id)
     {
-        $query = $this->getEntityManager()->createQuery('SELECT m, c
+        $query = $this->getEntityManager()->createQuery('SELECT m, c, o, w
         FROM App\Entity\MainCategory m
-        Join m.categories c
-        WHERE c.isActive = true
+        JOIN m.categories c
+        JOIN c.offer o
+        JOIN c.wish w
+        WHERE o.isActive = true
+        AND w.isActive = true
+        AND c.isActive = true
+        AND m.id = '. $id .'
         ');
         $activeCategories = $query->getResult();
         return $activeCategories;
