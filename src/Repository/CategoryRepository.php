@@ -56,6 +56,22 @@ class CategoryRepository extends ServiceEntityRepository
         return $categoryOffers;
     }
 
+    /**
+     * 
+     */
+    public function findAllWishes($id)
+    {   
+        $query = $this->getEntityManager()->createQuery('SELECT c, w
+        FROM App\Entity\Category c
+        JOIN c.wish w
+        WHERE c.isActive = true
+        AND w.isActive = true
+        AND c.id = '. $id .'
+        ');
+        $categoryOffers = $query->getResult();
+        return $categoryOffers;
+    }
+
 
     /**
      * 

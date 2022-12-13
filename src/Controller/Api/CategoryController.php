@@ -69,6 +69,35 @@ class CategoryController extends AbstractController
         );
     }
 
+        /**
+     * Retieves a list of Wish affliliated to a Category
+     * 
+     * @Route("/api/categories/{id<\d+>}/wishes", name="app_api_category_wishes", methods={"GET"})
+     *
+     * @param Category|null $category
+     * @return jsonResponse
+     */
+    public function getCategoryWishes(?Category $category, CategoryRepository $categoryRepository): JsonResponse
+    {
+        if (!$category) {
+            return $this->json(['erreur' => 'la demande n\'a pas été trouvée'], HttpFoundationResponse::HTTP_NOT_FOUND);
+        }
+        $categoryId = $category->getId();
+        $wishes = $categoryRepository->findAllWishes($categoryId);
+
+        return $this->json(
+            $wishes,
+            HttpFoundationResponse::HTTP_OK,
+            [],
+            [
+                "groups" =>
+                [
+                    "category_wishes"
+                ]
+            ]
+        );
+    }
+
 
 
     /**
