@@ -2,7 +2,9 @@
 
 namespace App\Controller\Api;
 
+use App\Entity\Offer;
 use App\Entity\User;
+use App\Entity\Wish;
 use App\Repository\OfferRepository;
 use App\Repository\UserRepository;
 use App\Repository\WishRepository;
@@ -16,11 +18,17 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response as HttpFoundationResponse;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Nelmio\ApiDocBundle\Annotation\Security;
+use OpenApi\Annotations as OA;
+use Nelmio\ApiDocBundle\Annotation\Model;
 
+/**
+ * @OA\Tag(name="O'troc API : User")
+ * @Security(name="bearerAuth")
+ */
 class UserController extends AbstractController
 {
 
@@ -28,25 +36,30 @@ class UserController extends AbstractController
      * Retrieves a list of the offers belonging to the connected user thanks to the related jwttoken
      *
      * @Route("/api/users/current/offers", name="app_api_current_user_offers", methods={"GET"})
+     * @OA\Response(
+     *     response="200",
+     *     description="Retrieves the offers list of the connected user",
+     *     @OA\JsonContent(
+     *        type="array",
+     *        @OA\Items(ref=@Model(type=Offer::class, groups={"current_user_offers"}))
+     *     )
+     * )
      * 
-     * @param Security $security
+     * @OA\Response(
+     *     response=404,
+     *     description="Nous avons eu un problème lors de la récupération de votre profil, merci de vous reconnecter"
+     * )
+     * 
      * @param OfferRepository $offerRepository
      * @return JsonResponse
      */
-    public function getMyOffers(Security $security, OfferRepository $offerRepository): JsonResponse
+    public function getMyOffers(OfferRepository $offerRepository): JsonResponse
     {
-        // $user = $this->get('security.token_storage')->getToken()->getUser();
-        // deprecated version
+        $user = $this->getUser();
 
-        if (!$security->getToken()) {
-            return $this->json(["erreur" => "Le token fournit n\'est pas valide ou il n\'existe pas"], HttpFoundationResponse::HTTP_BAD_REQUEST);
+        if (!$user) {
+            return $this->json(['erreur' => 'Erreur lors de la récupération du profil, merci de vous reconnecter'], HttpFoundationResponse::HTTP_NOT_FOUND);
         }
-        $token = $security->getToken();
-
-        if (!$token->getUser()) {
-            return $this->json(["erreur" => "Il y a eu un problème lors de la récupération de votre profil"], HttpFoundationResponse::HTTP_NOT_FOUND);
-        }
-        $user = $token->getUser();
 
         $offers = $offerRepository->findBy(['user' => $user]);
 
@@ -64,28 +77,35 @@ class UserController extends AbstractController
     }
 
     /**
-     * Retrieves a list of the wishes belonging to the connected user thanks to the related jwttoken
+     * Retrieves a list of the offers belonging to the connected user thanks to the related jwttoken
      *
      * @Route("/api/users/current/wishes", name="app_api_current_user_wishes", methods={"GET"})
      * 
-     * @param Security $security
+     * @OA\Response(
+     *     response="200",
+     *     description="Retrieves the wishes list of the connected user",
+     *     @OA\JsonContent(
+     *        type="array",
+     *        @OA\Items(ref=@Model(type=Wish::class, groups={"current_user_wishes"}))
+     *     )
+     * )
+     * 
+     * @OA\Response(
+     *     response=404,
+     *     description="Nous avons eu un problème lors de la récupération de votre profil, merci de vous reconnecter"
+     * )     
+     * 
      * @param WishRepository $wishRepository
      * @return JsonResponse
      */
-    public function getMyWishes(Security $security, WishRepository $wishRepository): JsonResponse
+    public function getMyWishes(WishRepository $wishRepository): JsonResponse
     {
-        // $user = $this->get('security.token_storage')->getToken()->getUser();
-        // deprecated version
 
-        if (!$security->getToken()) {
-            return $this->json(["erreur" => "Le token fournit n\'est pas valide ou il n\'existe pas"], HttpFoundationResponse::HTTP_BAD_REQUEST);
-        }
-        $token = $security->getToken();
+        $user = $this->getUser();
 
-        if (!$token->getUser()) {
-            return $this->json(["erreur" => "Il y a eu un problème lors de la récupération de votre profil"], HttpFoundationResponse::HTTP_NOT_FOUND);
+        if (!$user) {
+            return $this->json(['erreur' => 'Erreur lors de la récupération du profil, merci de vous reconnecter'], HttpFoundationResponse::HTTP_NOT_FOUND);
         }
-        $user = $token->getUser();
 
         $wishes = $wishRepository->findBy(['user' => $user]);
 
@@ -102,9 +122,25 @@ class UserController extends AbstractController
         );
     }
 
-
     /**
+     * Retrieves a list of the offers belonging to the connected user
      * @Route("/api/users/{id<\d+>}/offers", name="app_api_users_offers", methods={"GET"})
+     * 
+     * @OA\Response(
+     *     response="200",
+     *     description="Retrieves the offer list of a user thanks to its ID",
+     *     @OA\JsonContent(
+     *        type="array",
+     *        @OA\Items(ref=@Model(type=Offer::class, groups={"user_offer_browse"}))
+     *     )
+     * )
+     * 
+     * @OA\Response(
+     *     response=404,
+     *     description="Nous avons eu un problème lors de la récupération de votre profil, merci de vous reconnecter"
+     * )          
+     * @param User|null $user
+     * @return JsonResponse
      */
     public function userOfferBrowse(?User $user): JsonResponse
     {
@@ -127,8 +163,29 @@ class UserController extends AbstractController
 
 
     /**
+     * Method handling the users signup form
      * @Route("/api/users", name="app_api_users_add", methods={"POST"})
      * 
+     * @OA\Response(
+     *     response="201",
+     *     description="Allows a visitor to create an account and become a user",
+     *     @OA\JsonContent(
+     *        type="array",
+     *        @OA\Items(ref=@Model(type=User::class, groups={"users_read"}))
+     *     )
+     * )
+     * 
+     * @OA\Response(
+     *     response=400,
+     *     description="Les données JSON envoyées n'ont pas pu être intérpêtées"
+     * )
+     * @OA\Response(
+     *     response=422,
+     *     description="Renvoie un tableau d'erreurs en fonction des validations demandées pour les champs"
+     * )
+     * @OA\RequestBody(
+     *     @Model(type=User::class, groups={"nelmio_add_user"}),
+     * )
      * @param Request $request
      * @param SerializerInterface $serializerInterface
      * @param ValidatorInterface $validatorInterface
@@ -181,7 +238,23 @@ class UserController extends AbstractController
     }
 
     /**
+     * Retrieves the informations from a particular user from his ID
      * @Route("/api/users/{id<\d+>}", name="app_api_users_read", methods={"GET"})
+     * @OA\Response(
+     *     response="200",
+     *     description="Retrieves the informations from a particular user from his ID",
+     *     @OA\JsonContent(
+     *        type="array",
+     *        @OA\Items(ref=@Model(type=User::class, groups={"user_offer_browse"}))
+     *     )
+     * )
+     * 
+     * @OA\Response(
+     *     response=404,
+     *     description="L'utilisateur recherché n'existe pas"
+     * )          
+     * @param User|null $user
+     * @return JsonResponse
      */
     public function read(?User $user): JsonResponse
     {
@@ -203,26 +276,33 @@ class UserController extends AbstractController
     }
 
     /**
+     * Retrieves the informations of the connected user
+     * 
      * @Route("/api/users/current/profile", name="app_api_users_profile", methods={"GET"})
-     *
-     * @param Security $security
+     * 
+     * @OA\Response(
+     *     response="200",
+     *     description="Retrieves the informations of the connected user",
+     *     @OA\JsonContent(
+     *        type="array",
+     *        @OA\Items(ref=@Model(type=User::class, groups={"users_read"}))
+     *     )
+     * )
+     * 
+     * @OA\Response(
+     *     response=404,
+     *     description="Nous avons eu un problème lors de la récupération de votre profil, merci de vous reconnecter"
+     * )     
      * @return JsonResponse
      */
-    public function getMyProfile(Security $security): JsonResponse
+    public function getMyProfile(): JsonResponse
     {
-        // $user = $this->get('security.token_storage')->getToken()->getUser();
-        // deprecated version
 
-        if (!$security->getToken()) {
-            return $this->json(["erreur" => "Le token fournit n\'est pas valide ou il n\'existe pas"], HttpFoundationResponse::HTTP_BAD_REQUEST);
+        $user = $this->getUser();
+
+        if (!$user) {
+            return $this->json(['erreur' => 'Erreur lors de la récupération du profil, merci de vous reconnecter'], HttpFoundationResponse::HTTP_NOT_FOUND);
         }
-        $token = $security->getToken();
-
-        if (!$token->getUser()) {
-            return $this->json(["erreur" => "Il y a eu un problème lors de la récupération de votre profil"], HttpFoundationResponse::HTTP_NOT_FOUND);
-        }
-
-        $user = $token->getUser();
 
         return $this->json(
             $user,
@@ -236,10 +316,20 @@ class UserController extends AbstractController
             ]
         );
     }
-    
+
     /**
-     * Undocumented function
+     * Retrieves the list of all the users in the database
      * @Route("/api/users", name="app_api_users_browse", methods={"GET"})
+     * 
+     * @OA\Response(
+     *     response="200",
+     *     description="Retrieves the list of all the users in the database",
+     *     @OA\JsonContent(
+     *        type="array",
+     *        @OA\Items(ref=@Model(type=User::class, groups={"users_browse"}))
+     *     )
+     * )
+     * 
      * @param UserRepository $userRepository
      * @return JsonResponse
      */
@@ -259,27 +349,46 @@ class UserController extends AbstractController
     }
 
     /**
+     * Method handling the connected user's editing form 
      * @Route("/api/users/current", name="app_api_user_edit", methods={"PUT", "PATCH"})
+     * 
+     * @OA\Response(
+     *     response="206",
+     *     description="Method handling the connected user's editing form",
+     *     @OA\JsonContent(
+     *        type="array",
+     *        @OA\Items(ref=@Model(type=User::class, groups={"users_read"}))
+     *     )
+     * )
+     * 
+     * @OA\Response(
+     *     response=400,
+     *     description="Les données JSON envoyées n'ont pas pu être intérpêtées"
+     * )
+     * @OA\Response(
+     *     response=422,
+     *     description="Renvoie un tableau d'erreurs en fonction des validations demandées pour les champs"
+     * )
+     * @OA\Response(
+     *     response=404,
+     *     description="Erreur lors de la récupération du profil, merci de vous reconnecter"
+     * )
+     * @OA\RequestBody(
+     *     @Model(type=User::class, groups={"nelmio_edit_user"}),
+     * )
      */
     public function edit(
-        Security $security,
         EntityManagerInterface $doctrine,
         SerializerInterface $serializerInterface,
         Request $request,
-        ValidatorInterface $validatorInterface,
-        UserPasswordHasherInterface $passwordHasher
-    ): JsonResponse
-    {
-        if (!$security->getToken()) {
-            return $this->json(["erreur" => "Le token fournit n\'est pas valide ou il n\'existe pas"], HttpFoundationResponse::HTTP_BAD_REQUEST);
-        }
-        $token = $security->getToken();
+        ValidatorInterface $validatorInterface
+    ): JsonResponse {
+        $user = $this->getUser();
 
-        if (!$token->getUser()) {
-            return $this->json(["erreur" => "Il y a eu un problème lors de la récupération de votre profil"], HttpFoundationResponse::HTTP_NOT_FOUND);
+        if (!$user) {
+            return $this->json(['erreur' => 'Erreur lors de la récupération du profil, merci de vous reconnecter'], HttpFoundationResponse::HTTP_NOT_FOUND);
         }
 
-        $user = $token->getUser();
         $jsonContent = $request->getContent();
 
         try {
@@ -309,6 +418,7 @@ class UserController extends AbstractController
                 "groups" => [
                     "users_read"
                 ]
-            ]);
+            ]
+        );
     }
 }

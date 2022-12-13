@@ -11,6 +11,8 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use OpenApi\Annotations as OA;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -38,6 +40,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Groups({"user_offer_browse"})
      * @Groups({"users_read"})
      * @Groups({"users_browse"})
+     * @Groups({"nelmio_add_user"})
+     * @Groups({"nelmio_edit_user"})
      * @Assert\NotBlank
      * @Assert\NotNull
      */
@@ -48,6 +52,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Groups({"wish_read"})
      * @Groups({"offer_read"})
      * @Groups({"users_read"})
+     * @OA\Property(type="array", @OA\Items(type="string"))
      */
     private $roles = [];
 
@@ -55,6 +60,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      * @ORM\Column(type="string")
      * @Assert\NotBlank
+     * @Groups({"nelmio_add_user"})
      */
     private $password;
 
@@ -64,6 +70,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Groups({"offer_read"})
      * @Groups({"users_read"})
      * @Groups({"category_advertisement_browse"})
+     * @Groups({"nelmio_add_user"})
+     * @Groups({"nelmio_edit_user"})
      * @Assert\NotBlank
      * @Assert\NotNull
      */
@@ -74,12 +82,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Groups({"wish_read"})
      * @Groups({"offer_read"})
      * @Groups({"users_read"})
+     * @Groups({"nelmio_add_user"})
+     * @Groups({"nelmio_edit_user"})
      */
     private $phoneNumber;
 
     /**
      * @ORM\Column(type="integer")
      * @Groups({"users_read"})
+     * @Groups({"nelmio_add_user"})
+     * @Groups({"nelmio_edit_user"})
      * @Assert\NotBlank
      * @Assert\NotNull
      */
@@ -88,6 +100,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="string", length=64)
      * @Groups({"users_read"})
+     * @Groups({"nelmio_add_user"})
+     * @Groups({"nelmio_edit_user"})
      * @Assert\NotBlank
      * @Assert\NotNull
      */
@@ -96,6 +110,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="string", length=128)
      * @Groups({"users_read"})
+     * @Groups({"nelmio_add_user"})
+     * @Groups({"nelmio_edit_user"})
      * @Assert\NotBlank
      * @Assert\NotNull
      */
@@ -106,6 +122,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Groups({"wish_read"})
      * @Groups({"offer_read"})
      * @Groups({"users_read"})
+     * @Groups({"nelmio_add_user"})
+     * @Groups({"nelmio_edit_user"})
      * @Assert\Image
      */
     private $picture;
