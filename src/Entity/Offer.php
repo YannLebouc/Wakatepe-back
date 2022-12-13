@@ -26,9 +26,9 @@ class Offer
      * @Groups({"offer_browse"})
      * @Groups({"offer_read"})
      * @Groups({"user_offer_browse"})
-     * @Groups({"category_advertisement_browse"})
      * @Groups({"mainCategory_categories_advertisements"})
      * @Groups({"category_offers"})
+     * @Groups({"category_advertisements"})
      */
     private $id;
 
@@ -39,10 +39,10 @@ class Offer
      * @Groups({"offer_read"})
      * @Groups({"user_offer_browse"})
      * @Groups({"current_user_offers"})
-     * @Groups({"category_advertisement_browse"})
      * @Groups({"mainCategory_categories_advertisements"})
-     * @Groups({"category_offers"})
      * @Groups({"mainCategory_category_browse"})
+     * @Groups({"category_offers"})
+     * @Groups({"category_advertisements"})
      * @Groups({"nelmio_add_offer"})
      * 
      * @Assert\NotBlank
@@ -56,7 +56,7 @@ class Offer
      * @Groups({"offer_browse"})
      * @Groups({"offer_read"})
      * @Groups({"current_user_offers"})
-     * @Groups({"category_advertisement_browse"})
+     * @Groups({"category_offers"})
      * @Groups({"nelmio_add_offer"})
      *       
      * @Assert\Positive
@@ -70,9 +70,8 @@ class Offer
      * @Groups({"offer_browse"})
      * @Groups({"offer_read"})
      * @Groups({"current_user_offers"})
-     * @Groups({"category_advertisement_browse"})
+     * @Groups({"category_offers"})
      *       
-     * @Assert\Image
      */
     private $picture;
 
@@ -83,7 +82,7 @@ class Offer
      * @Groups({"offer_read"})
      * @Groups({"current_user_offers"})
      * @Groups({"nelmio_add_offer"})
-     * @Groups({"category_advertisement_browse"})
+     * @Groups({"category_offers"})
      * 
      */
     private $description;
@@ -91,16 +90,12 @@ class Offer
     /**
      * @ORM\Column(type="boolean")
      * 
-     * @Groups({"category_advertisement_browse"})
-     * 
      * @Groups({"nelmio_add_offer"})
      */
     private $isActive;
 
     /**
      * @ORM\Column(type="boolean")
-     * 
-     * @Groups({"category_advertisement_browse"})
      * 
      */
     private $isLended;
@@ -111,7 +106,7 @@ class Offer
      * @Groups({"offer_browse"})
      * @Groups({"offer_read"})
      * @Groups({"current_user_offers"})
-     * @Groups({"category_advertisement_browse"})
+     * @Groups({"category_offers"})
      * @Groups({"nelmio_add_offer"})
      */
     private $type;
@@ -120,7 +115,7 @@ class Offer
      * @ORM\Column(type="boolean", nullable=true)
      * 
      * @Groups({"offer_read"})
-     * @Groups({"category_advertisement_browse"})
+     * @Groups({"category_offers"})
      */
     private $isReported;
 
@@ -129,7 +124,7 @@ class Offer
      * 
      * @Groups({"current_user_offers"})
      * @Groups({"offer_read"})
-     * @Groups({"category_advertisement_browse"})
+     * @Groups({"category_offers"})
      */
     private $createdAt;
 
@@ -138,7 +133,7 @@ class Offer
      * 
      * @Groups({"current_user_offers"})
      * @Groups({"offer_read"})
-     * @Groups({"category_advertisement_browse"})
+     * @Groups({"category_offers"})
      */
     private $updatedAt;
 
@@ -147,7 +142,7 @@ class Offer
      * @ORM\JoinColumn(nullable=false)
      * 
      * @Groups({"offer_read"})
-     * @Groups({"category_advertisement_browse"})
+     * @Groups({"category_offers"})
      */
     private $user;
 

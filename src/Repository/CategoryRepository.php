@@ -42,6 +42,25 @@ class CategoryRepository extends ServiceEntityRepository
     /**
      * 
      */
+    public function findAllAdvertisements($id)
+    {   
+        $query = $this->getEntityManager()->createQuery('SELECT c, o, w
+        FROM App\Entity\Category c
+        JOIN c.offer o
+        JOIN c.wish w
+        WHERE c.isActive = true
+        AND o.isActive = true
+        AND o.isLended = false
+        AND w.isActive = true
+        AND c.id = '. $id .'
+        ');
+        $categoryAdvertisements = $query->getResult();
+        return $categoryAdvertisements;
+    }
+
+    /**
+     * 
+     */
     public function findAllOffers($id)
     {   
         $query = $this->getEntityManager()->createQuery('SELECT c, o
@@ -76,7 +95,7 @@ class CategoryRepository extends ServiceEntityRepository
     /**
      * 
      */
-    public function dql()
+    public function findAllActiveCategories()
     {   
         // on veut la liste des catégories où isActive = true
         $query = $this->getEntityManager()->createQuery('SELECT c

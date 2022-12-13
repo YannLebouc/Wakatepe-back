@@ -16,25 +16,29 @@ class CategoryController extends AbstractController
     /**
      * Retieves a list of Offer and Wish affliliated to a Category
      * 
-     * @Route("/api/categories/{id<\d+>}/advertisements", name="app_api_categories_advertisements", methods={"GET"})
+     * @Route("/api/categories/{id<\d+>}/advertisements", name="app_api_category_advertisements", methods={"GET"})
      *
      * @param Category|null $category
      * @return jsonResponse
      */
-    public function getCategoryAdvertisements(?Category $category): JsonResponse
+    public function getCategoryAdvertisements(?Category $category, CategoryRepository $categoryRepository): JsonResponse
     {
         if (!$category) {
             return $this->json(['erreur' => 'la demande n\'a pas été trouvée'], HttpFoundationResponse::HTTP_NOT_FOUND);
         }
+        $categoryId = $category->getId();
+        $advertisements = $categoryRepository->findAllAdvertisements($categoryId);
 
         return $this->json(
-            $category,
+            $advertisements,
             HttpFoundationResponse::HTTP_OK,
             [],
             [
                 "groups" =>
                 [
-                    "category_advertisement_browse"
+                    "category_wishes",
+                    "category_offers",
+                    "category_advertisements"
                 ]
             ]
         );
@@ -108,7 +112,7 @@ class CategoryController extends AbstractController
     public function findAllActiveCategories(CategoryRepository $categoryRepository): JsonResponse
     {
         return $this->json(
-            $categoryRepository->dql(),
+            $categoryRepository->findAllActiveCategories(),
             HttpFoundationResponse::HTTP_OK,
             [],
             [
