@@ -39,16 +39,6 @@ class CategoryController extends AbstractController
             ]);
     }
 
-    /**
-     * @Route("/api/categories/active", name="app_api_categories_active", methods={"GET"})
-     */
-    public function FunctionName(CategoryRepository $categoryRepository): JsonResponse
-    {
-      return $this->json(
-        $categoryRepository->findByActiveCategory(1),
-        HttpFoundationResponse::HTTP_OK,
-        [],
-      );
-    }
+
 
 }
