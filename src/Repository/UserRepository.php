@@ -56,6 +56,17 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->add($user, true);
     }
 
+    public function userActiveOffers($id) : array
+    {   
+        // Je veux les offres actives de l'utilisateur courant
+        $query = $this->getEntityManager()->createQuery(
+            "SELECT u FROM App\Entity\User u
+            JOIN u.offer o 
+            WHERE u.id = $id 
+            AND o.isActive = 1");
+
+        return $query->getResult();
+    }
 //    /**
 //     * @return User[] Returns an array of User objects
 //     */

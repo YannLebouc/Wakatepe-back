@@ -53,7 +53,7 @@ class UserController extends AbstractController
      * @param OfferRepository $offerRepository
      * @return JsonResponse
      */
-    public function getMyOffers(OfferRepository $offerRepository): JsonResponse
+    public function getMyOffers(OfferRepository $offerRepository, UserRepository $userRepository): JsonResponse
     {
         $user = $this->getUser();
 
@@ -61,8 +61,8 @@ class UserController extends AbstractController
             return $this->json(['erreur' => 'Erreur lors de la récupération du profil, merci de vous reconnecter'], HttpFoundationResponse::HTTP_NOT_FOUND);
         }
 
-        $offers = $offerRepository->findBy(['user' => $user]);
-
+        $offers = $userRepository->userActiveOffers($user->getId());
+        
         return $this->json(
             $offers,
             HttpFoundationResponse::HTTP_OK,

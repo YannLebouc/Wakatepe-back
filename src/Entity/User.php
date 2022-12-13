@@ -29,6 +29,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Groups({"users_read"})
      * @Groups({"users_browse"})
      * @Groups({"category_advertisement_browse"})
+     * @Groups({"current_user_offers"})
      * 
      */
     private $id;
@@ -43,6 +44,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Groups({"users_browse"})
      * @Groups({"nelmio_add_user"})
      * @Groups({"nelmio_edit_user"})
+     * @Groups({"current_user_offers"})
+     * 
      * @Assert\NotBlank
      * @Assert\NotNull
      * @Assert\Email(message = "The email '{{ value }}' is not a valid email.")
@@ -75,9 +78,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Groups({"offer_read"})
      * @Groups({"users_read"})
      * @Groups({"category_advertisement_browse"})
-     * 
+     * @Groups({"current_user_offers"})
      * @Groups({"nelmio_add_user"})
      * @Groups({"nelmio_edit_user"})
+     * 
      * @Assert\NotBlank
      * @Assert\NotNull
      */
@@ -89,6 +93,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Groups({"wish_read"})
      * @Groups({"offer_read"})
      * @Groups({"users_read"})
+     * @Groups({"current_user_offers"})
      * 
      * @Assert\Positive
      * @Groups({"nelmio_add_user"})
@@ -100,9 +105,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="integer")
      * 
      * @Groups({"users_read"})
-     * 
+     * @Groups({"current_user_offers"})
      * @Groups({"nelmio_add_user"})
      * @Groups({"nelmio_edit_user"})
+     * 
      * @Assert\NotBlank
      * @Assert\NotNull
      * @Assert\Positive
@@ -114,9 +120,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="string", length=64)
      * 
      * @Groups({"users_read"})
-     * 
+     * @Groups({"current_user_offers"})
      * @Groups({"nelmio_add_user"})
      * @Groups({"nelmio_edit_user"})
+     * 
      * @Assert\NotBlank
      * @Assert\NotNull
      */
@@ -163,6 +170,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\OneToMany(targetEntity=Offer::class, mappedBy="user", orphanRemoval=true)
      * 
      * @Groups({"user_offer_browse"})
+     * @Groups({"current_user_offers"})
      */
     private $offer;
 
