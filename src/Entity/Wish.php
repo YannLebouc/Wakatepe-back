@@ -27,6 +27,8 @@ class Wish
      * @Groups({"current_user_wishes"})
      * @Groups({"category_advertisement_browse"})
      * @Groups({"mainCategory_category_browse"})
+     * @Groups({"mainCategory_categories_advertisements"})
+     * @Groups({"category_wishes"})
      */
     private $id;
 
@@ -37,6 +39,8 @@ class Wish
      * @Groups({"wish_read"})
      * @Groups({"current_user_wishes"})
      * @Groups({"category_advertisement_browse"})
+     * @Groups({"mainCategory_categories_advertisements"})
+     * @Groups({"category_wishes"})
      * @Groups({"mainCategory_category_browse"})
      * @Groups({"nelmio_add_wish"})
      * 
