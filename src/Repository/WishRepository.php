@@ -39,6 +39,24 @@ class WishRepository extends ServiceEntityRepository
         }
     }
 
+        /**
+     * Retrieves a categories active wishes
+     *
+     * @param [id] $id
+     * @return array
+     */
+    public function activeWishes($id) : array
+    {   
+        $query = $this->getEntityManager()->createQuery(
+            "SELECT w FROM App\Entity\Wish w
+            JOIN w.categories c
+            WHERE c.id = $id 
+            AND w.isActive = true
+            ");
+
+        return $query->getResult();
+    }
+
 //    /**
 //     * @return Wish[] Returns an array of Wish objects
 //     */

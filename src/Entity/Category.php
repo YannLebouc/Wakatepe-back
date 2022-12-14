@@ -101,7 +101,6 @@ class Category
      * 
      * @Groups({"mainCategory_categories_advertisements"})
      * @Groups({"category_offers"})
-     * @Groups({"category_advertisements"})
      */
     private $offer;
 
@@ -110,7 +109,6 @@ class Category
      * 
      * @Groups({"mainCategory_categories_advertisements"})
      * @Groups({"category_wishes"})
-     * @Groups({"category_advertisements"})
      */
     private $wish;
 

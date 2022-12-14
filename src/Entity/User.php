@@ -30,6 +30,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Groups({"users_browse"})
      * @Groups({"category_offers"})
      * @Groups({"category_wishes"})
+     * @Groups({"category_advertisements"})
      */
     private $id;
 
@@ -76,6 +77,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Groups({"users_read"})
      * @Groups({"category_offers"})
      * @Groups({"category_wishes"})
+     * @Groups({"category_advertisements"})
      * @Groups({"nelmio_add_user"})
      * @Groups({"nelmio_edit_user"})
      * @Assert\NotBlank

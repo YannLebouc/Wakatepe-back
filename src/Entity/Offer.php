@@ -57,6 +57,7 @@ class Offer
      * @Groups({"offer_read"})
      * @Groups({"current_user_offers"})
      * @Groups({"category_offers"})
+     * @Groups({"category_advertisements"})
      * @Groups({"nelmio_add_offer"})
      *       
      * @Assert\Positive
@@ -71,7 +72,7 @@ class Offer
      * @Groups({"offer_read"})
      * @Groups({"current_user_offers"})
      * @Groups({"category_offers"})
-     *       
+     * @Groups({"category_advertisements"})      
      */
     private $picture;
 
@@ -83,7 +84,7 @@ class Offer
      * @Groups({"current_user_offers"})
      * @Groups({"nelmio_add_offer"})
      * @Groups({"category_offers"})
-     * 
+     * @Groups({"category_advertisements"})
      */
     private $description;
 
@@ -107,6 +108,7 @@ class Offer
      * @Groups({"offer_read"})
      * @Groups({"current_user_offers"})
      * @Groups({"category_offers"})
+     * @Groups({"category_advertisements"})
      * @Groups({"nelmio_add_offer"})
      */
     private $type;
@@ -116,6 +118,7 @@ class Offer
      * 
      * @Groups({"offer_read"})
      * @Groups({"category_offers"})
+     * @Groups({"category_advertisements"})
      */
     private $isReported;
 
@@ -125,6 +128,7 @@ class Offer
      * @Groups({"current_user_offers"})
      * @Groups({"offer_read"})
      * @Groups({"category_offers"})
+     * @Groups({"category_advertisements"})
      */
     private $createdAt;
 
@@ -134,6 +138,7 @@ class Offer
      * @Groups({"current_user_offers"})
      * @Groups({"offer_read"})
      * @Groups({"category_offers"})
+     * @Groups({"category_advertisements"})
      */
     private $updatedAt;
 
@@ -143,6 +148,7 @@ class Offer
      * 
      * @Groups({"offer_read"})
      * @Groups({"category_offers"})
+     * @Groups({"category_advertisements"})
      */
     private $user;
 
@@ -153,6 +159,7 @@ class Offer
      * @Groups({"offer_browse"})
      * @Groups({"current_user_offers"})
      * @Groups({"nelmio_add_offer"})
+     * @Groups({"category_advertisements"})
      * @OA\Property(type="array", @OA\Items(type="integer"))
      */
     private $categories;

@@ -39,21 +39,35 @@ class CategoryRepository extends ServiceEntityRepository
         }
     }
 
-    /**
-     * 
-     */
+    // /**
+    //  * 
+    //  */
+    // public function findAllAdvertisements($id)
+    // {   
+    //     $query = $this->getEntityManager()->createQuery('SELECT c, o, w
+    //     FROM App\Entity\Category c
+    //     JOIN c.offer o
+    //     JOIN c.wish w
+    //     WHERE c.id = '. $id .'
+    //     AND o.isActive = 1
+    //     AND o.isLended = 0
+    //     AND w.isActive = 1
+    //     AND c.isActive = 1
+    //     ');
+    //     $categoryAdvertisements = $query->getResult();
+    //     return $categoryAdvertisements;
+    // }
+
     public function findAllAdvertisements($id)
     {   
-        $query = $this->getEntityManager()->createQuery('SELECT c, o, w
+        $query = $this->getEntityManager()->createQuery("SELECT c, o, w
         FROM App\Entity\Category c
         JOIN c.offer o
         JOIN c.wish w
-        WHERE c.isActive = true
-        AND o.isActive = true
-        AND o.isLended = false
-        AND w.isActive = true
-        AND c.id = '. $id .'
-        ');
+        WHERE c.id = $id
+        AND o.isActive = 1
+        AND w.isActive = 1
+        ");
         $categoryAdvertisements = $query->getResult();
         return $categoryAdvertisements;
     }

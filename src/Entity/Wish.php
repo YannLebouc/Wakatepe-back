@@ -56,6 +56,7 @@ class Wish
      * @Groups({"wish_read"})
      * @Groups({"current_user_wishes"})
      * @Groups({"category_wishes"})
+     * @Groups({"category_advertisements"})
      * @Groups({"nelmio_add_wish"})
      * 
      * @Assert\Positive
@@ -70,6 +71,7 @@ class Wish
      * @Groups({"wish_read"})
      * @Groups({"current_user_wishes"})
      * @Groups({"category_wishes"})
+     * @Groups({"category_advertisements"})
      * 
      */
     private $picture;
@@ -81,6 +83,7 @@ class Wish
      * @Groups({"wish_read"})
      * @Groups({"current_user_wishes"})
      * @Groups({"category_wishes"})
+     * @Groups({"category_advertisements"})
      * @Groups({"nelmio_add_wish"})
      */
     private $description;
@@ -99,6 +102,7 @@ class Wish
      * @Groups({"wish_read"})
      * @Groups({"current_user_wishes"})
      * @Groups({"category_wishes"})
+     * @Groups({"category_advertisements"})
      * @Groups({"nelmio_add_wish"})
      */
     private $type;
@@ -108,6 +112,7 @@ class Wish
      * 
      * @Groups({"wish_read"})
      * @Groups({"category_wishes"})
+     * @Groups({"category_advertisements"})
      */
     private $isReported;
 
@@ -118,6 +123,7 @@ class Wish
      * @Groups({"wish_read"})
      * @Groups({"current_user_wishes"})
      * @Groups({"category_wishes"})
+     * @Groups({"category_advertisements"})
      */
     private $createdAt;
 
@@ -128,6 +134,7 @@ class Wish
      * @Groups({"wish_read"})
      * @Groups({"current_user_wishes"})
      * @Groups({"category_wishes"})
+     * @Groups({"category_advertisements"})
      */
     private $updatedAt;
 
@@ -137,6 +144,7 @@ class Wish
      * 
      * @Groups({"wish_read"})
      * @Groups({"category_wishes"})
+     * @Groups({"category_advertisements"})
      */
     private $user;
 
@@ -147,6 +155,7 @@ class Wish
      * @Groups({"wish_read"})
      * @Groups({"current_user_wishes"})
      * @Groups({"nelmio_add_wish"})
+     * @Groups({"category_advertisements"})
      * @OA\Property(type="array", @OA\Items(type="integer"))
      */
     private $categories;
