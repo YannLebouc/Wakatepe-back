@@ -11,22 +11,22 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/backoffice/main/category")
+ * @Route("/backoffice/maincategory")
  */
-class MainCategoryController extends AbstractController
+class MaincategoryController extends AbstractController
 {
     /**
-     * @Route("/", name="app_backoffice_main_category_index", methods={"GET"})
+     * @Route("/", name="app_backoffice_maincategory_index", methods={"GET"})
      */
     public function index(MainCategoryRepository $mainCategoryRepository): Response
     {
-        return $this->render('backoffice/main_category/index.html.twig', [
+        return $this->render('backoffice/maincategory/index.html.twig', [
             'main_categories' => $mainCategoryRepository->findAll(),
         ]);
     }
 
     /**
-     * @Route("/new", name="app_backoffice_main_category_new", methods={"GET", "POST"})
+     * @Route("/new", name="app_backoffice_maincategory_new", methods={"GET", "POST"})
      */
     public function new(Request $request, MainCategoryRepository $mainCategoryRepository): Response
     {
@@ -37,27 +37,27 @@ class MainCategoryController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $mainCategoryRepository->add($mainCategory, true);
 
-            return $this->redirectToRoute('app_backoffice_main_category_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_backoffice_maincategory_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('backoffice/main_category/new.html.twig', [
+        return $this->renderForm('backoffice/maincategory/new.html.twig', [
             'main_category' => $mainCategory,
             'form' => $form,
         ]);
     }
 
     /**
-     * @Route("/{id}", name="app_backoffice_main_category_show", methods={"GET"})
+     * @Route("/{id}", name="app_backoffice_maincategory_show", methods={"GET"})
      */
     public function show(MainCategory $mainCategory): Response
     {
-        return $this->render('backoffice/main_category/show.html.twig', [
+        return $this->render('backoffice/maincategory/show.html.twig', [
             'main_category' => $mainCategory,
         ]);
     }
 
     /**
-     * @Route("/{id}/edit", name="app_backoffice_main_category_edit", methods={"GET", "POST"})
+     * @Route("/{id}/edit", name="app_backoffice_maincategory_edit", methods={"GET", "POST"})
      */
     public function edit(Request $request, MainCategory $mainCategory, MainCategoryRepository $mainCategoryRepository): Response
     {
@@ -67,17 +67,17 @@ class MainCategoryController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $mainCategoryRepository->add($mainCategory, true);
 
-            return $this->redirectToRoute('app_backoffice_main_category_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_backoffice_maincategory_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('backoffice/main_category/edit.html.twig', [
+        return $this->renderForm('backoffice/maincategory/edit.html.twig', [
             'main_category' => $mainCategory,
             'form' => $form,
         ]);
     }
 
     /**
-     * @Route("/{id}", name="app_backoffice_main_category_delete", methods={"POST"})
+     * @Route("/{id}", name="app_backoffice_maincategory_delete", methods={"POST"})
      */
     public function delete(Request $request, MainCategory $mainCategory, MainCategoryRepository $mainCategoryRepository): Response
     {
@@ -85,6 +85,6 @@ class MainCategoryController extends AbstractController
             $mainCategoryRepository->remove($mainCategory, true);
         }
 
-        return $this->redirectToRoute('app_backoffice_main_category_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_backoffice_maincategory_index', [], Response::HTTP_SEE_OTHER);
     }
 }

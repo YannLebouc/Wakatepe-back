@@ -25,8 +25,8 @@
                 <td>{{ main_category.createdAt ? main_category.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ main_category.updatedAt ? main_category.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('app_backoffice_main_category_show', {'id': main_category.id}) }}">show</a>
-                    <a href="{{ path('app_backoffice_main_category_edit', {'id': main_category.id}) }}">edit</a>
+                    <a href="{{ path('app_backoffice_maincategory_show', {'id': main_category.id}) }}">show</a>
+                    <a href="{{ path('app_backoffice_maincategory_edit', {'id': main_category.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -37,5 +37,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_backoffice_main_category_new') }}">Create new</a>
+    <a href="{{ path('app_backoffice_maincategory_new') }}">Create new</a>
 {% endblock %}
