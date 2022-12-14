@@ -5,29 +5,31 @@
 {% block body %}
     <h1>MainCategory index</h1>
 
+    <a href="{{ path('app_backoffice_maincategory_new') }}">Ajouter une main catégorie</a>
+    
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
+                <th>actions</th>
                 <th>Name</th>
                 <th>Slug</th>
                 <th>CreatedAt</th>
                 <th>UpdatedAt</th>
-                <th>actions</th>
             </tr>
         </thead>
         <tbody>
         {% for main_category in main_categories %}
             <tr>
                 <td>{{ main_category.id }}</td>
-                <td>{{ main_category.name }}</td>
-                <td>{{ main_category.slug }}</td>
-                <td>{{ main_category.createdAt ? main_category.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ main_category.updatedAt ? main_category.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
                     <a href="{{ path('app_backoffice_maincategory_show', {'id': main_category.id}) }}">show</a>
                     <a href="{{ path('app_backoffice_maincategory_edit', {'id': main_category.id}) }}">edit</a>
                 </td>
+                <td>{{ main_category.name }}</td>
+                <td>{{ main_category.slug }}</td>
+                <td>{{ main_category.createdAt ? main_category.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ main_category.updatedAt ? main_category.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
         {% else %}
             <tr>
@@ -37,5 +39,6 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_backoffice_maincategory_new') }}">Create new</a>
+    <a href="{{ path('app_backoffice_maincategory_new') }}">Ajouter une main catégorie</a>
+
 {% endblock %}

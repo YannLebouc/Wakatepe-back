@@ -16,6 +16,8 @@ use OpenApi\Annotations as OA;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * 
+ * @ORM\HasLifecycleCallbacks()
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -204,6 +206,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Groups({"current_user_inactive_ads"})
      */
     private $wish;
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedAtValue(): void
+    {
+        $this->createdAt = new \DateTime();
+    }
 
     public function __construct()
     {

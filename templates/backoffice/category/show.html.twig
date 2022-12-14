@@ -3,7 +3,9 @@
 {% block title %}Category{% endblock %}
 
 {% block body %}
-    <h1>Category</h1>
+    <h1>Catégorie</h1>
+
+    <a href="{{ path('app_backoffice_category_edit', {'id': category.id}) }}">Editer</a>
 
     <table class="table">
         <tbody>
@@ -38,9 +40,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_backoffice_category_index') }}">back to list</a>
+    <a href="{{ path('app_backoffice_category_edit', {'id': category.id}) }}">Editer</a></br>
 
-    <a href="{{ path('app_backoffice_category_edit', {'id': category.id}) }}">edit</a>
+    <a href="{{ path('app_backoffice_category_index') }}">back to list</a>
 
     {{ include('backoffice/category/_delete_form.html.twig') }}
 {% endblock %}

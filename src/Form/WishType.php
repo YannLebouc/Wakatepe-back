@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Category;
 use App\Entity\Wish;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -21,8 +23,13 @@ class WishType extends AbstractType
             ->add('isReported')
             ->add('createdAt')
             ->add('updatedAt')
-            ->add('user')
-            ->add('categories')
+            // ->add('user')
+            ->add('categories', EntityType::class,[
+                'class' => Category::class,
+                'choice_label' => 'name',
+                'multiple' => true,
+                'expanded' => true
+            ])
         ;
     }
 

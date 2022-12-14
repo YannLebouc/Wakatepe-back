@@ -15,6 +15,7 @@ use OpenApi\Annotations as OA;
 /**
  * @ORM\Entity(repositoryClass=OfferRepository::class)
  * 
+ * @ORM\HasLifecycleCallbacks()
  */
 class Offer
 {
@@ -183,6 +184,14 @@ class Offer
      * @OA\Property(type="array", @OA\Items(type="integer"))
      */
     private $categories;
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedAtValue(): void
+    {
+        $this->createdAt = new \DateTime();
+    }
 
     public function __construct()
     {

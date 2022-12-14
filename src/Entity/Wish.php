@@ -14,6 +14,8 @@ use OpenApi\Annotations as OA;
 
 /**
  * @ORM\Entity(repositoryClass=WishRepository::class)
+ * 
+ * @ORM\HasLifecycleCallbacks()
  */
 class Wish
 {
@@ -172,6 +174,14 @@ class Wish
      * @OA\Property(type="array", @OA\Items(type="integer"))
      */
     private $categories;
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedAtValue(): void
+    {
+        $this->createdAt = new \DateTime();
+    }
 
     public function __construct()
     {
