@@ -39,12 +39,14 @@ class WishRepository extends ServiceEntityRepository
         }
     }
 
+
     /**
      * Retrieves a users inactive wishes
-     *
      * @param [id] $id
      * @return array
      */
+
+
     public function userInactiveWishes($id) : array
     {   
         $query = $this->getEntityManager()->createQuery(
@@ -52,6 +54,24 @@ class WishRepository extends ServiceEntityRepository
             JOIN w.user u
             WHERE u.id = $id 
             AND w.isActive = false
+            ");
+            
+        return $query->getResult();
+    }
+    
+     /**
+     * Retrieves a categories active wishes
+     *
+     * @param [id] $id
+     * @return array
+     */
+    public function activeWishes($id) : array
+    {   
+        $query = $this->getEntityManager()->createQuery(
+            "SELECT w FROM App\Entity\Wish w
+            JOIN w.categories c
+            WHERE c.id = $id 
+            AND w.isActive = true
             ");
 
         return $query->getResult();

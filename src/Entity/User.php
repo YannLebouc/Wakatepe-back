@@ -34,6 +34,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Groups({"current_user_inactive_ads"})
      * 
      * 
+     * @Groups({"category_offers"})
+     * @Groups({"category_wishes"})
+     * @Groups({"category_advertisements"})
      */
     private $id;
 
@@ -84,6 +87,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Groups({"users_read"})
      * @Groups({"category_advertisement_browse"})
      * @Groups({"current_user_offers"})
+     * @Groups({"category_offers"})
+     * @Groups({"category_wishes"})
+     * @Groups({"category_advertisements"})
      * @Groups({"nelmio_add_user"})
      * @Groups({"nelmio_edit_user"})
      * @Groups({"current_user_wishes"})

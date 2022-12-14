@@ -39,7 +39,86 @@ class CategoryRepository extends ServiceEntityRepository
         }
     }
 
+    // /**
+    //  * 
+    //  */
+    // public function findAllAdvertisements($id)
+    // {   
+    //     $query = $this->getEntityManager()->createQuery('SELECT c, o, w
+    //     FROM App\Entity\Category c
+    //     JOIN c.offer o
+    //     JOIN c.wish w
+    //     WHERE c.id = '. $id .'
+    //     AND o.isActive = 1
+    //     AND o.isLended = 0
+    //     AND w.isActive = 1
+    //     AND c.isActive = 1
+    //     ');
+    //     $categoryAdvertisements = $query->getResult();
+    //     return $categoryAdvertisements;
+    // }
 
+    public function findAllAdvertisements($id)
+    {   
+        $query = $this->getEntityManager()->createQuery("SELECT c, o, w
+        FROM App\Entity\Category c
+        JOIN c.offer o
+        JOIN c.wish w
+        WHERE c.id = $id
+        AND o.isActive = 1
+        AND w.isActive = 1
+        ");
+        $categoryAdvertisements = $query->getResult();
+        return $categoryAdvertisements;
+    }
+
+    /**
+     * 
+     */
+    public function findAllOffers($id)
+    {   
+        $query = $this->getEntityManager()->createQuery('SELECT c, o
+        FROM App\Entity\Category c
+        JOIN c.offer o
+        WHERE c.isActive = true
+        AND o.isActive = true
+        AND o.isLended = false 
+        AND c.id = '. $id .'
+        ');
+        $categoryOffers = $query->getResult();
+        return $categoryOffers;
+    }
+
+    /**
+     * 
+     */
+    public function findAllWishes($id)
+    {   
+        $query = $this->getEntityManager()->createQuery('SELECT c, w
+        FROM App\Entity\Category c
+        JOIN c.wish w
+        WHERE c.isActive = true
+        AND w.isActive = true
+        AND c.id = '. $id .'
+        ');
+        $categoryOffers = $query->getResult();
+        return $categoryOffers;
+    }
+
+
+    /**
+     * 
+     */
+    public function findAllActiveCategories()
+    {   
+        // on veut la liste des catégories où isActive = true
+        $query = $this->getEntityManager()->createQuery('SELECT c
+        FROM App\Entity\Category c
+        WHERE c.isActive = true
+        ');
+        $activeCategories = $query->getResult();
+        return $activeCategories;
+    }
 
 
 //    /**

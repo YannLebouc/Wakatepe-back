@@ -25,9 +25,11 @@ class Wish
      * @Groups({"wish_browse"})
      * @Groups({"wish_read"})
      * @Groups({"current_user_wishes"})
-     * @Groups({"category_advertisement_browse"})
      * @Groups({"mainCategory_category_browse"})
      * @Groups({"current_user_inactive_ads"})
+     * @Groups({"mainCategory_categories_advertisements"})
+     * @Groups({"category_wishes"})
+     * @Groups({"category_advertisements"})
      */
     private $id;
 
@@ -37,8 +39,10 @@ class Wish
      * @Groups({"wish_browse"})
      * @Groups({"wish_read"})
      * @Groups({"current_user_wishes"})
-     * @Groups({"category_advertisement_browse"})
+     * @Groups({"mainCategory_categories_advertisements"})
      * @Groups({"mainCategory_category_browse"})
+     * @Groups({"category_wishes"})
+     * @Groups({"category_advertisements"})
      * @Groups({"nelmio_add_wish"})
      * @Groups({"current_user_inactive_ads"})
      * 
@@ -53,7 +57,8 @@ class Wish
      * @Groups({"wish_browse"})
      * @Groups({"wish_read"})
      * @Groups({"current_user_wishes"})
-     * @Groups({"category_advertisement_browse"})
+     * @Groups({"category_wishes"})
+     * @Groups({"category_advertisements"})
      * @Groups({"nelmio_add_wish"})
      * @Groups({"current_user_inactive_ads"})
      * 
@@ -70,6 +75,8 @@ class Wish
      * @Groups({"current_user_wishes"})
      * @Groups({"category_advertisement_browse"})
      * @Groups({"current_user_inactive_ads"})
+     * @Groups({"category_wishes"})
+     * @Groups({"category_advertisements"})
      * 
      */
     private $picture;
@@ -80,7 +87,8 @@ class Wish
      * @Groups({"wish_browse"})
      * @Groups({"wish_read"})
      * @Groups({"current_user_wishes"})
-     * @Groups({"category_advertisement_browse"})
+     * @Groups({"category_wishes"})
+     * @Groups({"category_advertisements"})
      * @Groups({"nelmio_add_wish"})
      * @Groups({"current_user_inactive_ads"})
      */
@@ -89,7 +97,6 @@ class Wish
     /**
      * @ORM\Column(type="boolean")
      * 
-     * @Groups({"category_advertisement_browse"})
      * @Groups({"nelmio_add_wish"})
      * @Groups({"current_user_inactive_ads"})
      * 
@@ -102,7 +109,8 @@ class Wish
      * @Groups({"wish_browse"})
      * @Groups({"wish_read"})
      * @Groups({"current_user_wishes"})
-     * @Groups({"category_advertisement_browse"})
+     * @Groups({"category_wishes"})
+     * @Groups({"category_advertisements"})
      * @Groups({"nelmio_add_wish"})
      * @Groups({"current_user_inactive_ads"})
      */
@@ -112,7 +120,8 @@ class Wish
      * @ORM\Column(type="boolean", nullable=true)
      * 
      * @Groups({"wish_read"})
-     * @Groups({"category_advertisement_browse"})
+     * @Groups({"category_wishes"})
+     * @Groups({"category_advertisements"})
      */
     private $isReported;
 
@@ -124,6 +133,8 @@ class Wish
      * @Groups({"current_user_wishes"})
      * @Groups({"category_advertisement_browse"})
      * @Groups({"current_user_inactive_ads"})
+     * @Groups({"category_wishes"})
+     * @Groups({"category_advertisements"})
      */
     private $createdAt;
 
@@ -135,6 +146,8 @@ class Wish
      * @Groups({"current_user_wishes"})
      * @Groups({"category_advertisement_browse"})
      * @Groups({"current_user_inactive_ads"})
+     * @Groups({"category_wishes"})
+     * @Groups({"category_advertisements"})
      */
     private $updatedAt;
 
@@ -143,7 +156,8 @@ class Wish
      * @ORM\JoinColumn(nullable=false)
      * 
      * @Groups({"wish_read"})
-     * @Groups({"category_advertisement_browse"})
+     * @Groups({"category_wishes"})
+     * @Groups({"category_advertisements"})
      */
     private $user;
 
@@ -154,6 +168,7 @@ class Wish
      * @Groups({"wish_read"})
      * @Groups({"current_user_wishes"})
      * @Groups({"nelmio_add_wish"})
+     * @Groups({"category_advertisements"})
      * @OA\Property(type="array", @OA\Items(type="integer"))
      */
     private $categories;

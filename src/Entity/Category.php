@@ -25,9 +25,11 @@ class Category
      * @Groups({"wish_read"})
      * @Groups({"offer_browse"})
      * @Groups({"offer_read"})
-     * @Groups({"mainCategory_category_browse"})
-     * @Groups({"mainCategory_browse"})
-     * @Groups({"category_advertisement_browse"})
+     * @Groups({"mainCategory_categories_advertisements"})
+     * @Groups({"mainCategories_categories"})
+     * @Groups({"category_offers"})
+     * @Groups({"category_wishes"})
+     * @Groups({"category_advertisements"})
      * @Groups({"nelmio_add_wish"})
      */
     private $id;
@@ -41,9 +43,12 @@ class Category
      * @Groups({"wish_browse"})
      * @Groups({"current_user_offers"})
      * @Groups({"current_user_wishes"})
-     * @Groups({"mainCategory_category_browse"})
-     * @Groups({"mainCategory_browse"})
-     * @Groups({"category_advertisement_browse"})
+     * @Groups({"mainCategory_categories_advertisements"})
+     * @Groups({"mainCategories_categories"})
+     * @Groups({"category_browse"})
+     * @Groups({"category_offers"})
+     * @Groups({"category_wishes"})
+     * @Groups({"category_advertisements"})
      * @Groups({"nelmio_add_offer"})
      * 
      * 
@@ -59,15 +64,16 @@ class Category
      * @Groups({"offer_read"})
      * @Groups({"wish_read"})
      * @Groups({"wish_browse"})
-     * @Groups({"mainCategory_browse"})
-     * @Groups({"category_advertisement_browse"})
+     * @Groups({"mainCategories_categories"})
+     * @Groups({"mainCategory_categories_advertisements"})
+     * @Groups({"category_offers"})
+     * @Groups({"category_wishes"})
      */
     private $slug;
 
     /**
      * @ORM\Column(type="string", length=255)
      * 
-     * @Assert\Image
      */
     private $picture;
 
@@ -75,7 +81,6 @@ class Category
      * @ORM\Column(type="boolean")
      * 
      * @Groups({"mainCategory_category_browse"})
-     * @Groups({"mainCategory_browse"})
      */
     private $isActive;
 
@@ -94,17 +99,16 @@ class Category
     /**
      * @ORM\ManyToMany(targetEntity=Offer::class, inversedBy="categories")
      * 
-     * @Groups({"category_advertisement_browse"})
-     * @Groups({"mainCategory_category_browse"})
+     * @Groups({"mainCategory_categories_advertisements"})
+     * @Groups({"category_offers"})
      */
     private $offer;
 
     /**
      * @ORM\ManyToMany(targetEntity=Wish::class, inversedBy="categories")
      * 
-     * @Groups({"category_advertisement_browse"})
-     * @Groups({"mainCategory_category_browse"})
-     * 
+     * @Groups({"mainCategory_categories_advertisements"})
+     * @Groups({"category_wishes"})
      */
     private $wish;
 

@@ -39,23 +39,36 @@ class MainCategoryRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     */
+    public function findAllActiveCategories()
+    {
+        $query = $this->getEntityManager()->createQuery('SELECT m, c
+        FROM App\Entity\MainCategory m
+        Join m.categories c
+        WHERE c.isActive = true
+        ');
+        $activeCategories = $query->getResult();
+        return $activeCategories;
+    }
 
-//    /**
-//     * @return MainCategory[] Returns an array of MainCategory objects and of their affilated Category
-
-//     * @Route("/api/maincategories", name="app_api_maincategories", methods={"GET"})
-//     */
-//     public function findByExampleField(CategoryRepository $categoryRepository, $true): array
-//     {
-//         return $this->createQueryBuilder('c')
-//             ->andWhere('c.isActive = :isActive')
-//             ->setParameter('isActive', $true)
-//          //    ->orderBy('m.id', 'ASC')
-//          //    ->setMaxResults(10)
-//             ->getQuery()
-//             ->getResult()
-//         ;
-//     }
+    /**
+     */
+    public function findAllActiveAdvertisements($id)
+    {
+        $query = $this->getEntityManager()->createQuery('SELECT m, c, o, w
+        FROM App\Entity\MainCategory m
+        JOIN m.categories c
+        JOIN c.offer o
+        JOIN c.wish w
+        WHERE o.isActive = true
+        AND w.isActive = true
+        AND c.isActive = true
+        AND m.id = '. $id .'
+        ');
+        $activeCategories = $query->getResult();
+        return $activeCategories;
+    }
 
 
 //    /**
