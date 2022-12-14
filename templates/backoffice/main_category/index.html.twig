@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}MainCategory index{% endblock %}
+
+{% block body %}
+    <h1>MainCategory index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Slug</th>
+                <th>CreatedAt</th>
+                <th>UpdatedAt</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for main_category in main_categories %}
+            <tr>
+                <td>{{ main_category.id }}</td>
+                <td>{{ main_category.name }}</td>
+                <td>{{ main_category.slug }}</td>
+                <td>{{ main_category.createdAt ? main_category.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ main_category.updatedAt ? main_category.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_backoffice_main_category_show', {'id': main_category.id}) }}">show</a>
+                    <a href="{{ path('app_backoffice_main_category_edit', {'id': main_category.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_backoffice_main_category_new') }}">Create new</a>
+{% endblock %}

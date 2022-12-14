@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Wish{% endblock %}
+
+{% block body %}
+    <h1>Wish</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ wish.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ wish.title }}</td>
+            </tr>
+            <tr>
+                <th>Zipcode</th>
+                <td>{{ wish.zipcode }}</td>
+            </tr>
+            <tr>
+                <th>Picture</th>
+                <td>{{ wish.picture }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ wish.description }}</td>
+            </tr>
+            <tr>
+                <th>IsActive</th>
+                <td>{{ wish.isActive ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ wish.type }}</td>
+            </tr>
+            <tr>
+                <th>IsReported</th>
+                <td>{{ wish.isReported ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ wish.createdAt ? wish.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ wish.updatedAt ? wish.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_backoffice_wish_index') }}">back to list</a>
+
+    <a href="{{ path('app_backoffice_wish_edit', {'id': wish.id}) }}">edit</a>
+
+    {{ include('backoffice/wish/_delete_form.html.twig') }}
+{% endblock %}
