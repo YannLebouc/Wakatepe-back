@@ -57,6 +57,10 @@ security:
         # à vous de bien définir cette partie
         # - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
 
+        # - { path: ^/, roles: PUBLIC_ACCESS}
+        # - { path: /backoffice, roles: ROLE_MANAGER }
+        - { path: /backoffice, roles: ROLE_ADMIN }
+
 when@test:
     security:
         password_hashers:
