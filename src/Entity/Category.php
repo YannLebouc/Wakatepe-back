@@ -27,9 +27,9 @@ class Category
      * @Groups({"offer_read"})
      * @Groups({"mainCategory_categories_advertisements"})
      * @Groups({"mainCategories_categories"})
-     * @Groups({"category_advertisement_browse"})
      * @Groups({"category_offers"})
      * @Groups({"category_wishes"})
+     * @Groups({"category_advertisements"})
      * @Groups({"nelmio_add_wish"})
      */
     private $id;
@@ -45,10 +45,10 @@ class Category
      * @Groups({"current_user_wishes"})
      * @Groups({"mainCategory_categories_advertisements"})
      * @Groups({"mainCategories_categories"})
-     * @Groups({"category_advertisement_browse"})
      * @Groups({"category_browse"})
      * @Groups({"category_offers"})
      * @Groups({"category_wishes"})
+     * @Groups({"category_advertisements"})
      * @Groups({"nelmio_add_offer"})
      * 
      * 
@@ -65,15 +65,15 @@ class Category
      * @Groups({"wish_read"})
      * @Groups({"wish_browse"})
      * @Groups({"mainCategories_categories"})
-     * @Groups({"category_advertisement_browse"})
      * @Groups({"mainCategory_categories_advertisements"})
+     * @Groups({"category_offers"})
+     * @Groups({"category_wishes"})
      */
     private $slug;
 
     /**
      * @ORM\Column(type="string", length=255)
      * 
-     * @Assert\Image
      */
     private $picture;
 
@@ -99,7 +99,6 @@ class Category
     /**
      * @ORM\ManyToMany(targetEntity=Offer::class, inversedBy="categories")
      * 
-     * @Groups({"category_advertisement_browse"})
      * @Groups({"mainCategory_categories_advertisements"})
      * @Groups({"category_offers"})
      */
@@ -108,7 +107,6 @@ class Category
     /**
      * @ORM\ManyToMany(targetEntity=Wish::class, inversedBy="categories")
      * 
-     * @Groups({"category_advertisement_browse"})
      * @Groups({"mainCategory_categories_advertisements"})
      * @Groups({"category_wishes"})
      */

@@ -4,6 +4,8 @@ namespace App\Controller\Api;
 
 use App\Entity\Category;
 use App\Repository\CategoryRepository;
+use App\Repository\OfferRepository;
+use App\Repository\WishRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response as HttpFoundationResponse;
@@ -13,32 +15,36 @@ use Symfony\Component\Routing\Annotation\Route;
 class CategoryController extends AbstractController
 {
 
-    /**
-     * Retieves a list of Offer and Wish affliliated to a Category
-     * 
-     * @Route("/api/categories/{id<\d+>}/advertisements", name="app_api_categories_advertisements", methods={"GET"})
-     *
-     * @param Category|null $category
-     * @return jsonResponse
-     */
-    public function getCategoryAdvertisements(?Category $category): JsonResponse
-    {
-        if (!$category) {
-            return $this->json(['erreur' => 'la demande n\'a pas été trouvée'], HttpFoundationResponse::HTTP_NOT_FOUND);
-        }
+    // /**
+    //  * Retieves a list of Offer and Wish affliliated to a Category
+    //  * 
+    //  * @Route("/api/categories/{id<\d+>}/advertisements", name="app_api_category_advertisements", methods={"GET"})
+    //  *
+    //  * @param Category|null $category
+    //  * @return jsonResponse
+    //  */
+    // public function getCategoryAdvertisements(?Category $category, CategoryRepository $categoryRepository): JsonResponse
+    // {
+    //     if (!$category) {
+    //         return $this->json(['erreur' => 'la demande n\'a pas été trouvée'], HttpFoundationResponse::HTTP_NOT_FOUND);
+    //     }
+    //     $categoryId = $category->getId();
+    //     $advertisements = $categoryRepository->findAllAdvertisements($categoryId);
 
-        return $this->json(
-            $category,
-            HttpFoundationResponse::HTTP_OK,
-            [],
-            [
-                "groups" =>
-                [
-                    "category_advertisement_browse"
-                ]
-            ]
-        );
-    }
+    //     return $this->json(
+    //         $advertisements,
+    //         HttpFoundationResponse::HTTP_OK,
+    //         [],
+    //         [
+    //             "groups" =>
+    //             [
+    //                 "category_wishes",
+    //                 "category_offers",
+    //                 "category_advertisements"
+    //             ]
+    //         ]
+    //     );
+    // }
 
     /**
      * Retieves a list of Offer affliliated to a Category
@@ -98,8 +104,6 @@ class CategoryController extends AbstractController
         );
     }
 
-
-
     /**
      * Retrieves a list of active categories
      * 
@@ -108,7 +112,7 @@ class CategoryController extends AbstractController
     public function findAllActiveCategories(CategoryRepository $categoryRepository): JsonResponse
     {
         return $this->json(
-            $categoryRepository->dql(),
+            $categoryRepository->findAllActiveCategories(),
             HttpFoundationResponse::HTTP_OK,
             [],
             [
@@ -117,5 +121,38 @@ class CategoryController extends AbstractController
                 ]
             ]
         );
+    }
+
+        /**
+     * Retieves a list of Offer and Wish affliliated to a Category
+     * 
+     * @Route("/api/categories/{id<\d+>}/advertisements", name="app_api_categories_advertisements", methods={"GET"})
+     *
+     * @param Category|null $category
+     * @return jsonResponse
+     */
+    public function getCategoryAdvertisements(?Category $category, OfferRepository  $offerRepository, WishRepository $wishRepository): JsonResponse
+    {
+        if (!$category) {
+            return $this->json(['erreur' => 'la demande n\'a pas été trouvée'], HttpFoundationResponse::HTTP_NOT_FOUND);
+   }   
+        $activeWishes = $wishRepository->activeWishes($category->getId()); 
+        $activeOffers = $offerRepository->activeOffers($category->getId());
+
+        return $this->json(
+            [
+                'wishes' => $activeWishes,
+                'offers' => $activeOffers
+            ],
+            HttpFoundationResponse::HTTP_OK,
+            [],
+            [
+                "groups" =>
+                [
+                    // "wish_read",
+                    // "offer_read"
+                    "category_advertisements"
+                ]
+            ]);
     }
 }
