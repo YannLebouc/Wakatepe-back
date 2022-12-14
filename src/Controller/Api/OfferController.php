@@ -282,4 +282,17 @@ class OfferController extends AbstractController
             HttpFoundationResponse::HTTP_OK
         );
     }
+
+    /**
+     * @Route("/api/offers/results", name="app_api_offers_research")
+     */
+    public function offersResearch(): JsonResponse
+    {   
+        // Nom de la clé "search"
+        // Je veux récupérer l'input envoyé (string)
+        // exploser la string et aller chercher les offres dont le titre contient les morceaux de string
+        
+
+        return $this->json(['property'=>'value'],200);
+    }
 }

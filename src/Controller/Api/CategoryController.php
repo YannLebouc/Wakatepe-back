@@ -75,7 +75,7 @@ class CategoryController extends AbstractController
         );
     }
 
-        /**
+    /**
      * Retieves a list of Wish affliliated to a Category
      * 
      * @Route("/api/categories/{id<\d+>}/wishes", name="app_api_category_wishes", methods={"GET"})
@@ -123,7 +123,7 @@ class CategoryController extends AbstractController
         );
     }
 
-        /**
+    /**
      * Retieves a list of Offer and Wish affliliated to a Category
      * 
      * @Route("/api/categories/{id<\d+>}/advertisements", name="app_api_categories_advertisements", methods={"GET"})
@@ -159,6 +159,8 @@ class CategoryController extends AbstractController
     /**
      * Retrieves the top 5 categories with the most offers
      * @Route("/api/categories", name="app_api_top_categories", methods={"GET"})
+     * 
+     * 
      * @param CategoryRepository $categoryRepository
      * @return JsonResponse
      */
