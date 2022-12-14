@@ -26,6 +26,7 @@ class Wish
      * @Groups({"wish_read"})
      * @Groups({"current_user_wishes"})
      * @Groups({"mainCategory_category_browse"})
+     * @Groups({"current_user_inactive_ads"})
      * @Groups({"mainCategory_categories_advertisements"})
      * @Groups({"category_wishes"})
      * @Groups({"category_advertisements"})
@@ -43,6 +44,7 @@ class Wish
      * @Groups({"category_wishes"})
      * @Groups({"category_advertisements"})
      * @Groups({"nelmio_add_wish"})
+     * @Groups({"current_user_inactive_ads"})
      * 
      * @Assert\NotBlank
      * @Assert\NotNull
@@ -58,6 +60,7 @@ class Wish
      * @Groups({"category_wishes"})
      * @Groups({"category_advertisements"})
      * @Groups({"nelmio_add_wish"})
+     * @Groups({"current_user_inactive_ads"})
      * 
      * @Assert\Positive
      * @Assert\Length(max=5)
@@ -70,6 +73,8 @@ class Wish
      * @Groups({"wish_browse"})
      * @Groups({"wish_read"})
      * @Groups({"current_user_wishes"})
+     * @Groups({"category_advertisement_browse"})
+     * @Groups({"current_user_inactive_ads"})
      * @Groups({"category_wishes"})
      * @Groups({"category_advertisements"})
      * 
@@ -85,6 +90,7 @@ class Wish
      * @Groups({"category_wishes"})
      * @Groups({"category_advertisements"})
      * @Groups({"nelmio_add_wish"})
+     * @Groups({"current_user_inactive_ads"})
      */
     private $description;
 
@@ -92,6 +98,8 @@ class Wish
      * @ORM\Column(type="boolean")
      * 
      * @Groups({"nelmio_add_wish"})
+     * @Groups({"current_user_inactive_ads"})
+     * 
      */
     private $isActive;
 
@@ -104,6 +112,7 @@ class Wish
      * @Groups({"category_wishes"})
      * @Groups({"category_advertisements"})
      * @Groups({"nelmio_add_wish"})
+     * @Groups({"current_user_inactive_ads"})
      */
     private $type;
 
@@ -122,6 +131,8 @@ class Wish
      * @Groups({"wish_browse"})
      * @Groups({"wish_read"})
      * @Groups({"current_user_wishes"})
+     * @Groups({"category_advertisement_browse"})
+     * @Groups({"current_user_inactive_ads"})
      * @Groups({"category_wishes"})
      * @Groups({"category_advertisements"})
      */
@@ -133,6 +144,8 @@ class Wish
      * @Groups({"wish_browse"})
      * @Groups({"wish_read"})
      * @Groups({"current_user_wishes"})
+     * @Groups({"category_advertisement_browse"})
+     * @Groups({"current_user_inactive_ads"})
      * @Groups({"category_wishes"})
      * @Groups({"category_advertisements"})
      */

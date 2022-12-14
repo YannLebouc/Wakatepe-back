@@ -28,6 +28,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Groups({"offer_read"})
      * @Groups({"users_read"})
      * @Groups({"users_browse"})
+     * @Groups({"category_advertisement_browse"})
+     * @Groups({"current_user_offers"})
+     * @Groups({"current_user_wishes"})
+     * @Groups({"current_user_inactive_ads"})
+     * 
+     * 
      * @Groups({"category_offers"})
      * @Groups({"category_wishes"})
      * @Groups({"category_advertisements"})
@@ -44,6 +50,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Groups({"users_browse"})
      * @Groups({"nelmio_add_user"})
      * @Groups({"nelmio_edit_user"})
+     * @Groups({"current_user_offers"})
+     * @Groups({"current_user_wishes"})
+     * @Groups({"current_user_inactive_ads"})
+     * 
      * @Assert\NotBlank
      * @Assert\NotNull
      * @Assert\Email(message = "The email '{{ value }}' is not a valid email.")
@@ -75,11 +85,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Groups({"wish_read"})
      * @Groups({"offer_read"})
      * @Groups({"users_read"})
+     * @Groups({"category_advertisement_browse"})
+     * @Groups({"current_user_offers"})
      * @Groups({"category_offers"})
      * @Groups({"category_wishes"})
      * @Groups({"category_advertisements"})
      * @Groups({"nelmio_add_user"})
      * @Groups({"nelmio_edit_user"})
+     * @Groups({"current_user_wishes"})
+     * @Groups({"current_user_inactive_ads"})
+     * 
      * @Assert\NotBlank
      * @Assert\NotNull
      */
@@ -91,6 +106,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Groups({"wish_read"})
      * @Groups({"offer_read"})
      * @Groups({"users_read"})
+     * @Groups({"current_user_offers"})
+     * @Groups({"current_user_wishes"})
+     * @Groups({"current_user_inactive_ads"})
      * 
      * @Assert\Positive
      * @Groups({"nelmio_add_user"})
@@ -102,9 +120,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="integer")
      * 
      * @Groups({"users_read"})
-     * 
+     * @Groups({"current_user_offers"})
      * @Groups({"nelmio_add_user"})
      * @Groups({"nelmio_edit_user"})
+     * @Groups({"current_user_wishes"})
+     * @Groups({"current_user_inactive_ads"})
+     * 
      * @Assert\NotBlank
      * @Assert\NotNull
      * @Assert\Positive
@@ -116,9 +137,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="string", length=64)
      * 
      * @Groups({"users_read"})
-     * 
+     * @Groups({"current_user_offers"})
      * @Groups({"nelmio_add_user"})
      * @Groups({"nelmio_edit_user"})
+     * @Groups({"current_user_wishes"})
+     * @Groups({"current_user_inactive_ads"})
+     * 
      * @Assert\NotBlank
      * @Assert\NotNull
      */
@@ -128,9 +152,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="string", length=128)
      * 
      * @Groups({"users_read"})
-     * 
+     * @Groups({"current_user_wishes"})
      * @Groups({"nelmio_add_user"})
      * @Groups({"nelmio_edit_user"})
+     * @Groups({"current_user_inactive_ads"})
+     * 
      * @Assert\NotBlank
      * @Assert\NotNull
      */
@@ -144,6 +170,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Groups({"users_read"})
      * @Groups({"nelmio_add_user"})
      * @Groups({"nelmio_edit_user"})
+     * @Groups({"current_user_inactive_ads"})
      */
     private $picture;
 
@@ -165,11 +192,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\OneToMany(targetEntity=Offer::class, mappedBy="user", orphanRemoval=true)
      * 
      * @Groups({"user_offer_browse"})
+     * @Groups({"current_user_offers"})
+     * @Groups({"current_user_inactive_ads"})
+     * 
      */
     private $offer;
 
     /**
      * @ORM\OneToMany(targetEntity=Wish::class, mappedBy="user", orphanRemoval=true)
+     * @Groups({"current_user_wishes"})
+     * @Groups({"current_user_inactive_ads"})
      */
     private $wish;
 
