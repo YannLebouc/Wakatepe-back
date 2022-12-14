@@ -79,14 +79,25 @@ class OfferRepository extends ServiceEntityRepository
     }
 
 
-    public function getSearchedOffers($keyword, EntityManager $em)
+    public function getSearchedOffers($keyword)
     {
         
-        $qb = $em->createQueryBuilder();
+        $qb = $this->getEntityManager()->createQueryBuilder();
         
         $qb->select('o')
+            ->from('App\Entity\Offer', 'o')
             ->where($qb->expr()->like('o.title', ':title'))
             ->setParameter('title', '%'.$keyword.'%');
+
+        $query = $qb->getQuery();
+        return $query->getResult();
+
+        // $query = $this->getEntityManager()->createQuery('SELECT o
+        // FROM App\Entity\Offer o
+        // WHERE o.title LIKE :title
+        // ');
+        // $query->setParameter('title', '%'.$keyword.'%');
+        // return $query->getResult();
     }
 //    /**
 //     * @return Offer[] Returns an array of Offer objects
