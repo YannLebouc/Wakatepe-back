@@ -155,4 +155,35 @@ class CategoryController extends AbstractController
                 ]
             ]);
     }
+
+    /**
+     * Retrieves the top 5 categories with the most offers
+     * @Route("/api/categories", name="app_api_top_categories", methods={"GET"})
+     * @param CategoryRepository $categoryRepository
+     * @return JsonResponse
+     */
+    public function getTrendingCategories(CategoryRepository $categoryRepository): JsonResponse
+    {
+        $topCategories = [];
+        $categories = $categoryRepository->findAllActiveCategories();
+
+        for ($i = 0; $i < 5; $i++) { 
+            $catInArray = [];
+            $randomCat = $categories[rand(0, count($categories)-1)];
+            if(!in_array($randomCat, $catInArray)) {
+                $topCategories[] = $randomCat;
+            }
+        }
+
+        return $this->json(
+            $topCategories,
+            HttpFoundationResponse::HTTP_OK,
+            [],
+            [
+                'groups' => [
+                    'category_browse'
+                ]
+            ]
+         );
+    }
 }

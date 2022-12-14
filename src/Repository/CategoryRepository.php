@@ -39,24 +39,7 @@ class CategoryRepository extends ServiceEntityRepository
         }
     }
 
-    // /**
-    //  * 
-    //  */
-    // public function findAllAdvertisements($id)
-    // {   
-    //     $query = $this->getEntityManager()->createQuery('SELECT c, o, w
-    //     FROM App\Entity\Category c
-    //     JOIN c.offer o
-    //     JOIN c.wish w
-    //     WHERE c.id = '. $id .'
-    //     AND o.isActive = 1
-    //     AND o.isLended = 0
-    //     AND w.isActive = 1
-    //     AND c.isActive = 1
-    //     ');
-    //     $categoryAdvertisements = $query->getResult();
-    //     return $categoryAdvertisements;
-    // }
+
 
     public function findAllAdvertisements($id)
     {   
@@ -120,21 +103,6 @@ class CategoryRepository extends ServiceEntityRepository
         return $activeCategories;
     }
 
-
-//    /**
-//     * @return Category[] Returns an array of Category objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
 
 //    public function findOneBySomeField($value): ?Category
 //    {
