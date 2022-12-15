@@ -303,7 +303,15 @@ class OfferController extends AbstractController
             }
         }
         
-        dd($offers);
-        return $this->json(['property'=>'value'],200);
+        return $this->json(
+            $offers,
+            HttpFoundationResponse::HTTP_OK,
+            [],
+            [
+                'groups' => [
+                    'offer_browse'
+                ]
+            ]
+        );
     }
 }

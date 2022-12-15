@@ -87,8 +87,9 @@ class OfferRepository extends ServiceEntityRepository
         $qb->select('o')
             ->from('App\Entity\Offer', 'o')
             ->where($qb->expr()->like('o.title', ':title'))
-            ->setParameter('title', '%'.$keyword.'%');
-
+            ->setParameter('title', '%'.$keyword.'%'
+        );
+            
         $query = $qb->getQuery();
         return $query->getResult();
 
