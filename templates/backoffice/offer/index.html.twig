@@ -5,7 +5,10 @@
 {% block body %}
     <h1>Offer index</h1>
 
-    <a href="{{ path('app_backoffice_offer_new') }}">Create new</a>
+{% if is_granted('ROLE_ADMIN') %}
+    <a href="{{ path('app_backoffice_category_new') }}">Ajouter une offre</a>
+{% else %}
+{% endif %}
     
     <table class="table">
         <thead>
@@ -50,5 +53,10 @@
         {% endfor %}
         </tbody>
     </table>
+
+{% if is_granted('ROLE_ADMIN') %}
+    <a href="{{ path('app_backoffice_category_new') }}">Ajouter une offre</a>
+{% else %}
+{% endif %}
 
 {% endblock %}

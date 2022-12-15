@@ -5,7 +5,10 @@
 {% block body %}
     <h1>User index</h1>
 
-    <a href="{{ path('app_backoffice_user_new') }}">Create new</a>
+{% if is_granted('ROLE_ADMIN') %}
+    <a href="{{ path('app_backoffice_user_new') }}">Ajouter un utilisateur</a>
+{% else %}
+{% endif %}
     
     <table class="table">
         <thead>
@@ -52,5 +55,10 @@
         {% endfor %}
         </tbody>
     </table>
+
+{% if is_granted('ROLE_ADMIN') %}
+    <a href="{{ path('app_backoffice_user_new') }}">Ajouter un utilisateur</a>
+{% else %}
+{% endif %}
 
 {% endblock %}

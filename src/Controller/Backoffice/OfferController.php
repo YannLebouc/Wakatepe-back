@@ -30,6 +30,8 @@ class OfferController extends AbstractController
      */
     public function new(Request $request, OfferRepository $offerRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         $offer = new Offer();
         $form = $this->createForm(OfferType::class, $offer);
         $form->handleRequest($request);
@@ -81,6 +83,8 @@ class OfferController extends AbstractController
      */
     public function delete(Request $request, Offer $offer, OfferRepository $offerRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         if ($this->isCsrfTokenValid('delete'.$offer->getId(), $request->request->get('_token'))) {
             $offerRepository->remove($offer, true);
         }

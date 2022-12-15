@@ -5,7 +5,10 @@
 {% block body %}
     <h1>Wish index</h1>
 
-    <a href="{{ path('app_backoffice_wish_new') }}">Create new</a>
+{% if is_granted('ROLE_ADMIN') %}
+    <a href="{{ path('app_backoffice_category_new') }}">Ajouter une demande</a>
+{% else %}
+{% endif %}
     
     <table class="table">
         <thead>
@@ -49,4 +52,8 @@
         </tbody>
     </table>
 
+{% if is_granted('ROLE_ADMIN') %}
+    <a href="{{ path('app_backoffice_category_new') }}">Ajouter une demande</a>
+{% else %}
+{% endif %}
 {% endblock %}

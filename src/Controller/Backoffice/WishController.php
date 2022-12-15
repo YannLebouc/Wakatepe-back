@@ -30,6 +30,8 @@ class WishController extends AbstractController
      */
     public function new(Request $request, WishRepository $wishRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         $wish = new Wish();
         $form = $this->createForm(WishType::class, $wish);
         $form->handleRequest($request);
@@ -81,6 +83,8 @@ class WishController extends AbstractController
      */
     public function delete(Request $request, Wish $wish, WishRepository $wishRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         if ($this->isCsrfTokenValid('delete'.$wish->getId(), $request->request->get('_token'))) {
             $wishRepository->remove($wish, true);
         }

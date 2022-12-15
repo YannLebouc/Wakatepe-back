@@ -60,11 +60,19 @@
 							<span>User\</span>
 						</a>
 					</li>
+				{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+					<li>
+						<a href="{{path('app_logout')}}" {# type="button" class="btn btn-danger me-2" #}>
+							<span>Deconnexion\</span>
+						</a>
+					</li>
+				{% else %}
 					<li>
 						<a href="{{path('app_login')}}" {# type="button" class="btn btn-danger me-2" #}>
 							<span>Connexion\</span>
 						</a>
 					</li>
+				{% endif %}
 					{# <li>
 						<a href="{{ path('app_main_test')}}">
 							<span>Rechercher\</span>
@@ -74,7 +82,7 @@
 				<div id="right">
 					{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 						<span class="mr-2">Bienvenue
-							<b>{{ app.user.email }}</b>
+							<b>{{ app.user.alias }}</b>
 						</span>
 						{# <a href="{{ path('question_add') }}" class="btn btn-danger">Poser une question</a>
                         {% if is_granted('ROLE_MODERATOR') %}
@@ -124,11 +132,20 @@
 							<span>User\</span>
 						</a>
 					</li>
+				{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+					<li>
+						<a href="{{path('app_logout')}}" {# type="button" class="btn btn-danger me-2" #}>
+							<span>Deconnexion\</span>
+						</a>
+					</li>
+				{% else %}
 					<li>
 						<a href="{{path('app_login')}}" {# type="button" class="btn btn-danger me-2" #}>
 							<span>Connexion\</span>
 						</a>
 					</li>
+				{% endif %}
+
 					{# <li>
 						<a href="{{ path('app_main_test')}}">
 							<span>Rechercher\</span>
@@ -138,7 +155,7 @@
 				<div id="right">
 					{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 						<span class="mr-2">Bienvenue
-							<b>{{ app.user.email }}</b>
+							<b>{{ app.user.alias }}</b>
 						</span>
 						{# <a href="{{ path('question_add') }}" class="btn btn-danger">Poser une question</a>
                         {% if is_granted('ROLE_MODERATOR') %}

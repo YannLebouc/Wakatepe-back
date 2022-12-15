@@ -30,6 +30,8 @@ class UserController extends AbstractController
      */
     public function new(Request $request, UserRepository $userRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
@@ -81,6 +83,8 @@ class UserController extends AbstractController
      */
     public function delete(Request $request, User $user, UserRepository $userRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
             $userRepository->remove($user, true);
         }

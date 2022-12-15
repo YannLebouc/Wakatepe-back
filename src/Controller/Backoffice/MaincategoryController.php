@@ -30,6 +30,8 @@ class MaincategoryController extends AbstractController
      */
     public function new(Request $request, MainCategoryRepository $mainCategoryRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         $mainCategory = new MainCategory();
         $form = $this->createForm(MainCategoryType::class, $mainCategory);
         $form->handleRequest($request);
@@ -81,6 +83,8 @@ class MaincategoryController extends AbstractController
      */
     public function delete(Request $request, MainCategory $mainCategory, MainCategoryRepository $mainCategoryRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         if ($this->isCsrfTokenValid('delete'.$mainCategory->getId(), $request->request->get('_token'))) {
             $mainCategoryRepository->remove($mainCategory, true);
         }

@@ -53,9 +53,15 @@ security:
         # à vous de bien définir cette partie
         # - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
 
+# du + au - précis
         # - { path: ^/, roles: PUBLIC_ACCESS}
-        # - { path: /backoffice, roles: ROLE_MANAGER }
-        - { path: /backoffice, roles: ROLE_ADMIN }
+        - { path: /backoffice, roles: [ ROLE_MANAGER, ROLE_ADMIN ] }
+        # - { path: /backoffice, roles: [ ROLE_MANAGER, ROLE_ADMIN ], methods: [GET, PUT, PATCH]}
+        # - { path: /backoffice, roles: [ ROLE_MANAGER, ROLE_ADMIN ], methods: [POST]}
+
+
+    # role_hierarchy:
+    #     ROLE_ADMIN: ROLE_MANAGER
 
 when@test:
     security:
