@@ -5,9 +5,11 @@ namespace App\Controller\Backoffice;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -28,7 +30,7 @@ class UserController extends AbstractController
     /**
      * @Route("/new", name="app_backoffice_user_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, UserRepository $userRepository): Response
+    public function new(Request $request, UserRepository $userRepository, UserPasswordHasherInterface $userPasswordHasher): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
@@ -37,6 +39,9 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $user->setPicture('https://upload.wikimedia.org/wikipedia/commons/1/1e/Michel_Sardou_2014.jpg');
+            $passwordHashed = $userPasswordHasher->hashPassword($user, $user->getPassword());
+            $user->setPassword($passwordHashed);
             $userRepository->add($user, true);
 
             return $this->redirectToRoute('app_backoffice_user_index', [], Response::HTTP_SEE_OTHER);
@@ -67,6 +72,7 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $user->setUpdatedAt(new DateTime());
             $userRepository->add($user, true);
 
             return $this->redirectToRoute('app_backoffice_user_index', [], Response::HTTP_SEE_OTHER);

@@ -25,13 +25,13 @@ class CategoryType extends AbstractType
                 ]
             ])
             // ->add('slug')
-            ->add('picture', UrlType::class, 
-            [
-                "label" => "URL de l'image de la catégorie :",
-                "attr" => [
-                    "placeholder" => "http://...."
-                ]
-            ])
+            // ->add('picture', UrlType::class, 
+            // [
+            //     "label" => "URL de l'image de la catégorie :",
+            //     "attr" => [
+            //         "placeholder" => "http://...."
+            //     ]
+            // ])
             ->add('isActive', ChoiceType::class,
             [
                 "placeholder" => "Active",

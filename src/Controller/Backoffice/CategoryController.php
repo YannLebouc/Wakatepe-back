@@ -5,6 +5,8 @@ namespace App\Controller\Backoffice;
 use App\Entity\Category;
 use App\Form\CategoryType;
 use App\Repository\CategoryRepository;
+use App\Services\CustomSlugger;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,7 +32,7 @@ class CategoryController extends AbstractController
      * 
      */
     // @isGranted("ROLE_ADMIN")
-    public function new(Request $request, CategoryRepository $categoryRepository): Response
+    public function new(Request $request, CategoryRepository $categoryRepository, CustomSlugger $customSlugger): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
@@ -38,12 +40,21 @@ class CategoryController extends AbstractController
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $categoryRepository->add($category, true);
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $category->setPicture('https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Michael_Youn_2018.jpg/220px-Michael_Youn_2018.jpg');
+                $newSlug = $customSlugger->slugToLower($category->getName());
+                $category->setSlug($newSlug);
+                $categoryRepository->add($category, true);
 
-            return $this->redirectToRoute('app_backoffice_category_index', [], Response::HTTP_SEE_OTHER);
+                $this->addFlash('success', 'la catégorie a bien été ajoutée');
+
+                return $this->redirectToRoute('app_backoffice_category_index', [], Response::HTTP_SEE_OTHER);
+            }
+
+            $this->addFlash('danger', 'la catégorie n\'a pas été ajoutée');
+
         }
-
         return $this->renderForm('backoffice/category/new.html.twig', [
             'category' => $category,
             'form' => $form,
@@ -63,17 +74,25 @@ class CategoryController extends AbstractController
     /**
      * @Route("/{id}/edit", name="app_backoffice_category_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, Category $category, CategoryRepository $categoryRepository): Response
+    public function edit(Request $request, Category $category, CategoryRepository $categoryRepository, CustomSlugger $customSlugger): Response
     {
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $categoryRepository->add($category, true);
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $category->setUpdatedAt(new DateTime());
+                $newSlug = $customSlugger->slugToLower($category->getName());
+                $category->setSlug($newSlug);
+                $categoryRepository->add($category, true);
 
-            return $this->redirectToRoute('app_backoffice_category_index', [], Response::HTTP_SEE_OTHER);
+                $this->addFlash('success', 'la catégorie a bien été modifiée');
+
+                return $this->redirectToRoute('app_backoffice_category_index', [], Response::HTTP_SEE_OTHER);
+            }
+
+            $this->addFlash('danger', 'la catégorie n\'a pas été modifiée');
         }
-
         return $this->renderForm('backoffice/category/edit.html.twig', [
             'category' => $category,
             'form' => $form,
@@ -87,9 +106,11 @@ class CategoryController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
-        if ($this->isCsrfTokenValid('delete'.$category->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $category->getId(), $request->request->get('_token'))) {
             $categoryRepository->remove($category, true);
         }
+
+        $this->addFlash('success', 'la catégorie a bien été supprimée');
 
         return $this->redirectToRoute('app_backoffice_category_index', [], Response::HTTP_SEE_OTHER);
     }

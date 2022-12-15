@@ -5,6 +5,8 @@ namespace App\Controller\Backoffice;
 use App\Entity\MainCategory;
 use App\Form\MainCategoryType;
 use App\Repository\MainCategoryRepository;
+use App\Services\CustomSlugger;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,7 +30,7 @@ class MaincategoryController extends AbstractController
     /**
      * @Route("/new", name="app_backoffice_maincategory_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, MainCategoryRepository $mainCategoryRepository): Response
+    public function new(Request $request, MainCategoryRepository $mainCategoryRepository, CustomSlugger $customSlugger): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
@@ -36,12 +38,19 @@ class MaincategoryController extends AbstractController
         $form = $this->createForm(MainCategoryType::class, $mainCategory);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $mainCategoryRepository->add($mainCategory, true);
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $newSlug = $customSlugger->slugToLower($mainCategory->getName());
+                $mainCategory->setSlug($newSlug);
+                $mainCategoryRepository->add($mainCategory, true);
 
-            return $this->redirectToRoute('app_backoffice_maincategory_index', [], Response::HTTP_SEE_OTHER);
+                $this->addFlash('success', 'la main catégorie a bien été ajoutée');
+
+                return $this->redirectToRoute('app_backoffice_maincategory_index', [], Response::HTTP_SEE_OTHER);
+            }
+
+            $this->addFlash('danger', 'la main catégorie n\'a pas été ajoutée');
         }
-
         return $this->renderForm('backoffice/maincategory/new.html.twig', [
             'main_category' => $mainCategory,
             'form' => $form,
@@ -61,15 +70,24 @@ class MaincategoryController extends AbstractController
     /**
      * @Route("/{id}/edit", name="app_backoffice_maincategory_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, MainCategory $mainCategory, MainCategoryRepository $mainCategoryRepository): Response
+    public function edit(Request $request, MainCategory $mainCategory, MainCategoryRepository $mainCategoryRepository, CustomSlugger $customSlugger): Response
     {
         $form = $this->createForm(MainCategoryType::class, $mainCategory);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $mainCategoryRepository->add($mainCategory, true);
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $mainCategory->setUpdatedAt(new DateTime());
+                $newSlug = $customSlugger->slugToLower($mainCategory->getName());
+                $mainCategory->setSlug($newSlug);
+                $mainCategoryRepository->add($mainCategory, true);
 
-            return $this->redirectToRoute('app_backoffice_maincategory_index', [], Response::HTTP_SEE_OTHER);
+                $this->addFlash('success', 'la main catégorie a bien été modifiée');
+
+                return $this->redirectToRoute('app_backoffice_maincategory_index', [], Response::HTTP_SEE_OTHER);
+            }
+
+            $this->addFlash('danger', 'la main catégorie n\'a pas été modifiée');
         }
 
         return $this->renderForm('backoffice/maincategory/edit.html.twig', [
@@ -85,8 +103,11 @@ class MaincategoryController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
-        if ($this->isCsrfTokenValid('delete'.$mainCategory->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $mainCategory->getId(), $request->request->get('_token'))) {
             $mainCategoryRepository->remove($mainCategory, true);
+
+            $this->addFlash('success', 'la main catégorie a bien été supprimée');
+
         }
 
         return $this->redirectToRoute('app_backoffice_maincategory_index', [], Response::HTTP_SEE_OTHER);
