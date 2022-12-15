@@ -33,6 +33,8 @@ class Offer
      * @Groups({"mainCategory_categories_advertisements"})
      * @Groups({"category_offers"})
      * @Groups({"category_advertisements"})
+     * @Groups({"current_user_offers"})
+     * 
      */
     private $id;
 

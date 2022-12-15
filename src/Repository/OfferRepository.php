@@ -4,7 +4,9 @@ namespace App\Repository;
 
 use App\Entity\Offer;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManager;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @extends ServiceEntityRepository<Offer>
@@ -76,6 +78,28 @@ class OfferRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+
+    public function getSearchedOffers($keyword)
+    {
+        
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        
+        $qb->select('o')
+            ->from('App\Entity\Offer', 'o')
+            ->where($qb->expr()->like('o.title', ':title'))
+            ->setParameter('title', '%'.$keyword.'%'
+        );
+            
+        $query = $qb->getQuery();
+        return $query->getResult();
+
+        // $query = $this->getEntityManager()->createQuery('SELECT o
+        // FROM App\Entity\Offer o
+        // WHERE o.title LIKE :title
+        // ');
+        // $query->setParameter('title', '%'.$keyword.'%');
+        // return $query->getResult();
+    }
 //    /**
 //     * @return Offer[] Returns an array of Offer objects
 //     */
