@@ -298,7 +298,7 @@ class OfferController extends AbstractController
         $keywords = explode(" ", $requestContent);
         $offers = [];
         foreach ($keywords as $keyword) {
-            if (strlen($keyword) > 3) {
+            if (strlen($keyword) > 2) {
                 $results = $offerRepository->getSearchedOffers($keyword);
                 $offers[] = $results;
             }
