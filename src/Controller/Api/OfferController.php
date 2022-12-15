@@ -151,7 +151,6 @@ class OfferController extends AbstractController
             );
         }
 
-        $newOffer->setCreatedAt(new DateTime());
         $newOffer->setUser($this->getUser());
 
         $doctrine->persist($newOffer);
