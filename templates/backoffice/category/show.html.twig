@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Category{% endblock %}
+
+{% block body %}
+    <h1>Catégorie</h1>
+
+    <a href="{{ path('app_backoffice_category_edit', {'id': category.id}) }}">Editer</a>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ category.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ category.name }}</td>
+            </tr>
+            <tr>
+                <th>Slug</th>
+                <td>{{ category.slug }}</td>
+            </tr>
+            <tr>
+                <th>Picture</th>
+                <td>{{ category.picture }}</td>
+            </tr>
+            <tr>
+                <th>IsActive</th>
+                <td>{{ category.isActive ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ category.createdAt ? category.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ category.updatedAt ? category.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_backoffice_category_edit', {'id': category.id}) }}">Editer</a></br>
+
+    <a href="{{ path('app_backoffice_category_index') }}">back to list</a>
+
+    {{ include('backoffice/category/_delete_form.html.twig') }}
+{% endblock %}

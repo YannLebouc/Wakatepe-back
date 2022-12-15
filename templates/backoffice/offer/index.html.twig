@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Offer index{% endblock %}
+
+{% block body %}
+    <h1>Offer index</h1>
+
+    <a href="{{ path('app_backoffice_offer_new') }}">Create new</a>
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>actions</th>
+                <th>Title</th>
+                <th>Zipcode</th>
+                <th>Picture</th>
+                <th>Description</th>
+                <th>IsActive</th>
+                <th>IsLended</th>
+                <th>Type</th>
+                <th>IsReported</th>
+                <th>CreatedAt</th>
+                <th>UpdatedAt</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for offer in offers %}
+            <tr>
+                <td>{{ offer.id }}</td>
+                <td>
+                    <a href="{{ path('app_backoffice_offer_show', {'id': offer.id}) }}">show</a>
+                    <a href="{{ path('app_backoffice_offer_edit', {'id': offer.id}) }}">edit</a>
+                </td>
+                <td>{{ offer.title }}</td>
+                <td>{{ offer.zipcode }}</td>
+                <td>{{ offer.picture }}</td>
+                <td>{{ offer.description }}</td>
+                <td>{{ offer.isActive ? 'Yes' : 'No' }}</td>
+                <td>{{ offer.isLended ? 'Yes' : 'No' }}</td>
+                <td>{{ offer.type }}</td>
+                <td>{{ offer.isReported ? 'Yes' : 'No' }}</td>
+                <td>{{ offer.createdAt ? offer.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ offer.updatedAt ? offer.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="12">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

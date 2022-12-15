@@ -19,6 +19,7 @@ security:
                 check_path: /api/login_check
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
+
         
         # zone d'intervention du JWT
         api:
@@ -31,7 +32,14 @@ security:
         main:
             lazy: true
             provider: app_user_provider
-
+            ## 
+            custom_authenticator: App\Security\BackofficeAuthenticator
+            logout:
+                path: app_logout
+                # where to redirect after logout
+                target: app_login
+            ##
+            
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
 
@@ -44,6 +52,10 @@ security:
         # on ferme toutes les routes /api
         # à vous de bien définir cette partie
         # - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
+
+        # - { path: ^/, roles: PUBLIC_ACCESS}
+        # - { path: /backoffice, roles: ROLE_MANAGER }
+        - { path: /backoffice, roles: ROLE_ADMIN }
 
 when@test:
     security:

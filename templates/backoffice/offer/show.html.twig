@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Offer{% endblock %}
+
+{% block body %}
+    <h1>Offer</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ offer.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ offer.title }}</td>
+            </tr>
+            <tr>
+                <th>Zipcode</th>
+                <td>{{ offer.zipcode }}</td>
+            </tr>
+            <tr>
+                <th>Picture</th>
+                <td>{{ offer.picture }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ offer.description }}</td>
+            </tr>
+            <tr>
+                <th>IsActive</th>
+                <td>{{ offer.isActive ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>IsLended</th>
+                <td>{{ offer.isLended ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ offer.type }}</td>
+            </tr>
+            <tr>
+                <th>IsReported</th>
+                <td>{{ offer.isReported ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ offer.createdAt ? offer.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ offer.updatedAt ? offer.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_backoffice_offer_index') }}">back to list</a>
+
+    <a href="{{ path('app_backoffice_offer_edit', {'id': offer.id}) }}">edit</a>
+
+    {{ include('backoffice/offer/_delete_form.html.twig') }}
+{% endblock %}

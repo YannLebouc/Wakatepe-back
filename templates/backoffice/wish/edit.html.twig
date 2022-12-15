@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Wish{% endblock %}
+
+{% block body %}
+    <h1>Edit Wish</h1>
+
+    {{ include('backoffice/wish/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_backoffice_wish_index') }}">back to list</a>
+
+    {{ include('backoffice/wish/_delete_form.html.twig') }}
+{% endblock %}

@@ -13,6 +13,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=MainCategoryRepository::class)
+ * 
+ * @ORM\HasLifecycleCallbacks()
  */
 class MainCategory
 {
@@ -65,6 +67,14 @@ class MainCategory
      * 
      */
     private $categories;
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedAtValue(): void
+    {
+        $this->createdAt = new \DateTime();
+    }
 
     public function __construct()
     {
