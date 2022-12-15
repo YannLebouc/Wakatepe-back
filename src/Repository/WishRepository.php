@@ -77,6 +77,28 @@ class WishRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+
+    /**
+     * Retrieves all the wishes containing a keyword in their title
+     *
+     * @param [mixed] $keyword
+     * @return void
+     */
+    public function getSearchedWishes($keyword)
+    {
+        
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        
+        $qb->select('w')
+            ->from('App\Entity\Wish', 'w')
+            ->where($qb->expr()->like('w.title', ':title'))
+            ->setParameter('title', '%'.$keyword.'%'
+        );
+            
+        $query = $qb->getQuery();
+        return $query->getResult();
+    }
+
 //    /**
 //     * @return Wish[] Returns an array of Wish objects
 //     */

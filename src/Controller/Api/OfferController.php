@@ -283,7 +283,8 @@ class OfferController extends AbstractController
         );
     }
 
-    /**
+    /** Retrieves all the offers containing a keyword in their title
+     * 
      * @Route("/api/offers/results", name="app_api_offers_research", methods={"GET"})
      */
     public function offersResearch(Request $request, OfferRepository $offerRepository): JsonResponse
