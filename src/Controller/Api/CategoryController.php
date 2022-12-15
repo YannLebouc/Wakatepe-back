@@ -168,12 +168,13 @@ class CategoryController extends AbstractController
     {
         $topCategories = [];
         $categories = $categoryRepository->findAllActiveCategories();
-
+        
         for ($i = 0; $i < 5; $i++) { 
-            $catInArray = [];
             $randomCat = $categories[rand(0, count($categories)-1)];
-            if(!in_array($randomCat, $catInArray)) {
+            if(!in_array($randomCat, $topCategories)) {
                 $topCategories[] = $randomCat;
+            } else {
+                $i--;
             }
         }
 
