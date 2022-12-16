@@ -5,10 +5,13 @@ namespace App\Controller\Backoffice;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 /**
  * @Route("/backoffice/user")
@@ -28,18 +31,27 @@ class UserController extends AbstractController
     /**
      * @Route("/new", name="app_backoffice_user_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, UserRepository $userRepository): Response
+    public function new(Request $request, UserRepository $userRepository, UserPasswordHasherInterface $userPasswordHasher): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $userRepository->add($user, true);
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $user->setPicture('https://upload.wikimedia.org/wikipedia/commons/1/1e/Michel_Sardou_2014.jpg');
+                $passwordHashed = $userPasswordHasher->hashPassword($user, $user->getPassword());
+                $user->setPassword($passwordHashed);
+                $userRepository->add($user, true);
 
-            return $this->redirectToRoute('app_backoffice_user_index', [], Response::HTTP_SEE_OTHER);
+                $this->addFlash('success', 'l\'utilisateur a bien été ajouté');
+
+                return $this->redirectToRoute('app_backoffice_user_index', [], Response::HTTP_SEE_OTHER);
+            }
+
+            $this->addFlash('danger', 'l\' utilisateur n\'a pas été ajouté');
+
         }
-
         return $this->renderForm('backoffice/user/new.html.twig', [
             'user' => $user,
             'form' => $form,
@@ -61,15 +73,25 @@ class UserController extends AbstractController
      */
     public function edit(Request $request, User $user, UserRepository $userRepository): Response
     {
+        // $token->getUser();
+
+        // $this->denyAccessUnlessGranted('USER_EDIT', $token);
+
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $userRepository->add($user, true);
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $user->setUpdatedAt(new DateTime());
+                $userRepository->add($user, true);
 
-            return $this->redirectToRoute('app_backoffice_user_index', [], Response::HTTP_SEE_OTHER);
+                $this->addFlash('success', 'l\'utilisateur a bien été modifié');
+
+                return $this->redirectToRoute('app_backoffice_user_index', [], Response::HTTP_SEE_OTHER);
+            }
+
+            $this->addFlash('danger', 'l\'utilisateur n\'a pas été modifié');
         }
-
         return $this->renderForm('backoffice/user/edit.html.twig', [
             'user' => $user,
             'form' => $form,
@@ -81,9 +103,11 @@ class UserController extends AbstractController
      */
     public function delete(Request $request, User $user, UserRepository $userRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
             $userRepository->remove($user, true);
         }
+
+        $this->addFlash('success', 'l\'utilisateur a bien été supprimé');
 
         return $this->redirectToRoute('app_backoffice_user_index', [], Response::HTTP_SEE_OTHER);
     }

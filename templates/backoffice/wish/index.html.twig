@@ -5,7 +5,9 @@
 {% block body %}
     <h1>Wish index</h1>
 
-    <a href="{{ path('app_backoffice_wish_new') }}">Create new</a>
+
+    <a href="{{ path('app_backoffice_category_new') }}">Ajouter une demande</a>
+
     
     <table class="table">
         <thead>
@@ -48,5 +50,8 @@
         {% endfor %}
         </tbody>
     </table>
+
+
+    <a href="{{ path('app_backoffice_category_new') }}">Ajouter une demande</a>
 
 {% endblock %}

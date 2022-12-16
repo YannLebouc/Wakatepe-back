@@ -5,7 +5,9 @@
 {% block body %}
     <h1>Category index</h1>
 
+
     <a href="{{ path('app_backoffice_category_new') }}">Ajouter une catégorie</a>
+
     
     <table class="table">
         <thead>
@@ -32,6 +34,7 @@
                 <td>{{ category.name }}</td>
                 <td>{{ category.slug }}</td>
                 <td>{{ category.picture }}</td>
+
                 <td>{{ category.isActive ? 'Yes' : 'No' }}</td>
                 <td>{{ category.createdAt ? category.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ category.updatedAt ? category.updatedAt|date('Y-m-d H:i:s') : '' }}</td>

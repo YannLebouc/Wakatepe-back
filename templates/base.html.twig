@@ -28,7 +28,7 @@
 	</head>
 	<body>
 		<div class="container-fluid"> 
-        	<nav class="navbar navbar-expand-lg navbar-dark">
+            <nav class="navbar navbar-expand-lg navbar-dark">
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 					<li>
 						<a href="{{ path('app_backoffice_main')}}">
@@ -37,34 +37,34 @@
 					</li>
 					<li>
 						<a href="{{ path('app_backoffice_maincategory_index')}}">
-							<span>MainCatégorie\</span>
+							<span>MainCatégories\</span>
 						</a>
 					</li>
 					<li>
 						<a href="{{ path('app_backoffice_category_index')}}">
-							<span>Catégorie\</span>
+							<span>Catégories\</span>
 						</a>
 					</li>
 					<li>
 						<a href="{{ path('app_backoffice_offer_index')}}">
-							<span>Offre\</span>
+							<span>Offres\</span>
 						</a>
 					</li>
                     <li>
 						<a href="{{ path('app_backoffice_wish_index')}}">
-							<span>Demande\</span>
+							<span>Demandes\</span>
 						</a>
 					</li>
                     <li>
 						<a href="{{ path('app_backoffice_user_index')}}">
-							<span>User\</span>
+							<span>Utilisateurs\</span>
 						</a>
 					</li>
 					<li>
-						<a href="{{path('app_login')}}" {# type="button" class="btn btn-danger me-2" #}>
-							<span>Connexion\</span>
+						<a href="{{ path('app_backoffice_reported')}}">
+							<span>Annonces reportées\</span>
 						</a>
-					</li>
+					</li> 
 					{# <li>
 						<a href="{{ path('app_main_test')}}">
 							<span>Rechercher\</span>
@@ -73,9 +73,12 @@
 				</ul>
 				<div id="right">
 					{% if is_granted('IS_AUTHENTICATED_FULLY') %}
-						<span class="mr-2">Bienvenue
-							<b>{{ app.user.email }}</b>
+					<ul>
+						<li>
+							<span class="mr-2">Bienvenue
+								<b>{{ app.user.alias }}</b>
 						</span>
+						</li>
 						{# <a href="{{ path('question_add') }}" class="btn btn-danger">Poser une question</a>
                         {% if is_granted('ROLE_MODERATOR') %}
                         <a href="{{ path('tag_index') }}" class="btn btn-success">Tags</a>
@@ -84,13 +87,32 @@
 						{# <a href="{{ path('user_profile') }}" class="btn btn-primary">Mon compte</a> #}
 						{# <a href="{{ path('logout') }}" class="btn btn-secondary">Déconnexion</a> #}
 					{% else %}
-						<span class="mr-2">Bienvenue invité</span>
+						<li>	
+							<span class="mr-2">Bienvenue invité</span>
+						</li>
 						{# <a href="{{ path('user_register') }}" class="btn btn-success">Inscription</a> #}
 						{# <a href="{{ path('login') }}" class="btn btn-primary">Connexion</a> #}
 					{% endif %}
+									{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+						<li>
+							<a href="{{path('app_logout')}}" {# type="button" class="btn btn-danger me-2" #}>
+								<span>Deconnexion</span>
+						</a>
+						</li>
+					</ul>
+				{% else %}
+					<li>
+						<a href="{{path('app_login')}}" {# type="button" class="btn btn-danger me-2" #}>
+							<span>Connexion</span>
+						</a>
+					</li>
+				{% endif %}
 
 				</div>
 			</nav>
+		
+       			{{ include('backoffice/partials/_flash_message.html.twig') }}
+
             {% block body %}{% endblock %}
             <nav class="navbar navbar-expand-lg navbar-dark">
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -101,32 +123,32 @@
 					</li>
 					<li>
 						<a href="{{ path('app_backoffice_maincategory_index')}}">
-							<span>MainCatégorie\</span>
+							<span>MainCatégories\</span>
 						</a>
 					</li>
 					<li>
 						<a href="{{ path('app_backoffice_category_index')}}">
-							<span>Catégorie\</span>
+							<span>Catégories\</span>
 						</a>
 					</li>
 					<li>
 						<a href="{{ path('app_backoffice_offer_index')}}">
-							<span>Offre\</span>
+							<span>Offres\</span>
 						</a>
 					</li>
                     <li>
 						<a href="{{ path('app_backoffice_wish_index')}}">
-							<span>Demande\</span>
+							<span>Demandes\</span>
 						</a>
 					</li>
                     <li>
 						<a href="{{ path('app_backoffice_user_index')}}">
-							<span>User\</span>
+							<span>Utilisateurs\</span>
 						</a>
 					</li>
 					<li>
-						<a href="{{path('app_login')}}" {# type="button" class="btn btn-danger me-2" #}>
-							<span>Connexion\</span>
+						<a href="{{ path('app_backoffice_reported')}}">
+							<span>Annonces reportées\</span>
 						</a>
 					</li>
 					{# <li>
@@ -137,9 +159,12 @@
 				</ul>
 				<div id="right">
 					{% if is_granted('IS_AUTHENTICATED_FULLY') %}
-						<span class="mr-2">Bienvenue
-							<b>{{ app.user.email }}</b>
+					<ul>
+						<li>
+							<span class="mr-2">Bienvenue
+								<b>{{ app.user.alias }}</b>
 						</span>
+						</li>
 						{# <a href="{{ path('question_add') }}" class="btn btn-danger">Poser une question</a>
                         {% if is_granted('ROLE_MODERATOR') %}
                         <a href="{{ path('tag_index') }}" class="btn btn-success">Tags</a>
@@ -148,10 +173,26 @@
 						{# <a href="{{ path('user_profile') }}" class="btn btn-primary">Mon compte</a> #}
 						{# <a href="{{ path('logout') }}" class="btn btn-secondary">Déconnexion</a> #}
 					{% else %}
-						<span class="mr-2">Bienvenue invité</span>
+						<li>	
+							<span class="mr-2">Bienvenue invité</span>
+						</li>
 						{# <a href="{{ path('user_register') }}" class="btn btn-success">Inscription</a> #}
 						{# <a href="{{ path('login') }}" class="btn btn-primary">Connexion</a> #}
 					{% endif %}
+									{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+						<li>
+							<a href="{{path('app_logout')}}" {# type="button" class="btn btn-danger me-2" #}>
+								<span>Deconnexion</span>
+						</a>
+						</li>
+					</ul>
+				{% else %}
+					<li>
+						<a href="{{path('app_login')}}" {# type="button" class="btn btn-danger me-2" #}>
+							<span>Connexion</span>
+						</a>
+					</li>
+				{% endif %}
 
 				</div>
 			</nav>

@@ -78,6 +78,23 @@ class WishRepository extends ServiceEntityRepository
     }
 
 
+        /**
+     * Retrieves a list of reported wishes
+     *
+     * @return array
+     */
+    public function reportedWishes() : array
+    {   
+        $query = $this->getEntityManager()->createQuery(
+            "SELECT w FROM App\Entity\Wish w
+            WHERE w.isReported = true
+            ");
+      
+        return $query->getResult();
+    }
+
+
+
     /**
      * Retrieves all the wishes containing a keyword in their title
      *
@@ -96,6 +113,7 @@ class WishRepository extends ServiceEntityRepository
         );
             
         $query = $qb->getQuery();
+
         return $query->getResult();
     }
 

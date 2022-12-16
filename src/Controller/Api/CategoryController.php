@@ -14,38 +14,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CategoryController extends AbstractController
 {
-
-    // /**
-    //  * Retieves a list of Offer and Wish affliliated to a Category
-    //  * 
-    //  * @Route("/api/categories/{id<\d+>}/advertisements", name="app_api_category_advertisements", methods={"GET"})
-    //  *
-    //  * @param Category|null $category
-    //  * @return jsonResponse
-    //  */
-    // public function getCategoryAdvertisements(?Category $category, CategoryRepository $categoryRepository): JsonResponse
-    // {
-    //     if (!$category) {
-    //         return $this->json(['erreur' => 'la demande n\'a pas été trouvée'], HttpFoundationResponse::HTTP_NOT_FOUND);
-    //     }
-    //     $categoryId = $category->getId();
-    //     $advertisements = $categoryRepository->findAllAdvertisements($categoryId);
-
-    //     return $this->json(
-    //         $advertisements,
-    //         HttpFoundationResponse::HTTP_OK,
-    //         [],
-    //         [
-    //             "groups" =>
-    //             [
-    //                 "category_wishes",
-    //                 "category_offers",
-    //                 "category_advertisements"
-    //             ]
-    //         ]
-    //     );
-    // }
-
     /**
      * Retieves a list of Offer affliliated to a Category
      * 

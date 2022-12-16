@@ -13,28 +13,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class MainCategoryController extends AbstractController
 {
-  /**
-   * Retrieves a list of MainCategory and their affiliated Category
-   * 
-   * @Route("/api/maincategories", name="app_api_maincategories", methods={"GET"})
-   *
-   * @param MainCategoryRepository $mainCategoryRepository
-   * @return JsonResponse
-   */
-  public function browse(MainCategoryRepository $mainCategoryRepository): JsonResponse
-  {
-    return $this->json(
-      $mainCategoryRepository->findAll(),
-      HttpFoundationResponse::HTTP_OK,
-      [],
-      [
-        "groups" =>
-        [
-          "mainCategory_browse"
-        ]
-      ]
-    );
-  }
 
   /**
    * Retrieves a list of MainCategory and their affiliated active Category

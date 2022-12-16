@@ -105,6 +105,22 @@ class OfferRepository extends ServiceEntityRepository
         // $query->setParameter('title', '%'.$keyword.'%');
         // return $query->getResult();
     }
+
+    /**
+     * Retrieves a list of reported offers
+     *
+     * @return array
+     */
+    public function reportedOffers() : array
+    {   
+        $query = $this->getEntityManager()->createQuery(
+            "SELECT o FROM App\Entity\Offer o
+            WHERE o.isReported = true
+            ");
+
+        return $query->getResult();
+    }
+
 //    /**
 //     * @return Offer[] Returns an array of Offer objects
 //     */
