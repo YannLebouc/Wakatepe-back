@@ -24,6 +24,8 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use OpenApi\Annotations as OA;
 use Nelmio\ApiDocBundle\Annotation\Model;
+use Symfony\Component\PasswordHasher\PasswordHasherInterface;
+use Symfony\Component\Security\Core\Security as CoreSecurity;
 
 /**
  * @OA\Tag(name="O'troc API : User")
@@ -469,6 +471,47 @@ class UserController extends AbstractController
                     "users_read"
                 ]
             ]
+        );
+    }
+
+    /** Allows a user to edit its password
+     * @Route("/api/users/current/password", name="app_api_users_edit_password", methods={"PUT", "PATCH"})
+     */
+    public function editPassword(
+        Request $request, 
+        EntityManagerInterface $doctrine, 
+        UserPasswordHasherInterface $passwordHasher
+        ): JsonResponse
+    {
+        $user = $this->getUser();
+
+        try {
+            $dataArray = json_decode($request->getContent(), true);
+        } catch (\Exception $e) {
+            return $this->json(
+                ["erreur" => "Les données JSON envoyées n'ont pas pu être interprêtées"],
+                HttpFoundationResponse::HTTP_BAD_REQUEST
+            );
+        }
+
+        $currentPassword = (key_exists('currentpassword', $dataArray)) ? $dataArray['currentpassword'] : null;
+        $newPassword = (key_exists('newpassword', $dataArray)) ? $dataArray['newpassword'] : null;
+        $passwordConfirmation = (key_exists('passwordconfirmation', $dataArray)) ? $dataArray['passwordconfirmation'] : null;
+
+        if($newPassword !== $passwordConfirmation) {
+            return $this->json(['erreur' => 'Il y a eu une erreur lors de la confirmation du mot de passe, merci de réessayer'], HttpFoundationResponse::HTTP_BAD_REQUEST);
+        }
+
+        if(!$passwordHasher->isPasswordValid($user, $currentPassword)) {
+            return $this->json(['erreur' => 'Mot de passe actuel incorrect'], HttpFoundationResponse::HTTP_BAD_REQUEST);
+        }
+
+        $user->setPassword($passwordHasher->hashPassword($user, $newPassword));
+        $doctrine->flush();
+
+        return $this->json(
+            ['Validation' => 'Votre mot de passe a bien été modifié.'],
+            HttpFoundationResponse::HTTP_PARTIAL_CONTENT
         );
     }
 }
