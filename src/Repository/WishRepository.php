@@ -47,7 +47,7 @@ class WishRepository extends ServiceEntityRepository
      */
 
 
-    public function userInactiveWishes($id) : array
+    public function findUserInactiveWishes($id) : array
     {   
         $query = $this->getEntityManager()->createQuery(
             "SELECT w FROM App\Entity\Wish w
@@ -65,7 +65,7 @@ class WishRepository extends ServiceEntityRepository
      * @param [id] $id
      * @return array
      */
-    public function activeWishes($id) : array
+    public function findActiveWishes($id) : array
     {   
         $query = $this->getEntityManager()->createQuery(
             "SELECT w FROM App\Entity\Wish w
@@ -84,7 +84,7 @@ class WishRepository extends ServiceEntityRepository
      * @param [mixed] $keyword
      * @return void
      */
-    public function getSearchedWishes($keyword)
+    public function findSearchedWishes($keyword)
     {
         
         $qb = $this->getEntityManager()->createQueryBuilder();

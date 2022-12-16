@@ -61,7 +61,7 @@ class UserController extends AbstractController
             return $this->json(['erreur' => 'Erreur lors de la récupération du profil, merci de vous reconnecter'], HttpFoundationResponse::HTTP_NOT_FOUND);
         }
 
-        $offers = $userRepository->userActiveOffers($user->getId());
+        $offers = $userRepository->findUserActiveOffers($user->getId());
 
         return $this->json(
             $offers,
@@ -107,7 +107,7 @@ class UserController extends AbstractController
             return $this->json(['erreur' => 'Erreur lors de la récupération du profil, merci de vous reconnecter'], HttpFoundationResponse::HTTP_NOT_FOUND);
         }
 
-        $wishes = $userRepository->userActiveOffers($user->getId());
+        $wishes = $userRepository->findUserActiveWishes($user->getId());
 
         return $this->json(
             $wishes,
@@ -152,8 +152,8 @@ class UserController extends AbstractController
             return $this->json(['erreur' => 'Erreur lors de la récupération du profil, merci de vous reconnecter'], HttpFoundationResponse::HTTP_NOT_FOUND);
         }
 
-        $wishes = $wishRepository->userInactiveWishes($user->getId());
-        $offers = $offerRepository->userInactiveOffers($user->getId());
+        $wishes = $wishRepository->findUserInactiveWishes($user->getId());
+        $offers = $offerRepository->findUserInactiveOffers($user->getId());
 
         return $this->json(
             [
@@ -171,7 +171,6 @@ class UserController extends AbstractController
             ]
         );
     }
-
     /**
      * Retrieves a list of the offers belonging to a user thanks to its ID
      * @Route("/api/users/{id<\d+>}/offers", name="app_api_users_offers", methods={"GET"})

@@ -48,7 +48,7 @@ class OfferRepository extends ServiceEntityRepository
      * @return array
      */
 
-    public function userInactiveOffers($id) : array
+    public function findUserInactiveOffers($id) : array
     {   
         $query = $this->getEntityManager()->createQuery(
             "SELECT o FROM App\Entity\Offer o
@@ -66,7 +66,7 @@ class OfferRepository extends ServiceEntityRepository
      * @param [id] $id
      * @return array
      */
-    public function activeOffers($id) : array
+    public function findActiveOffers($id) : array
     {   
         $query = $this->getEntityManager()->createQuery(
             "SELECT o FROM App\Entity\Offer o
@@ -84,7 +84,7 @@ class OfferRepository extends ServiceEntityRepository
      * @param [mixed] $keyword
      * @return void
      */
-    public function getSearchedOffers($keyword)
+    public function findSearchedOffers($keyword)
     {
         
         $qb = $this->getEntityManager()->createQueryBuilder();
