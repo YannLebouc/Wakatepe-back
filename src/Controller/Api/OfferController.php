@@ -151,7 +151,6 @@ class OfferController extends AbstractController
             );
         }
 
-        $newOffer->setCreatedAt(new DateTime());
         $newOffer->setUser($this->getUser());
 
         $doctrine->persist($newOffer);
@@ -283,7 +282,8 @@ class OfferController extends AbstractController
         );
     }
 
-    /**
+    /** Retrieves all the offers containing a keyword in their title
+     * 
      * @Route("/api/offers/results", name="app_api_offers_research", methods={"GET"})
      */
     public function offersResearch(Request $request, OfferRepository $offerRepository): JsonResponse
@@ -297,7 +297,7 @@ class OfferController extends AbstractController
         $keywords = explode(" ", $requestContent);
         $offers = [];
         foreach ($keywords as $keyword) {
-            if (strlen($keyword) > 3) {
+            if (strlen($keyword) > 2) {
                 $results = $offerRepository->getSearchedOffers($keyword);
                 $offers[] = $results;
             }

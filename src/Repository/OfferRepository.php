@@ -78,7 +78,12 @@ class OfferRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-
+    /**
+     * Retrieves all the offers containing a keyword in their title
+     *
+     * @param [mixed] $keyword
+     * @return void
+     */
     public function getSearchedOffers($keyword)
     {
         

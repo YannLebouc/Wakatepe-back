@@ -148,7 +148,6 @@ class WishController extends AbstractController
             );
         }
         
-        $newWish->setCreatedAt(new DateTime());
         $newWish->setUser($this->getUser());
 
         $doctrine->persist($newWish);
@@ -276,6 +275,39 @@ class WishController extends AbstractController
         return $this->json(
             'l\'annonce "' . $wish->getTitle() . '" a bien été supprimée.',
             HttpFoundationResponse::HTTP_OK
+        );
+    }
+
+    /** Retrieves all the wishes containing a keyword in their title
+     * 
+     * @Route("/api/wishes/results", name="app_api_wishes_research", methods={"GET"})
+     */
+    public function wishesResearch(Request $request, WishRepository $wishRepository): JsonResponse
+    {   
+        
+        // Nom de la clé "search"
+
+        // Je veux récupérer l'input envoyé (string)
+        $requestContent = $request->getContent();
+        // exploser la string et aller chercher les offres dont le titre contient les morceaux de string
+        $keywords = explode(" ", $requestContent);
+        $wishes = [];
+        foreach ($keywords as $keyword) {
+            if (strlen($keyword) > 2) {
+                $results = $wishRepository->getSearchedWishes($keyword);
+                $wishes[] = $results;
+            }
+        }
+        
+        return $this->json(
+            $wishes,
+            HttpFoundationResponse::HTTP_OK,
+            [],
+            [
+                'groups' => [
+                    'wish_browse'
+                ]
+            ]
         );
     }
 }
