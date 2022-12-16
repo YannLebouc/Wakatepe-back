@@ -31,11 +31,9 @@ class CategoryController extends AbstractController
      * @Route("/new", name="app_backoffice_category_new", methods={"GET", "POST"})
      * 
      */
-    // @isGranted("ROLE_ADMIN")
+
     public function new(Request $request, CategoryRepository $categoryRepository, CustomSlugger $customSlugger): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
-
         $category = new Category();
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
@@ -104,8 +102,6 @@ class CategoryController extends AbstractController
      */
     public function delete(Request $request, Category $category, CategoryRepository $categoryRepository): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
-
         if ($this->isCsrfTokenValid('delete' . $category->getId(), $request->request->get('_token'))) {
             $categoryRepository->remove($category, true);
         }

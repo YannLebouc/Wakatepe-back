@@ -52,7 +52,7 @@ class UserType extends AbstractType
             ->add('lastname')
             // ->add('picture')
             // ->add('createdAt')
-            ->add('updatedAt')
+            // ->add('updatedAt')
         ;
     }
 

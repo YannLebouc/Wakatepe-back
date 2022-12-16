@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 /**
  * @Route("/backoffice/user")
@@ -32,8 +33,6 @@ class UserController extends AbstractController
      */
     public function new(Request $request, UserRepository $userRepository, UserPasswordHasherInterface $userPasswordHasher): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
-
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
@@ -74,6 +73,10 @@ class UserController extends AbstractController
      */
     public function edit(Request $request, User $user, UserRepository $userRepository): Response
     {
+        // $token->getUser();
+
+        // $this->denyAccessUnlessGranted('USER_EDIT', $token);
+
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
@@ -100,8 +103,6 @@ class UserController extends AbstractController
      */
     public function delete(Request $request, User $user, UserRepository $userRepository): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
-
         if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
             $userRepository->remove($user, true);
         }
