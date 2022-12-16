@@ -220,7 +220,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->offer = new ArrayCollection();
         $this->wish = new ArrayCollection();
         $this->roles = ['ROLE_USER'];
-        $this->setCreatedAt(new DateTime());
     }
 
     public function getId(): ?int

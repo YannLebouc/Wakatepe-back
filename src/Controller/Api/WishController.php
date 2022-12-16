@@ -148,7 +148,6 @@ class WishController extends AbstractController
             );
         }
         
-        $newWish->setCreatedAt(new DateTime());
         $newWish->setUser($this->getUser());
 
         $doctrine->persist($newWish);
