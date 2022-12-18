@@ -4,6 +4,7 @@ namespace App\Controller\Backoffice;
 
 use App\Entity\Wish;
 use App\Form\WishType;
+use App\Form\WishTypeCustom;
 use App\Repository\WishRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -71,6 +72,31 @@ class WishController extends AbstractController
         }
 
         return $this->renderForm('backoffice/wish/edit.html.twig', [
+            'wish' => $wish,
+            'form' => $form,
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/editcustom", name="app_backoffice_wish_editcustom", methods={"GET", "POST"})
+     */
+    public function editCustom(Request $request, Wish $wish, WishRepository $wishRepository): Response
+    {
+        $form = $this->createForm(WishTypeCustom::class, $wish);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $wishRepository->add($wish, true);
+
+                $this->addFlash('success', 'La demande a bien été modifiée');
+
+                return $this->redirectToRoute('app_backoffice_wish_index', [], Response::HTTP_SEE_OTHER);
+            }
+
+            $this->addFlash('danger', 'La demande n\'a pas été modifiée');
+        }
+        return $this->renderForm('backoffice/wish/editcustom.html.twig', [
             'wish' => $wish,
             'form' => $form,
         ]);

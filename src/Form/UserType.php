@@ -5,6 +5,8 @@ namespace App\Form;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -17,42 +19,75 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email')
-            ->add('roles', ChoiceType::class, [
+            ->add('email', EmailType::class, 
+            [
+                "label" => "Adresse mail :",
+                "attr" => [
+                    "placeholder" => "adresse@mail.xyz",
+                ]
+            ])
+            ->add('roles', ChoiceType::class, 
+            [
                 'choices'  => [
-                    // Libellé => Valeur
                     'Utilisateur' => 'ROLE_USER',
                     'Modérateur' => 'ROLE_MANAGER',
                     'Administrateur' => 'ROLE_ADMIN',
                 ],
-                // Choix multiple => Tableau ;)
                 'multiple' => true,
-                // On veut des checkboxes !
                 'expanded' => true,
             ])
-            // ->add('password')
-            ->add('password', PasswordType::class, [
-                // En cas d'erreur du type
-                // Expected argument of type "string", "null" given at property path "password".
-                // (notamment à l'edit en cas de passage d'une valeur existante à vide)
+            ->add('password', PasswordType::class, 
+            [
+                "label" => "Mot de passe:",
+                "attr" => [
+                    "placeholder" => "Mot de passe",
+                    // "placeholder" => "Le mot de passe doit contenir au minimum 8 caractères, une majuscule, un chiffre et un caractère spécial",
+                ],
                 'empty_data' => '',
-                 // On déplace les contraintes de l'entité vers le form d'ajout
-                 'constraints' => [
+                'constraints' => [
                     new NotBlank(),
                     // new Regex(
                     //     "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/",
                     //     "Le mot de passe doit contenir au minimum 8 caractères, une majuscule, un chiffre et un caractère spécial"
                     // ),
-                ],
+                ]
             ])
-            ->add('alias')
-            ->add('phoneNumber')
-            ->add('zipcode')
-            ->add('firstname')
-            ->add('lastname')
+            ->add('alias', TextType::class,
+            [
+                "label" => "Pseudonyme :",
+                "attr" => [
+                    "placeholder" => "Saisissez le nom que vous voulez utiliser",
+                ]
+            ])
+            ->add('phoneNumber', NumberType::class,
+            [
+                "label" => "n° de téléphone :",
+                "attr" => [
+                    "placeholder" => "Facultatif",
+                ]
+            ])
+            ->add('zipcode', NumberType::class,
+            [
+                "label" => "Code postal :",
+                "attr" => [
+                    "placeholder" => "XXXXX",
+                ]
+            ])
+            ->add('firstname', TextType::class,
+            [
+                "label" => "Prénom :",
+                "attr" => [
+                    "placeholder" => "Saisissez votre prénom",
+                ]  
+            ])
+            ->add('lastname', TextType::class,
+            [
+                "label" => "Nom :",
+                "attr" => [
+                    "placeholder" => "Saisissez votre nom",
+                ]    
+            ])
             // ->add('picture')
-            // ->add('createdAt')
-            // ->add('updatedAt')
         ;
     }
 

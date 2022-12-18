@@ -16,6 +16,7 @@
                 <th>actions</th>
                 <th>Title</th>
                 <th>Zipcode</th>
+                <th>User</th>
                 <th>Picture</th>
                 <th>Description</th>
                 <th>IsActive</th>
@@ -31,10 +32,11 @@
                 <td>{{ wish.id }}</td>
                 <td>
                     <a href="{{ path('app_backoffice_wish_show', {'id': wish.id}) }}">show</a>
-                    <a href="{{ path('app_backoffice_wish_edit', {'id': wish.id}) }}">edit</a>
+                    <a href="{{ path('app_backoffice_wish_editcustom', {'id': wish.id}) }}">edit</a>
                 </td>
                 <td>{{ wish.title }}</td>
                 <td>{{ wish.zipcode }}</td>
+                <td>{{ wish.user.alias }}</td>
                 <td>{{ wish.picture }}</td>
                 <td>{{ wish.description }}</td>
                 <td>{{ wish.isActive ? 'Yes' : 'No' }}</td>

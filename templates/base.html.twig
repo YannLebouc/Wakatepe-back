@@ -185,15 +185,19 @@
 								<span>Deconnexion</span>
 						</a>
 						</li>
-					</ul>
 				{% else %}
-					<li>
+						<li>
 						<a href="{{path('app_login')}}" {# type="button" class="btn btn-danger me-2" #}>
 							<span>Connexion</span>
 						</a>
-					</li>
+						</li>
 				{% endif %}
-
+						{# <li>
+						<a href="{{path('app_backoffice_user_editcustom', {'id': user.id})}}">
+							<span>Profil</span>
+						</a>
+						</li> #}
+					</ul>
 				</div>
 			</nav>
 		</div>

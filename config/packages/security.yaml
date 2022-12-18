@@ -56,13 +56,14 @@ security:
 # du + au - précis
         # - { path: ^/, roles: PUBLIC_ACCESS}
         # - { path: /backoffice, roles: [ ROLE_MANAGER, ROLE_ADMIN ] }
-        - { path: /backoffice/user, roles: [ ROLE_ADMIN ] }
+        # - { path: /backoffice/user, roles: [ ROLE_ADMIN ] }
+        - { path: /backoffice/user, roles: [ ROLE_MANAGER ] }
         # - { path: /backoffice, roles: [ ROLE_MANAGER, ROLE_ADMIN ], methods: [GET, PUT, PATCH]}
         # - { path: /backoffice, roles: [ ROLE_MANAGER, ROLE_ADMIN ], methods: [POST]}
 
 
-    # role_hierarchy:
-    #     ROLE_ADMIN: ROLE_MANAGER
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_MANAGER
 
 when@test:
     security:
