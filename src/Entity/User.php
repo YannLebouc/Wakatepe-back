@@ -34,7 +34,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Groups({"current_user_offers"})
      * @Groups({"current_user_wishes"})
      * @Groups({"current_user_inactive_ads"})
-     * 
+     * @Groups({"user_ads_browse"})
      * 
      * @Groups({"category_offers"})
      * @Groups({"category_wishes"})
@@ -47,7 +47,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * 
      * @Groups({"wish_read"})
      * @Groups({"offer_read"})
-     * @Groups({"user_offer_browse"})
+     * @Groups({"user_ads_browse"})
      * @Groups({"users_read"})
      * @Groups({"users_browse"})
      * @Groups({"nelmio_add_user"})
@@ -55,6 +55,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Groups({"current_user_offers"})
      * @Groups({"current_user_wishes"})
      * @Groups({"current_user_inactive_ads"})
+     * @Groups({"user_ads_browse"})
      * 
      * @Assert\NotBlank
      * @Assert\NotNull
@@ -96,6 +97,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Groups({"nelmio_edit_user"})
      * @Groups({"current_user_wishes"})
      * @Groups({"current_user_inactive_ads"})
+     * @Groups({"offer_browse"})
+     * @Groups({"wish_browse"})
+     * @Groups({"user_ads_browse"})
      * 
      * @Assert\NotBlank
      * @Assert\NotNull
@@ -111,8 +115,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Groups({"current_user_offers"})
      * @Groups({"current_user_wishes"})
      * @Groups({"current_user_inactive_ads"})
+     * @Groups({"user_ads_browse"})
      * 
-     * @Assert\Positive
      * @Groups({"nelmio_add_user"})
      * @Groups({"nelmio_edit_user"})
      */
@@ -173,6 +177,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Groups({"nelmio_add_user"})
      * @Groups({"nelmio_edit_user"})
      * @Groups({"current_user_inactive_ads"})
+     * @Groups({"offer_browse"})
+     * @Groups({"wish_browse"})
+     * @Groups({"category_advertisements"})
+     * @Groups({"user_ads_browse"})
      */
     private $picture;
 
@@ -193,9 +201,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\OneToMany(targetEntity=Offer::class, mappedBy="user", orphanRemoval=true)
      * 
-     * @Groups({"user_offer_browse"})
+     * @Groups({"user_ads_browse"})
      * @Groups({"current_user_offers"})
      * @Groups({"current_user_inactive_ads"})
+     * 
      * 
      */
     private $offer;
@@ -204,6 +213,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\OneToMany(targetEntity=Wish::class, mappedBy="user", orphanRemoval=true)
      * @Groups({"current_user_wishes"})
      * @Groups({"current_user_inactive_ads"})
+     * @Groups({"user_ads_browse"})
      */
     private $wish;
 

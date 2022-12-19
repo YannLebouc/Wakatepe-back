@@ -34,6 +34,7 @@ class MainCategory
      * 
      * @Groups({"mainCategories_categories"})
      * @Groups({"mainCategory_category_browse"})
+     * @Groups({"category_advertisements"})
      * 
      * @Assert\NotBlank
      * @Assert\NotNull

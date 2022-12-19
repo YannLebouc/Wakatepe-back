@@ -297,7 +297,7 @@ class UserController extends AbstractController
      *     description="Retrieves the informations from a particular user from his ID",
      *     @OA\JsonContent(
      *        type="array",
-     *        @OA\Items(ref=@Model(type=User::class, groups={"user_offer_browse"}))
+     *        @OA\Items(ref=@Model(type=User::class, groups={"user_ads_browse"}))
      *     )
      * )
      * 
@@ -321,7 +321,7 @@ class UserController extends AbstractController
             [
                 "groups" =>
                 [
-                    "user_offer_browse"
+                    "user_ads_browse"
                 ]
             ]
         );

@@ -32,6 +32,7 @@ class Wish
      * @Groups({"mainCategory_categories_advertisements"})
      * @Groups({"category_wishes"})
      * @Groups({"category_advertisements"})
+     * @Groups({"user_ads_browse"})
      */
     private $id;
 
@@ -47,6 +48,7 @@ class Wish
      * @Groups({"category_advertisements"})
      * @Groups({"nelmio_add_wish"})
      * @Groups({"current_user_inactive_ads"})
+     * @Groups({"user_ads_browse"})
      * 
      * @Assert\NotBlank
      * @Assert\NotNull
@@ -63,6 +65,7 @@ class Wish
      * @Groups({"category_advertisements"})
      * @Groups({"nelmio_add_wish"})
      * @Groups({"current_user_inactive_ads"})
+     * @Groups({"user_ads_browse"})
      * 
      * @Assert\Positive
      * @Assert\Length(max=5)
@@ -79,6 +82,7 @@ class Wish
      * @Groups({"current_user_inactive_ads"})
      * @Groups({"category_wishes"})
      * @Groups({"category_advertisements"})
+     * @Groups({"user_ads_browse"})
      * 
      */
     private $picture;
@@ -93,6 +97,7 @@ class Wish
      * @Groups({"category_advertisements"})
      * @Groups({"nelmio_add_wish"})
      * @Groups({"current_user_inactive_ads"})
+     * @Groups({"user_ads_browse"})
      */
     private $description;
 
@@ -115,6 +120,7 @@ class Wish
      * @Groups({"category_advertisements"})
      * @Groups({"nelmio_add_wish"})
      * @Groups({"current_user_inactive_ads"})
+     * @Groups({"user_ads_browse"})
      */
     private $type;
 
@@ -124,6 +130,7 @@ class Wish
      * @Groups({"wish_read"})
      * @Groups({"category_wishes"})
      * @Groups({"category_advertisements"})
+     * @Groups({"user_ads_browse"})
      */
     private $isReported;
 
@@ -137,6 +144,8 @@ class Wish
      * @Groups({"current_user_inactive_ads"})
      * @Groups({"category_wishes"})
      * @Groups({"category_advertisements"})
+     * @Groups({"wish_browse"})
+     * @Groups({"user_ads_browse"})
      */
     private $createdAt;
 
@@ -160,6 +169,8 @@ class Wish
      * @Groups({"wish_read"})
      * @Groups({"category_wishes"})
      * @Groups({"category_advertisements"})
+     * @Groups({"wish_browse"})
+     * 
      */
     private $user;
 
