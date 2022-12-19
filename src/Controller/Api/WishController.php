@@ -310,4 +310,27 @@ class WishController extends AbstractController
             ]
         );
     }
+
+    /** Allows a user to set a wish active status to true or false
+    * 
+    * @Route("/api/wishes/{id<\d+>}/active", name="app_api_wishes_active", methods={"PUT", "PATCH"})
+    * Undocumented function
+    *
+    * @param Wish|null $wish
+    * @param EntityManagerInterface $doctrine
+    * @return JsonResponse
+    */
+    public function isActive(?Wish $wish, EntityManagerInterface $doctrine): JsonResponse
+    {   
+        if (!$wish) {
+            return $this->json(["erreur" => "Il n\'existe pas d'offre' pour cet ID"]);
+        }
+
+        $isActive = !$wish->isIsActive();
+
+        $wish->setIsActive($isActive);
+        $doctrine->flush();
+
+        return $this->json(['success' => 'Modification prise en compte'], HttpFoundationResponse::HTTP_PARTIAL_CONTENT);
+    }
 }
