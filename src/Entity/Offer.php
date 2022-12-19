@@ -26,7 +26,7 @@ class Offer
      * 
      * @Groups({"offer_browse"})
      * @Groups({"offer_read"})
-     * @Groups({"user_offer_browse"})
+     * @Groups({"user_ads_browse"})
      * @Groups({"category_advertisement_browse"})
      * @Groups({"mainCategory_category_browse"})
      * @Groups({"current_user_inactive_ads"})
@@ -34,6 +34,7 @@ class Offer
      * @Groups({"category_offers"})
      * @Groups({"category_advertisements"})
      * @Groups({"current_user_offers"})
+     * @Groups({"user_ads_browse"})
      * 
      */
     private $id;
@@ -43,7 +44,7 @@ class Offer
      * 
      * @Groups({"offer_browse"})
      * @Groups({"offer_read"})
-     * @Groups({"user_offer_browse"})
+     * @Groups({"user_ads_browse"})
      * @Groups({"current_user_offers"})
      * @Groups({"mainCategory_categories_advertisements"})
      * @Groups({"mainCategory_category_browse"})
@@ -51,6 +52,7 @@ class Offer
      * @Groups({"category_advertisements"})
      * @Groups({"nelmio_add_offer"})
      * @Groups({"current_user_inactive_ads"})
+     * @Groups({"user_ads_browse"})
      * 
      * @Assert\NotBlank
      * @Assert\NotNull
@@ -67,6 +69,7 @@ class Offer
      * @Groups({"category_advertisements"})
      * @Groups({"nelmio_add_offer"})
      * @Groups({"current_user_inactive_ads"})
+     * @Groups({"user_ads_browse"})
      *       
      * @Assert\Positive
      * @Assert\Length(max=5)
@@ -81,6 +84,7 @@ class Offer
      * @Groups({"current_user_offers"})
      * @Groups({"category_advertisement_browse"})
      * @Groups({"current_user_inactive_ads"})
+     * @Groups({"user_ads_browse"})
      *       
      * @Assert\Image
      * @Groups({"category_offers"})
@@ -97,6 +101,7 @@ class Offer
      * @Groups({"nelmio_add_offer"})
      * @Groups({"category_advertisement_browse"})
      * @Groups({"current_user_inactive_ads"})
+     * @Groups({"user_ads_browse"})
      * 
      * @Groups({"category_offers"})
      * @Groups({"category_advertisements"})
@@ -127,6 +132,7 @@ class Offer
      * @Groups({"category_advertisements"})
      * @Groups({"nelmio_add_offer"})
      * @Groups({"current_user_inactive_ads"})
+     * @Groups({"user_ads_browse"})
      */
     private $type;
 
@@ -138,6 +144,7 @@ class Offer
      * @Groups({"current_user_inactive_ads"})
      * @Groups({"category_offers"})
      * @Groups({"category_advertisements"})
+     * @Groups({"user_ads_browse"})
      */
     private $isReported;
 
@@ -150,6 +157,8 @@ class Offer
      * @Groups({"current_user_inactive_ads"})
      * @Groups({"category_offers"})
      * @Groups({"category_advertisements"})
+     * @Groups({"offer_browse"})
+     * @Groups({"user_ads_browse"})
      */
     private $createdAt;
 
@@ -172,6 +181,8 @@ class Offer
      * @Groups({"offer_read"})
      * @Groups({"category_offers"})
      * @Groups({"category_advertisements"})
+     * @Groups({"offer_browse"})
+     * 
      */
     private $user;
 
