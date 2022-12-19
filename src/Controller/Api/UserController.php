@@ -24,6 +24,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use OpenApi\Annotations as OA;
 use Nelmio\ApiDocBundle\Annotation\Model;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 use Symfony\Component\Security\Core\Security as CoreSecurity;
 
@@ -272,7 +273,7 @@ class UserController extends AbstractController
             );
         }
 
-        $newUser->setPicture('https://upload.wikimedia.org/wikipedia/commons/1/1e/Michel_Sardou_2014.jpg');
+        // $newUser->setPicture('https://upload.wikimedia.org/wikipedia/commons/1/1e/Michel_Sardou_2014.jpg');
         $hashedPassword = $passwordHasher->hashPassword($newUser, $newUser->getPassword());
         $newUser->setPassword($hashedPassword);
 
@@ -513,5 +514,38 @@ class UserController extends AbstractController
             ['Validation' => 'Votre mot de passe a bien été modifié.'],
             HttpFoundationResponse::HTTP_PARTIAL_CONTENT
         );
+    }
+
+     /**
+      * Undocumented function
+      * @Route("/api/users/{id<\d+>}/pictures", name="app_api_user_add_picture", methods={"PUT", "PATCH"})
+      * 
+      * @param User|null $user
+      * @param Request $request
+      * @param ParameterBagInterface $parameterBag
+      * @param EntityManagerInterface $doctrine
+      * @return JsonResponse
+      */
+    public function uploadProfilePicture(
+        ?User $user, 
+        Request $request, 
+        ParameterBagInterface $parameterBag, 
+        EntityManagerInterface $doctrine): JsonResponse
+    {
+        if (!$user) {
+            return $this->json(["erreur" => "L'utilisateur recherché n'existe pas"], HttpFoundationResponse::HTTP_NOT_FOUND);
+        }
+
+        $image = $request->files->get('file');
+    
+        $imageName = uniqid() . '_' . $image->getClientOriginalName();
+        $image->move($parameterBag->get('public') . '/assets/images', $imageName);
+    
+        $user->setPicture($imageName);
+    
+        // $doctrine->persist($user);
+        $doctrine->flush();
+
+        return $this->json(['success' => 'Image correctement importée'], HttpFoundationResponse::HTTP_OK);
     }
 }
