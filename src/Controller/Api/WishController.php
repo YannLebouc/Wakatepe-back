@@ -231,6 +231,7 @@ class WishController extends AbstractController
            );
        }
 
+       $wish->setIsReported(null);
        $wish->setUpdatedAt(new DateTime());
        $doctrine->flush();
 
@@ -329,6 +330,27 @@ class WishController extends AbstractController
         $isActive = !$wish->isIsActive();
 
         $wish->setIsActive($isActive);
+        $doctrine->flush();
+
+        return $this->json(['success' => 'Modification prise en compte'], HttpFoundationResponse::HTTP_PARTIAL_CONTENT);
+    }
+
+    /** Allows a user to set a wish reported status to true or false
+     * 
+     * @Route("/api/wishes/{id<\d+>}/reported", name="app_api_wishes_reported", methods={"PUT", "PATCH"})
+     * Undocumented function
+     *
+     * @param Wish|null $wish
+     * @param EntityManagerInterface $doctrine
+     * @return JsonResponse
+     */
+    public function isReported(?Wish $wish, EntityManagerInterface $doctrine): JsonResponse
+    {   
+        if (!$wish) {
+            return $this->json(["erreur" => "Il n\'existe pas d'offre' pour cet ID"]);
+        }
+
+        $wish->setIsReported(true);
         $doctrine->flush();
 
         return $this->json(['success' => 'Modification prise en compte'], HttpFoundationResponse::HTTP_PARTIAL_CONTENT);

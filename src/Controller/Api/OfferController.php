@@ -231,7 +231,8 @@ class OfferController extends AbstractController
                 HttpFoundationResponse::HTTP_UNPROCESSABLE_ENTITY
             );
         }
-
+        
+        $offer->setIsReported(null);
         $offer->setUpdatedAt(new DateTime());
         $doctrine->flush();
 
@@ -359,5 +360,23 @@ class OfferController extends AbstractController
         return $this->json(['success' => 'Modification prise en compte'], HttpFoundationResponse::HTTP_PARTIAL_CONTENT);
     }
 
+    /** Allows a user to set an offer reported status to true or false
+    * 
+    * @Route("/api/offers/{id<\d+>}/reported", name="app_api_offers_reported", methods={"PUT", "PATCH"})
 
+    * @param Offer|null $offer
+    * @param EntityManagerInterface $doctrine
+    * @return JsonResponse
+    */
+    public function isReported(?Offer $offer, EntityManagerInterface $doctrine): JsonResponse
+    {   
+        if (!$offer) {
+            return $this->json(["erreur" => "Il n\'existe pas d'offre' pour cet ID"]);
+        }
+
+        $offer->setIsReported(true);
+        $doctrine->flush();
+
+        return $this->json(['success' => 'Modification prise en compte'], HttpFoundationResponse::HTTP_PARTIAL_CONTENT);
+    }
 }
