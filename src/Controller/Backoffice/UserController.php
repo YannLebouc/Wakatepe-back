@@ -4,9 +4,8 @@ namespace App\Controller\Backoffice;
 
 use App\Entity\User;
 use App\Form\UserType;
-use App\Form\UserTypeCustom;
-use App\Form\UserTypePassword;
-use App\Form\UserTypeRoles;
+use App\Form\UserTypeEdit;
+use App\Form\UserTypeTest;
 use App\Repository\UserRepository;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @Route("/backoffice/user")
@@ -77,11 +77,11 @@ class UserController extends AbstractController
      */
     public function edit(Request $request, User $user, UserRepository $userRepository): Response
     {
-        // $token->getUser();
+        $form = $this->createForm(UserTypeEdit::class, $user);
+        if(!in_array('ROLE_ADMIN', $this->getUser()->getRoles())) {
+            $form->remove('roles');
+        }
 
-        // $this->denyAccessUnlessGranted('USER_EDIT', $token);
-
-        $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
@@ -103,66 +103,6 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/editcustom", name="app_backoffice_user_editcustom", methods={"GET", "POST"})
-     */
-    public function editCustom(Request $request, User $user, UserRepository $userRepository): Response
-    {
-        // $token->getUser();
-
-        // $this->denyAccessUnlessGranted('USER_EDIT', $token);
-
-        $form = $this->createForm(UserTypeCustom::class, $user);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
-                $user->setUpdatedAt(new DateTime());
-                $userRepository->add($user, true);
-
-                $this->addFlash('success', 'L\'utilisateur a bien été modifié');
-
-                return $this->redirectToRoute('app_backoffice_user_index', [], Response::HTTP_SEE_OTHER);
-            }
-
-            $this->addFlash('danger', 'L\'utilisateur n\'a pas été modifié');
-        }
-        return $this->renderForm('backoffice/user/editcustom.html.twig', [
-            'user' => $user,
-            'form' => $form,
-        ]);
-    }
-
-    /**
-     * @Route("/{id}/editroles", name="app_backoffice_user_editroles", methods={"GET", "POST"})
-     */
-    public function editRoles(Request $request, User $user, UserRepository $userRepository): Response
-    {
-        // $token->getUser();
-
-        // $this->denyAccessUnlessGranted('USER_EDIT', $token);
-
-        $form = $this->createForm(UserTypeRoles::class, $user);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
-                $user->setUpdatedAt(new DateTime());
-                $userRepository->add($user, true);
-
-                $this->addFlash('success', 'L\'utilisateur a bien été modifié');
-
-                return $this->redirectToRoute('app_backoffice_user_index', [], Response::HTTP_SEE_OTHER);
-            }
-
-            $this->addFlash('danger', 'L\'utilisateur n\'a pas été modifié');
-        }
-        return $this->renderForm('backoffice/user/editroles.html.twig', [
-            'user' => $user,
-            'form' => $form,
-        ]);
-    }
-
-    /**
      * @Route("/{id}", name="app_backoffice_user_delete", methods={"POST"})
      */
     public function delete(Request $request, User $user, UserRepository $userRepository): Response
@@ -177,4 +117,5 @@ class UserController extends AbstractController
 
         return $this->redirectToRoute('app_backoffice_user_index', [], Response::HTTP_SEE_OTHER);
     }
+    
 }

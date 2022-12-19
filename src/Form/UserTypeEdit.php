@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -11,7 +12,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class UserTypeCustom extends AbstractType
+class UserTypeEdit extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -23,6 +24,16 @@ class UserTypeCustom extends AbstractType
                 "placeholder" => "adresse@mail.xyz",
             ]
         ])
+        ->add('roles', ChoiceType::class, 
+        [
+            'choices'  => [
+                'Utilisateur' => 'ROLE_USER',
+                'Modérateur' => 'ROLE_MANAGER',
+                'Administrateur' => 'ROLE_ADMIN',
+            ],
+            'multiple' => true,
+            'expanded' => true,
+        ])
         ->add('alias', TextType::class,
         [
             "label" => "Pseudonyme :",
@@ -30,7 +41,7 @@ class UserTypeCustom extends AbstractType
                 "placeholder" => "Saisissez le nom que vous voulez utiliser",
             ]
         ])
-        ->add('phoneNumber', NumberType::class,
+        ->add('phoneNumber', TextType::class,
         [
             "label" => "n° de téléphone :",
             "attr" => [

@@ -59,7 +59,7 @@ class UserType extends AbstractType
                     "placeholder" => "Saisissez le nom que vous voulez utiliser",
                 ]
             ])
-            ->add('phoneNumber', NumberType::class,
+            ->add('phoneNumber', TextType::class,
             [
                 "label" => "n° de téléphone :",
                 "attr" => [

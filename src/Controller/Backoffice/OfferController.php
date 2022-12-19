@@ -17,37 +17,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class OfferController extends AbstractController
 {
     /**
-     * @Route("/", name="app_backoffice_offer_index", methods={"GET"})
-     */
-    public function index(OfferRepository $offerRepository): Response
-    {
-        return $this->render('backoffice/offer/index.html.twig', [
-            'offers' => $offerRepository->findAll(),
-        ]);
-    }
-
-    /**
-     * @Route("/new", name="app_backoffice_offer_new", methods={"GET", "POST"})
-     */
-    public function new(Request $request, OfferRepository $offerRepository): Response
-    {
-        $offer = new Offer();
-        $form = $this->createForm(OfferType::class, $offer);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $offerRepository->add($offer, true);
-
-            return $this->redirectToRoute('app_backoffice_offer_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('backoffice/offer/new.html.twig', [
-            'offer' => $offer,
-            'form' => $form,
-        ]);
-    }
-
-    /**
      * @Route("/{id}", name="app_backoffice_offer_show", methods={"GET"})
      */
     public function show(Offer $offer): Response
@@ -65,26 +34,6 @@ class OfferController extends AbstractController
         $form = $this->createForm(OfferType::class, $offer);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $offerRepository->add($offer, true);
-
-            return $this->redirectToRoute('app_backoffice_offer_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('backoffice/offer/edit.html.twig', [
-            'offer' => $offer,
-            'form' => $form,
-        ]);
-    }
-
-    /**
-     * @Route("/{id}/editcustom", name="app_backoffice_offer_editcustom", methods={"GET", "POST"})
-     */
-    public function editCustom(Request $request, Offer $offer, OfferRepository $offerRepository): Response
-    {
-        $form = $this->createForm(OfferTypeCustom::class, $offer);
-        $form->handleRequest($request);
-
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $offerRepository->add($offer, true);
@@ -96,7 +45,7 @@ class OfferController extends AbstractController
 
             $this->addFlash('danger', 'L\'offre n\'a pas été modifiée');
         }
-        return $this->renderForm('backoffice/offer/editcustom.html.twig', [
+        return $this->renderForm('backoffice/offer/edit.html.twig', [
             'offer' => $offer,
             'form' => $form,
         ]);

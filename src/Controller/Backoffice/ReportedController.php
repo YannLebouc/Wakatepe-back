@@ -16,9 +16,6 @@ class ReportedController extends AbstractController
      */
     public function index(Request $request, OfferRepository $offerRepository, WishRepository $wishRepository): Response
     {
-        // return $this->render('backoffice/reported/index.html.twig', [
-        //     'controller_name' => 'ReportedController',
-        // ]);
         return $this->render('backoffice/reported/index.html.twig', [
             'offers' => $offerRepository->reportedOffers(),
             'wishes' => $wishRepository->reportedWishes(),

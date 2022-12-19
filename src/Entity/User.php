@@ -112,7 +112,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Groups({"current_user_wishes"})
      * @Groups({"current_user_inactive_ads"})
      * 
-     * @Assert\Positive
      * @Groups({"nelmio_add_user"})
      * @Groups({"nelmio_edit_user"})
      */

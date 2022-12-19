@@ -14,23 +14,23 @@ class OfferType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('title')
-            ->add('zipcode')
-            ->add('picture')
-            ->add('description')
-            ->add('isActive')
-            ->add('isLended')
-            ->add('type')
+            // ->add('title')
+            // ->add('zipcode')
+            // ->add('picture')
+            // ->add('description')
+            // ->add('isActive')
+            // ->add('isLended')
+            // ->add('type')
             ->add('isReported')
-            ->add('createdAt')
-            ->add('updatedAt')
+            // ->add('createdAt')
+            // ->add('updatedAt')
             // ->add('user')
-            ->add('categories', EntityType::class,[
-                'class' => Category::class,
-                'choice_label' => 'name',
-                'multiple' => true,
-                'expanded' => true
-            ])
+            // ->add('categories', EntityType::class,[
+            //     'class' => Category::class,
+            //     'choice_label' => 'name',
+            //     'multiple' => true,
+            //     'expanded' => true
+            // ])
         ;
     }
 
