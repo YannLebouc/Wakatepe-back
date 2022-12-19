@@ -318,7 +318,7 @@ class OfferController extends AbstractController
     /** Allows a user to set an offer lended status to true or false
     * 
     * @Route("/api/offers/{id<\d+>}/lend", name="app_api_offers_lended", methods={"PUT", "PATCH"})
-    
+
     * @param Offer|null $offer
     * @param EntityManagerInterface $doctrine
     * @return JsonResponse
@@ -336,4 +336,28 @@ class OfferController extends AbstractController
 
         return $this->json(['success' => 'Modification prise en compte'], HttpFoundationResponse::HTTP_PARTIAL_CONTENT);
     }
+
+    /** Allows a user to set an offer active status to true or false
+    * 
+    * @Route("/api/offers/{id<\d+>}/active", name="app_api_offers_active", methods={"PUT", "PATCH"})
+
+    * @param Offer|null $offer
+    * @param EntityManagerInterface $doctrine
+    * @return JsonResponse
+    */
+    public function isActive(?Offer $offer, EntityManagerInterface $doctrine): JsonResponse
+    {   
+        if (!$offer) {
+            return $this->json(["erreur" => "Il n\'existe pas d'offre' pour cet ID"]);
+        }
+
+        $isActive = !$offer->isIsActive();
+
+        $offer->setIsActive($isActive);
+        $doctrine->flush();
+
+        return $this->json(['success' => 'Modification prise en compte'], HttpFoundationResponse::HTTP_PARTIAL_CONTENT);
+    }
+
+
 }
