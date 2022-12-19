@@ -314,4 +314,26 @@ class OfferController extends AbstractController
             ]
         );
     }
+
+    /** Allows a user to set an offer lended status to true or false
+    * 
+    * @Route("/api/offers/{id<\d+>}/lend", name="app_api_offers_lended", methods={"PUT", "PATCH"})
+    
+    * @param Offer|null $offer
+    * @param EntityManagerInterface $doctrine
+    * @return JsonResponse
+    */
+    public function isLended(?Offer $offer, EntityManagerInterface $doctrine): JsonResponse
+    {   
+        if (!$offer) {
+            return $this->json(["erreur" => "Il n\'existe pas d'offre' pour cet ID"]);
+        }
+
+        $isLended = !$offer->isIsLended();
+
+        $offer->setIsLended($isLended);
+        $doctrine->flush();
+
+        return $this->json(['success' => 'Modification prise en compte'], HttpFoundationResponse::HTTP_PARTIAL_CONTENT);
+    }
 }
