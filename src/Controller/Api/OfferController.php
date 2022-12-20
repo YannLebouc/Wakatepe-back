@@ -319,7 +319,7 @@ class OfferController extends AbstractController
     /** Allows a user to set an offer lended status to true or false
     * 
     * @Route("/api/offers/{id<\d+>}/lend", name="app_api_offers_lended", methods={"PUT", "PATCH"})
-
+    *
     * @param Offer|null $offer
     * @param EntityManagerInterface $doctrine
     * @return JsonResponse
@@ -341,7 +341,7 @@ class OfferController extends AbstractController
     /** Allows a user to set an offer active status to true or false
     * 
     * @Route("/api/offers/{id<\d+>}/active", name="app_api_offers_active", methods={"PUT", "PATCH"})
-
+    *
     * @param Offer|null $offer
     * @param EntityManagerInterface $doctrine
     * @return JsonResponse
@@ -363,7 +363,7 @@ class OfferController extends AbstractController
     /** Allows a user to set an offer reported status to true or false
     * 
     * @Route("/api/offers/{id<\d+>}/reported", name="app_api_offers_reported", methods={"PUT", "PATCH"})
-
+    *
     * @param Offer|null $offer
     * @param EntityManagerInterface $doctrine
     * @return JsonResponse
