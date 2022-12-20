@@ -77,6 +77,8 @@ class UserController extends AbstractController
      */
     public function edit(Request $request, User $user, UserRepository $userRepository): Response
     {
+        $this->denyAccessUnlessGranted("ROLE_ADMIN");
+        
         $form = $this->createForm(UserTypeEdit::class, $user);
         if(!in_array('ROLE_ADMIN', $this->getUser()->getRoles())) {
             $form->remove('roles');
@@ -117,5 +119,4 @@ class UserController extends AbstractController
 
         return $this->redirectToRoute('app_backoffice_user_index', [], Response::HTTP_SEE_OTHER);
     }
-    
 }

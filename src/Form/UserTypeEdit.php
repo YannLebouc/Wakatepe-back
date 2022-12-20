@@ -43,6 +43,7 @@ class UserTypeEdit extends AbstractType
         ])
         ->add('phoneNumber', TextType::class,
         [
+            'required' => false,
             "label" => "n° de téléphone :",
             "attr" => [
                 "placeholder" => "Facultatif",
