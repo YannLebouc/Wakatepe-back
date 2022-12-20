@@ -64,4 +64,20 @@ class OfferController extends AbstractController
 
         return $this->redirectToRoute('app_backoffice_offer_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    /**
+     * @Route("/{id}/validate", name="app_backoffice_offer_validate", methods={"POST"})
+     */
+    public function validate(Request $request, Offer $offer, OfferRepository $offerRepository): Response
+    {
+        // if ($this->isCsrfTokenValid('validate' . $offer->getId(), $request->request->get('_token'))) {
+        // }
+        
+        $offer->setIsReported(false);
+        $offer->setUpdatedAt(new DateTime());
+        $offerRepository->add($offer, true);
+
+
+        return $this->redirectToRoute('app_backoffice_reported', [], Response::HTTP_SEE_OTHER);
+    }
 }

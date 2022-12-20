@@ -1,0 +1,7 @@
+
+
+<form method="post" action="{{ path('app_backoffice_wish_validate', {'id': wish.id}) }}" onsubmit="return confirm('Are you sure you want to validate this item?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ wish.id) }}">
+    <button class="btn btn-success">Valider</button>
+</form>
+

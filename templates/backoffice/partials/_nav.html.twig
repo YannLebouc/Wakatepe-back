@@ -15,21 +15,18 @@
 							<span>Catégories \</span>
 						</a>
 					</li>
+					{% if is_granted('ROLE_ADMIN') %}
                     <li>
 						<a href="{{ path('app_backoffice_user_index')}}">
 							<span>Utilisateurs \</span>
 						</a>
 					</li>
+					{% endif %}
 					<li>
 						<a href="{{ path('app_backoffice_reported')}}">
 							<span>Annonces reportées \</span>
 						</a>
 					</li> 
-					{# <li>
-						<a href="{{ path('app_main_test')}}">
-							<span>Rechercher\</span>
-						</a>
-					</li> #}
 				</ul>
 				<div id="right">
 					{% if is_granted('IS_AUTHENTICATED_FULLY') %}
@@ -46,7 +43,7 @@
 						</li>
 
 					{% endif %}
-									{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+					{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 						<li>
 							<a href="{{path('app_logout')}}">
 								<span>Deconnexion</span>

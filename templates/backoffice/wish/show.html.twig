@@ -63,9 +63,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_backoffice_wish_editcustom', {'id': wish.id}) }}">Editer</a></br>
+    <a href="{{ path('app_backoffice_wish_edit', {'id': wish.id}) }}">Editer</a></br>
 
-    <a href="{{ path('app_backoffice_wish_index') }}">back to list</a>
+    {# <a href="{{ path('app_backoffice_wish_index') }}">back to list</a> #}
 
     {{ include('backoffice/wish/_delete_form.html.twig') }}
 {% endblock %}

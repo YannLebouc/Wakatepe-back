@@ -12,9 +12,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class ReportedController extends AbstractController
 {
     /**
-     * @Route("/backoffice/reported", name="app_backoffice_reported")
+     * @Route("/backoffice/reported", name="app_backoffice_reported", methods={"GET"})
      */
-    public function index(Request $request, OfferRepository $offerRepository, WishRepository $wishRepository): Response
+    public function index(OfferRepository $offerRepository, WishRepository $wishRepository): Response
     {
         return $this->render('backoffice/reported/index.html.twig', [
             'offers' => $offerRepository->reportedOffers(),

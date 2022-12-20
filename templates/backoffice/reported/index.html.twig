@@ -1,102 +1,230 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ReportedController!{% endblock %}
+{% block title %}Hello ReportedController!
+{% endblock %}
 
 {% block body %}
-{# <style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>actions</th>
+				<th>Title</th>
+				<th>Zipcode</th>
+				<th>Picture</th>
+				<th>Description</th>
+				<th>IsActive</th>
+				<th>IsLended</th>
+				<th>Type</th>
+				<th>IsReported</th>
+				<th>CreatedAt</th>
+				<th>UpdatedAt</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for offer in offers %}
+				<tr>
+					<td>{{ offer.id }}</td>
+					<td>
+						<a href="{{ path('app_backoffice_offer_edit', {'id': offer.id}) }}">edit</a>
+					</td>
+					<td>{{ offer.title }}</td>
+					<td>{{ offer.zipcode }}</td>
+					<td>{{ offer.picture }}</td>
+					<td>{{ offer.description }}</td>
+					<td>{{ offer.isActive ? 'Yes' : 'No' }}</td>
+					<td>{{ offer.isLended ? 'Yes' : 'No' }}</td>
+					<td>{{ offer.type }}</td>
+					<td>{{ offer.isReported ? 'Yes' : 'No' }}</td>
+					<td>{{ offer.createdAt ? offer.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+					<td>{{ offer.updatedAt ? offer.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="12">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>actions</th>
+				<th>Title</th>
+				<th>Zipcode</th>
+				<th>Picture</th>
+				<th>Description</th>
+				<th>IsActive</th>
+				<th>Type</th>
+				<th>IsReported</th>
+				<th>CreatedAt</th>
+				<th>UpdatedAt</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for wish in wishes %}
+				<tr>
+					<td>{{ wish.id }}</td>
+					<td>
+						<a href="{{ path('app_backoffice_wish_edit', {'id': wish.id}) }}">edit</a>
+					</td>
+					<td>{{ wish.title }}</td>
+					<td>{{ wish.zipcode }}</td>
+					<td>{{ wish.picture }}</td>
+					<td>{{ wish.description }}</td>
+					<td>{{ wish.isActive ? 'Yes' : 'No' }}</td>
+					<td>{{ wish.type }}</td>
+					<td>{{ wish.isReported ? 'Yes' : 'No' }}</td>
+					<td>{{ wish.createdAt ? wish.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+					<td>{{ wish.updatedAt ? wish.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="11">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/var/www/html/projet-11-o-troc-back/src/Controller/Backoffice/ReportedController.php'|file_link(0) }}">src/Controller/Backoffice/ReportedController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/var/www/html/projet-11-o-troc-back/templates/backoffice/reported/index.html.twig'|file_link(0) }}">templates/backoffice/reported/index.html.twig</a></code></li>
-    </ul>
-</div> #}
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>actions</th>
-                <th>Title</th>
-                <th>Zipcode</th>
-                <th>Picture</th>
-                <th>Description</th>
-                <th>IsActive</th>
-                <th>IsLended</th>
-                <th>Type</th>
-                <th>IsReported</th>
-                <th>CreatedAt</th>
-                <th>UpdatedAt</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for offer in offers %}
-            <tr>
-                <td>{{ offer.id }}</td>
-                <td>
-                    <a href="{{ path('app_backoffice_offer_edit', {'id': offer.id}) }}">edit</a>
-                </td>
-                <td>{{ offer.title }}</td>
-                <td>{{ offer.zipcode }}</td>
-                <td>{{ offer.picture }}</td>
-                <td>{{ offer.description }}</td>
-                <td>{{ offer.isActive ? 'Yes' : 'No' }}</td>
-                <td>{{ offer.isLended ? 'Yes' : 'No' }}</td>
-                <td>{{ offer.type }}</td>
-                <td>{{ offer.isReported ? 'Yes' : 'No' }}</td>
-                <td>{{ offer.createdAt ? offer.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ offer.updatedAt ? offer.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="12">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>actions</th>
-                <th>Title</th>
-                <th>Zipcode</th>
-                <th>Picture</th>
-                <th>Description</th>
-                <th>IsActive</th>
-                <th>Type</th>
-                <th>IsReported</th>
-                <th>CreatedAt</th>
-                <th>UpdatedAt</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for wish in wishes %}
-            <tr>
-                <td>{{ wish.id }}</td>
-                <td>
-                    <a href="{{ path('app_backoffice_wish_edit', {'id': wish.id}) }}">edit</a>
-                </td>
-                <td>{{ wish.title }}</td>
-                <td>{{ wish.zipcode }}</td>
-                <td>{{ wish.picture }}</td>
-                <td>{{ wish.description }}</td>
-                <td>{{ wish.isActive ? 'Yes' : 'No' }}</td>
-                <td>{{ wish.type }}</td>
-                <td>{{ wish.isReported ? 'Yes' : 'No' }}</td>
-                <td>{{ wish.createdAt ? wish.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ wish.updatedAt ? wish.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="11">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+	{% for offer in offers %}
+		<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm bg-white position-relative">
+			<div class="col-4 movie__poster" style="background-image: url({{ offer.picture }});"></div>
+			<div class="col-8 p-4 d-flex flex-column position-static">
+				<dl>
+					<dt>
+						id de l'offre :
+					</dt>
+					<dd>
+						{{ offer.id }}
+					</dd>
+					<dt>
+						utilisateur :
+					</dt>
+					<dd>
+						{{ offer.user.alias }}
+					</dd>
+					<dt>
+						intitulé de l'offre:
+					</dt>
+					<dd>
+						{{ offer.title }}
+					</dd>
+					<dt>
+						code postal :
+					</dt>
+					<dd>
+						{{ offer.zipcode }}
+					</dd>
+					<dt>
+						description :
+					</dt>
+					<dd>
+						{{ offer.description }}
+					</dd>
+					<dt>
+						IsActive :
+					</dt>
+					<dd>
+						{{ offer.isActive ? 'Yes' : 'No' }}
+					</dd>
+					<dt>
+						isLended :
+					</dt>
+					<dd>
+						{{ offer.isLended ? 'Yes' : 'No' }}
+					</dd>
+					<dt>
+						type :
+					</dt>
+					<dd>
+						{{ offer.type }}
+					</dd>
+					<dt>
+						crée le :
+					</dt>
+					<dd>
+						{{ offer.createdAt ? offer.createdAt|date('Y-m-d H:i:s') : '' }}
+					</dd>
+					<dt>
+						mise à jour le :
+					</dt>
+					<dd>
+						{{ offer.updatedAt ? offer.updatedAt|date('Y-m-d H:i:s') : '' }}
+					</dd>
+				</dl>
+				<div class="d-flex align-items-center">
+					{{ include('backoffice/offer/_validate_form.html.twig') }}
+					{{ include('backoffice/offer/_delete_form.html.twig') }}
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+	{% for wish in wishes %}
+		<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm bg-white position-relative">
+			<div class="col-4 movie__poster" style="background-image: url({{ wish.picture }});"></div>
+			<div class="col-8 p-4 d-flex flex-column position-static">
+				<dl>
+					<dt>
+						id de la demande :
+					</dt>
+					<dd>
+						{{ wish.id }}
+					</dd>
+					<dt>
+						utilisateur :
+					</dt>
+					<dd>
+						{{ wish.user.alias }}
+					</dd>
+					<dt>
+						intitulé de la demande :
+					</dt>
+					<dd>
+						{{ wish.title }}
+					</dd>
+					<dt>
+						code postal :
+					</dt>
+					<dd>
+						{{ wish.zipcode }}
+					</dd>
+					<dt>
+						description :
+					</dt>
+					<dd>
+						{{ wish.description }}
+					</dd>
+					<dt>
+						IsActive :
+					</dt>
+					<dd>
+						{{ wish.isActive ? 'Yes' : 'No' }}
+					</dd>
+					<dt>
+						type :
+					</dt>
+					<dd>
+						{{ wish.type }}
+					</dd>
+					<dt>
+						crée le :
+					</dt>
+					<dd>
+						{{ wish.createdAt ? wish.createdAt|date('Y-m-d H:i:s') : '' }}
+					</dd>
+					<dt>
+						mise à jour le :
+					</dt>
+					<dd>
+						{{ wish.updatedAt ? wish.updatedAt|date('Y-m-d H:i:s') : '' }}
+					</dd>
+				</dl>
+				<div class="d-flex align-items-center">
+					{{ include('backoffice/wish/_validate_form.html.twig') }}
+					{{ include('backoffice/wish/_delete_form.html.twig') }}
+				</div>
+			</div>
+		</div>
+	{% endfor %}
 {% endblock %}

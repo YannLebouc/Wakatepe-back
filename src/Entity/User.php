@@ -129,7 +129,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * 
      * @Assert\NotBlank
      * @Assert\NotNull
-     * @Assert\Positive
      * @Assert\Length(max=5)
      */
     private $zipcode;

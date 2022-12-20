@@ -6,6 +6,7 @@ use App\Entity\Wish;
 use App\Form\WishType;
 use App\Form\WishTypeCustom;
 use App\Repository\WishRepository;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -56,10 +57,26 @@ class WishController extends AbstractController
      */
     public function delete(Request $request, Wish $wish, WishRepository $wishRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$wish->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $wish->getId(), $request->request->get('_token'))) {
             $wishRepository->remove($wish, true);
         }
 
-        return $this->redirectToRoute('app_backoffice_wish_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_backoffice_reported', [], Response::HTTP_SEE_OTHER);
+    }
+
+    /**
+     * @Route("/{id}/validate", name="app_backoffice_wish_validate", methods={"POST"})
+     */
+    public function validate(Request $request, Wish $wish, WishRepository $wishRepository): Response
+    {
+        // if ($this->isCsrfTokenValid('validate' . $wish->getId(), $request->request->get('_token'))) {
+        // }
+        
+        $wish->setIsReported(false);
+        $wish->setUpdatedAt(new DateTime());
+        $wishRepository->add($wish, true);
+
+
+        return $this->redirectToRoute('app_backoffice_reported', [], Response::HTTP_SEE_OTHER);
     }
 }
