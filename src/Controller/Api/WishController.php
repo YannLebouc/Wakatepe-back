@@ -19,6 +19,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use OpenApi\Annotations as OA;
 use Nelmio\ApiDocBundle\Annotation\Model;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 /**
  * @OA\Tag(name="O'troc API : Wish")
@@ -309,5 +310,43 @@ class WishController extends AbstractController
                 ]
             ]
         );
+    }
+
+    /**
+     * Undocumented function
+     * @Route("/api/wishes/{id<\d+>}/pictures", name="app_api_wish_add_picture", methods={"POST"})
+     * 
+     * @param Wish|null $wish
+     * @param Request $request
+     * @param ParameterBagInterface $parameterBag
+     * @param EntityManagerInterface $doctrine
+     * @return JsonResponse
+     */
+    public function uploadWishPicture(
+        ?Wish $wish,
+        Request $request,
+        ParameterBagInterface $parameterBag,
+        EntityManagerInterface $doctrine
+    ): JsonResponse
+    {   
+
+        if (!$wish) {
+            return $this->json(["erreur" => "La demande recherchée n'existe pas"], HttpFoundationResponse::HTTP_NOT_FOUND);
+        }
+
+        try {
+            $image = $request->files->get('file');
+            $imageName = uniqid() . '_' . $image->getClientOriginalName();
+            $image->move($parameterBag->get('public') . '/img', $imageName);
+        
+            $wish->setPicture('http://yann-lebouc.vpnuser.lan:8081/img/'.$imageName);
+            // $user->setPicture($parameterBag->get('public').'/img/'.$imageName);
+
+            $doctrine->flush();
+        } catch (\Exception $e) {
+            return $this->json(['erreur' => 'Il y a un eu problème lors de la sauvegarde de l\'image'], HttpFoundationResponse::HTTP_UNSUPPORTED_MEDIA_TYPE);
+        }
+
+        return $this->json(['success' => 'Image correctement importée'], HttpFoundationResponse::HTTP_OK);
     }
 }

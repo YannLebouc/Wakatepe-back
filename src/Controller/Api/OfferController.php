@@ -18,6 +18,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use OpenApi\Annotations as OA;
 use Nelmio\ApiDocBundle\Annotation\Model;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 /**
  * @OA\Tag(name="O'troc API : Offer")
@@ -313,5 +314,43 @@ class OfferController extends AbstractController
                 ]
             ]
         );
+    }
+
+    /**
+     * Undocumented function
+     * @Route("/api/offers/{id<\d+>}/pictures", name="app_api_offer_add_picture", methods={"POST"})
+     * 
+     * @param Offer|null $offer
+     * @param Request $request
+     * @param ParameterBagInterface $parameterBag
+     * @param EntityManagerInterface $doctrine
+     * @return JsonResponse
+     */
+    public function uploadOfferPicture(
+        ?Offer $offer,
+        Request $request,
+        ParameterBagInterface $parameterBag,
+        EntityManagerInterface $doctrine
+    ): JsonResponse
+    {   
+
+        if (!$offer) {
+            return $this->json(["erreur" => "L'offre recherchée n'existe pas"], HttpFoundationResponse::HTTP_NOT_FOUND);
+        }
+
+        try {
+            $image = $request->files->get('file');
+            $imageName = uniqid() . '_' . $image->getClientOriginalName();
+            $image->move($parameterBag->get('public') . '/img', $imageName);
+        
+            $offer->setPicture('http://yann-lebouc.vpnuser.lan:8081/img/'.$imageName);
+            // $user->setPicture($parameterBag->get('public').'/img/'.$imageName);
+
+            $doctrine->flush();
+        } catch (\Exception $e) {
+            return $this->json(['erreur' => 'Il y a un eu problème lors de la sauvegarde de l\'image'], HttpFoundationResponse::HTTP_UNSUPPORTED_MEDIA_TYPE);
+        }
+
+        return $this->json(['success' => 'Image correctement importée'], HttpFoundationResponse::HTTP_OK);
     }
 }
