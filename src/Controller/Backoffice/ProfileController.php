@@ -2,7 +2,7 @@
 
 namespace App\Controller\Backoffice;
 
-
+use App\Form\EditPasswordType;
 use App\Form\UserTypeEdit;
 use App\Repository\UserRepository;
 use DateTime;
@@ -54,10 +54,40 @@ class ProfileController extends AbstractController
 
                 $this->addFlash('success', 'Votre profil a bien été modifié');
 
-                return $this->redirectToRoute('app_backoffice_user_index', [], Response::HTTP_SEE_OTHER);
+                return $this->redirectToRoute('app_backoffice_profile_show', [], Response::HTTP_SEE_OTHER);
             }
 
             $this->addFlash('danger', 'Votre profil n\'a pas été modifié');
+        }
+        return $this->renderForm('backoffice/user/edit.html.twig', [
+            'user' => $user,
+            'form' => $form,
+        ]);
+    }
+
+    /**
+     * @Route("/password", name="app_backoffice_profile_password", methods={"GET", "POST"})
+     */
+    public function editPassword(Request $request, UserRepository $userRepository, UserPasswordHasherInterface $userPasswordHasher)
+    {
+        $user = $this->getUser();
+
+        $form = $this->createForm(EditPasswordType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $user->setUpdatedAt(new DateTime());
+                $passwordHashed = $userPasswordHasher->hashPassword($user, $user->getPassword());
+                $user->setPassword($passwordHashed);
+                $userRepository->add($user, true);
+
+                $this->addFlash('success', 'Votre mot de passe a bien été modifié');
+
+                return $this->redirectToRoute('app_backoffice_profile_show', [], Response::HTTP_SEE_OTHER);
+            }
+
+            $this->addFlash('danger', 'Votre mot de passe n\'a pas été modifié');
         }
         return $this->renderForm('backoffice/user/edit.html.twig', [
             'user' => $user,

@@ -66,7 +66,7 @@ class UserType extends AbstractType
                     "placeholder" => "Facultatif",
                 ]
             ])
-            ->add('zipcode', TextTypeType::class,
+            ->add('zipcode', TextType::class,
             [
                 "label" => "Code postal :",
                 "attr" => [

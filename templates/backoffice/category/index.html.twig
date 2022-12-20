@@ -6,54 +6,11 @@
 {% block body %}
 	<h1>Category index</h1>
 
-
 	<a href="{{ path('app_backoffice_category_new') }}">Ajouter une catégorie</a>
-
-
-	<table class="table">
-		<thead>
-			<tr>
-				<th>Id</th>
-				<th>actions</th>
-				<th>Name</th>
-				<th>Slug</th>
-				<th>MainCategory</th>
-				<th>Picture</th>
-				<th>IsActive</th>
-				<th>CreatedAt</th>
-				<th>UpdatedAt</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for category in categories %}
-				<tr>
-					<td>{{ category.id }}</td>
-					<td>
-						<a href="{{ path('app_backoffice_category_show', {'id': category.id}) }}">show</a>
-						<a href="{{ path('app_backoffice_category_edit', {'id': category.id}) }}">edit</a>
-						<a href="{{ path('app_backoffice_category_delete', {'id': category.id}) }}">delete</a>
-					</td>
-					<td>{{ category.name }}</td>
-					<td>{{ category.slug }}</td>
-					<td>{{ category.mainCategory.name }}</td>
-					<td>{{ category.picture }}</td>
-					<td>{{ category.isActive ? 'Yes' : 'No' }}</td>
-					<td>{{ category.createdAt ? category.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-					<td>{{ category.updatedAt ? category.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-				</tr>
-			{% else %}
-				<tr>
-					<td colspan="8">no records found</td>
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
 
 	{% for category in categories %}
 		<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm bg-white position-relative">
-			<div class="col-4 movie__poster" style="background-image: url({{ category.picture }});">
-				{# <img src="{{ asset('/assets/images/220px-Michael_Youn_2018.jpg') }}" class="img-fluid"> #}
-			</div>
+			<div class="col-4" style="background-image: url({{ category.picture }});"></div>
 			<div class="col-8 p-4 d-flex flex-column position-static">
 				<dl>
 					<dt>
@@ -62,7 +19,7 @@
 					<dd>
 						{{ category.id }}
 					</dd>
-                    <dt>
+					<dt>
 						nom :
 					</dt>
 					<dd>
@@ -81,11 +38,11 @@
 						{{ category.mainCategory.name }}
 					</dd>
 					{# <dt>
-						catégorie active :
-					</dt>
-					<dd>
-						{{ category.isActive ? 'Yes' : 'No' }}
-					</dd> #}
+											catégorie active :
+										</dt>
+										<dd>
+											{{ category.isActive ? 'Yes' : 'No' }}
+										</dd> #}
 					<dt>
 						crée le :
 					</dt>
@@ -99,9 +56,11 @@
 						{{ category.updatedAt ? category.updatedAt|date('Y-m-d H:i:s') : '' }}
 					</dd>
 				</dl>
-                		<a href="{{ path('app_backoffice_category_show', {'id': category.id}) }}">show</a>
-						<a href="{{ path('app_backoffice_category_edit', {'id': category.id}) }}">edit</a>
-						<a href="{{ path('app_backoffice_category_delete', {'id': category.id}) }}">delete</a>
+				<div class="d-flex align-items-center">
+					<a href="{{ path('app_backoffice_category_show', {'id': category.id}) }}">show \</a>
+					<a href="{{ path('app_backoffice_category_edit', {'id': category.id}) }}">edit \</a>
+					<a href="{{ path('app_backoffice_category_delete', {'id': category.id}) }}">delete \</a>
+				</div>
 			</div>
 		</div>
 	{% endfor %}

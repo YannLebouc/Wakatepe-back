@@ -1,95 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ReportedController!
+{% block title %}
+	Annonces reportées
 {% endblock %}
 
 {% block body %}
-	<table class="table">
-		<thead>
-			<tr>
-				<th>Id</th>
-				<th>actions</th>
-				<th>Title</th>
-				<th>Zipcode</th>
-				<th>Picture</th>
-				<th>Description</th>
-				<th>IsActive</th>
-				<th>IsLended</th>
-				<th>Type</th>
-				<th>IsReported</th>
-				<th>CreatedAt</th>
-				<th>UpdatedAt</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for offer in offers %}
-				<tr>
-					<td>{{ offer.id }}</td>
-					<td>
-						<a href="{{ path('app_backoffice_offer_edit', {'id': offer.id}) }}">edit</a>
-					</td>
-					<td>{{ offer.title }}</td>
-					<td>{{ offer.zipcode }}</td>
-					<td>{{ offer.picture }}</td>
-					<td>{{ offer.description }}</td>
-					<td>{{ offer.isActive ? 'Yes' : 'No' }}</td>
-					<td>{{ offer.isLended ? 'Yes' : 'No' }}</td>
-					<td>{{ offer.type }}</td>
-					<td>{{ offer.isReported ? 'Yes' : 'No' }}</td>
-					<td>{{ offer.createdAt ? offer.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-					<td>{{ offer.updatedAt ? offer.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-				</tr>
-			{% else %}
-				<tr>
-					<td colspan="12">no records found</td>
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
-	<table class="table">
-		<thead>
-			<tr>
-				<th>Id</th>
-				<th>actions</th>
-				<th>Title</th>
-				<th>Zipcode</th>
-				<th>Picture</th>
-				<th>Description</th>
-				<th>IsActive</th>
-				<th>Type</th>
-				<th>IsReported</th>
-				<th>CreatedAt</th>
-				<th>UpdatedAt</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for wish in wishes %}
-				<tr>
-					<td>{{ wish.id }}</td>
-					<td>
-						<a href="{{ path('app_backoffice_wish_edit', {'id': wish.id}) }}">edit</a>
-					</td>
-					<td>{{ wish.title }}</td>
-					<td>{{ wish.zipcode }}</td>
-					<td>{{ wish.picture }}</td>
-					<td>{{ wish.description }}</td>
-					<td>{{ wish.isActive ? 'Yes' : 'No' }}</td>
-					<td>{{ wish.type }}</td>
-					<td>{{ wish.isReported ? 'Yes' : 'No' }}</td>
-					<td>{{ wish.createdAt ? wish.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-					<td>{{ wish.updatedAt ? wish.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-				</tr>
-			{% else %}
-				<tr>
-					<td colspan="11">no records found</td>
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
 
 	{% for offer in offers %}
 		<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm bg-white position-relative">
-			<div class="col-4 movie__poster" style="background-image: url({{ offer.picture }});"></div>
+			<div class="col-4" style="background-image: url({{ offer.picture }});"></div>
 			<div class="col-8 p-4 d-flex flex-column position-static">
 				<dl>
 					<dt>
@@ -162,7 +81,7 @@
 	{% endfor %}
 	{% for wish in wishes %}
 		<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm bg-white position-relative">
-			<div class="col-4 movie__poster" style="background-image: url({{ wish.picture }});"></div>
+			<div class="col-4" style="background-image: url({{ wish.picture }});"></div>
 			<div class="col-8 p-4 d-flex flex-column position-static">
 				<dl>
 					<dt>

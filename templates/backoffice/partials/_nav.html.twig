@@ -1,4 +1,4 @@
-            <nav class="navbar navbar-expand-lg navbar-dark">
+            <nav class="navbar navbar-expand-lg">
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 					<li>
 						<a href="{{ path('app_backoffice_main')}}">
@@ -46,8 +46,13 @@
 					{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 						<li>
 							<a href="{{path('app_logout')}}">
-								<span>Deconnexion</span>
+								<span>Déconnexion</span>
 						</a>
+						</li>
+                        <li>
+							<a href="{{path('app_backoffice_profile_show')}}">
+								<span>Profil</span>
+							</a>
 						</li>
 				{% else %}
 						<li>
@@ -56,11 +61,6 @@
 							</a>
 						</li>
 				{% endif %}
-                        <li>
-							<a href="{{path('app_backoffice_profile_show')}}">
-								<span>Profil</span>
-							</a>
-						</li>
 					</ul>
 				</div>
 			</nav>
