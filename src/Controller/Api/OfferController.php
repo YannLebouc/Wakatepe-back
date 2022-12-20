@@ -330,7 +330,7 @@ class OfferController extends AbstractController
             return $this->json(["erreur" => "Il n\'existe pas d'offre' pour cet ID"]);
         }
 
-        $isLended = !$offer->isIsLended();
+        $isLended = !($offer->isIsLended());
 
         $offer->setIsLended($isLended);
         $doctrine->flush();
@@ -352,7 +352,7 @@ class OfferController extends AbstractController
             return $this->json(["erreur" => "Il n\'existe pas d'offre' pour cet ID"]);
         }
 
-        $isActive = !$offer->isIsActive();
+        $isActive = !($offer->isIsActive());
 
         $offer->setIsActive($isActive);
         $doctrine->flush();

@@ -327,7 +327,7 @@ class WishController extends AbstractController
             return $this->json(["erreur" => "Il n\'existe pas d'offre' pour cet ID"]);
         }
 
-        $isActive = !$wish->isIsActive();
+        $isActive = !($wish->isIsActive());
 
         $wish->setIsActive($isActive);
         $doctrine->flush();
