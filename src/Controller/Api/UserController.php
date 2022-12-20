@@ -514,4 +514,22 @@ class UserController extends AbstractController
             HttpFoundationResponse::HTTP_PARTIAL_CONTENT
         );
     }
+
+    /**
+     * @Route("/api/users/current", name="app_api_users_delete", methods={"DELETE"})
+     */
+    public function delete(EntityManagerInterface $doctrine): JsonResponse
+    {
+        $user = $this->getUser();
+
+        try {
+            $doctrine->remove($user);
+        } catch (\Exception $e) {
+            return $this->json(['erreur' => 'Il y a eu une erreur lors de la suppression'], HttpFoundationResponse::HTTP_BAD_REQUEST);
+        }
+        
+        $doctrine->flush();
+        
+        return $this->json(['success' => 'L\'utilisateur a bien été supprimé'], HttpFoundationResponse::HTTP_OK);
+    }
 }
