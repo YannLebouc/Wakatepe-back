@@ -62,7 +62,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
      * @param [id] $id
      * @return array
      */
-    public function userActiveOffers($id) : array
+    public function findUserActiveOffers($id) : array
     {   
         // Je veux les offres actives de l'utilisateur courant
         $query = $this->getEntityManager()->createQuery(
@@ -80,7 +80,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
      * @param [id] $id
      * @return array
      */
-    public function userActiveWishes($id) : array
+    public function findUserActiveWishes($id) : array
     {   
         // Je veux les offres actives de l'utilisateur courant
         $query = $this->getEntityManager()->createQuery(
@@ -98,7 +98,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
      * @param [id] $id
      * @return array
      */
-    public function userInactiveAdverts($id) : array
+    public function findUserInactiveAdverts($id) : array
     {   
         $query = $this->getEntityManager()->createQuery(
             "SELECT u FROM App\Entity\User u
