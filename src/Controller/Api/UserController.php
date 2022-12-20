@@ -539,6 +539,10 @@ class UserController extends AbstractController
         }
 
         try {
+            $oldPicture = $user->getPicture();
+            $pictureFile = str_replace('http://yann-lebouc.vpnuser.lan:8081/img/', "", $oldPicture);
+            unlink($pictureFile);
+
             $image = $request->files->get('file');
             $imageName = uniqid() . '_' . $image->getClientOriginalName();
             $image->move($parameterBag->get('public') . '/img', $imageName);
