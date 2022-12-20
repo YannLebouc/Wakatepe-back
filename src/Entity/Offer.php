@@ -186,6 +186,7 @@ class Offer
      * @Groups({"category_offers"})
      * @Groups({"category_advertisements"})
      * @Groups({"offer_browse"})
+     * @Groups({"current_user_offers"})
      * 
      */
     private $user;

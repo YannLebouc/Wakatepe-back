@@ -76,6 +76,24 @@ class WishRepository extends ServiceEntityRepository
 
         return $query->getResult();
     }
+    
+     /**
+     * Retrieves a users active wishes
+     *
+     * @param [id] $id
+     * @return array
+     */
+    public function findUserActiveWishes($id) : array
+    {   
+        $query = $this->getEntityManager()->createQuery(
+            "SELECT w FROM App\Entity\Wish w
+            JOIN w.user u
+            WHERE u.id = $id 
+            AND w.isActive = true
+            ");
+
+        return $query->getResult();
+    }
 
 
         /**
