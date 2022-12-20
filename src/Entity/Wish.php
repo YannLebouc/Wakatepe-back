@@ -106,6 +106,7 @@ class Wish
      * 
      * @Groups({"nelmio_add_wish"})
      * @Groups({"current_user_inactive_ads"})
+     * @Groups({"current_user_wishes"})
      * 
      */
     private $isActive;
