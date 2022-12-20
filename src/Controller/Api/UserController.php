@@ -52,10 +52,10 @@ class UserController extends AbstractController
      *     description="Nous avons eu un problème lors de la récupération de votre profil, merci de vous reconnecter"
      * )
      * 
-     * @param UserRepository $userRepository
+     * @param OfferRepository $offerRepository
      * @return JsonResponse
      */
-    public function getMyOffers(UserRepository $userRepository): JsonResponse
+    public function getMyOffers(OfferRepository $offerRepository): JsonResponse
     {
         $user = $this->getUser();
 
@@ -63,7 +63,7 @@ class UserController extends AbstractController
             return $this->json(['erreur' => 'Erreur lors de la récupération du profil, merci de vous reconnecter'], HttpFoundationResponse::HTTP_NOT_FOUND);
         }
 
-        $offers = $userRepository->findUserActiveOffers($user->getId());
+        $offers = $offerRepository->findUsersActiveOffers($user->getId());
 
         return $this->json(
             $offers,
@@ -97,10 +97,10 @@ class UserController extends AbstractController
      *     description="Nous avons eu un problème lors de la récupération de votre profil, merci de vous reconnecter"
      * )     
      * 
-     * @param UserRepository $userRepository
+     * @param WishRepository $wishRepository
      * @return JsonResponse
      */
-    public function getMyWishes(UserRepository $userRepository): JsonResponse
+    public function getMyWishes(WishRepository $wishRepository): JsonResponse
     {
 
         $user = $this->getUser();
@@ -109,7 +109,7 @@ class UserController extends AbstractController
             return $this->json(['erreur' => 'Erreur lors de la récupération du profil, merci de vous reconnecter'], HttpFoundationResponse::HTTP_NOT_FOUND);
         }
 
-        $wishes = $userRepository->findUserActiveWishes($user->getId());
+        $wishes = $wishRepository->findUserActiveWishes($user->getId());
 
         return $this->json(
             $wishes,

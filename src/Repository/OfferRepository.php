@@ -78,6 +78,24 @@ class OfferRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+     /**
+     * Retrieves a users active offers
+     *
+     * @param [id] $id
+     * @return array
+     */
+    public function findUsersActiveOffers($id) : array
+    {   
+        $query = $this->getEntityManager()->createQuery(
+            "SELECT o FROM App\Entity\Offer o
+            JOIN o.user u
+            WHERE u.id = $id 
+            AND o.isActive = true
+            ");
+
+        return $query->getResult();
+    }
+
     /**
      * Retrieves all the offers containing a keyword in their title
      *

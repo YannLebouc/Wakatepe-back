@@ -202,7 +202,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\OneToMany(targetEntity=Offer::class, mappedBy="user", orphanRemoval=true)
      * 
      * @Groups({"user_ads_browse"})
-     * @Groups({"current_user_offers"})
+     * 
      * @Groups({"current_user_inactive_ads"})
      * 
      * 
@@ -211,7 +211,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\OneToMany(targetEntity=Wish::class, mappedBy="user", orphanRemoval=true)
-     * @Groups({"current_user_wishes"})
+     * 
      * @Groups({"current_user_inactive_ads"})
      * @Groups({"user_ads_browse"})
      */

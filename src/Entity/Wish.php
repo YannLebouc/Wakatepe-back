@@ -171,6 +171,8 @@ class Wish
      * @Groups({"category_wishes"})
      * @Groups({"category_advertisements"})
      * @Groups({"wish_browse"})
+     * @Groups({"current_user_wishes"})
+     * 
      * 
      */
     private $user;
