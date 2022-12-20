@@ -273,7 +273,7 @@ class UserController extends AbstractController
             );
         }
 
-        // $newUser->setPicture('https://upload.wikimedia.org/wikipedia/commons/1/1e/Michel_Sardou_2014.jpg');
+        $newUser->setPicture('https://st3.depositphotos.com/19428878/35596/v/450/depositphotos_355964924-stock-illustration-default-avatar-profile-icon-vector.jpg');
         $hashedPassword = $passwordHasher->hashPassword($newUser, $newUser->getPassword());
         $newUser->setPassword($hashedPassword);
 
@@ -356,7 +356,7 @@ class UserController extends AbstractController
         if (!$user) {
             return $this->json(['erreur' => 'Erreur lors de la récupération du profil, merci de vous reconnecter'], HttpFoundationResponse::HTTP_NOT_FOUND);
         }
-
+        
         return $this->json(
             $user,
             HttpFoundationResponse::HTTP_OK,
@@ -518,7 +518,7 @@ class UserController extends AbstractController
 
      /**
       * Undocumented function
-      * @Route("/api/users/{id<\d+>}/pictures", name="app_api_user_add_picture", methods={"PUT", "PATCH"})
+      * @Route("/api/users/current/pictures", name="app_api_user_add_picture", methods={"POST"})
       * 
       * @param User|null $user
       * @param Request $request
@@ -527,24 +527,29 @@ class UserController extends AbstractController
       * @return JsonResponse
       */
     public function uploadProfilePicture(
-        ?User $user, 
         Request $request, 
         ParameterBagInterface $parameterBag, 
         EntityManagerInterface $doctrine): JsonResponse
-    {
+    {   
+
+        $user = $this->getUser();
+
         if (!$user) {
             return $this->json(["erreur" => "L'utilisateur recherché n'existe pas"], HttpFoundationResponse::HTTP_NOT_FOUND);
         }
 
-        $image = $request->files->get('file');
-    
-        $imageName = uniqid() . '_' . $image->getClientOriginalName();
-        $image->move($parameterBag->get('public') . '/assets/images', $imageName);
-    
-        $user->setPicture($imageName);
-    
-        // $doctrine->persist($user);
-        $doctrine->flush();
+        try {
+            $image = $request->files->get('file');
+            $imageName = uniqid() . '_' . $image->getClientOriginalName();
+            $image->move($parameterBag->get('public') . '/img', $imageName);
+        
+            $user->setPicture('http://yann-lebouc.vpnuser.lan:8081/img/'.$imageName);
+            // $user->setPicture($parameterBag->get('public').'/img/'.$imageName);
+
+            $doctrine->flush();
+        } catch (\Exception $e) {
+            return $this->json(['erreur' => 'Il y a un eu problème lors de la sauvegarde de l\'image'], HttpFoundationResponse::HTTP_UNSUPPORTED_MEDIA_TYPE);
+        }
 
         return $this->json(['success' => 'Image correctement importée'], HttpFoundationResponse::HTTP_OK);
     }
