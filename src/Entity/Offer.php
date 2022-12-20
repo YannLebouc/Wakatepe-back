@@ -113,11 +113,15 @@ class Offer
      * 
      * @Groups({"nelmio_add_offer"})
      * @Groups({"current_user_inactive_ads"})
+     * @Groups({"current_user_offers"})
+     * 
+     * 
      */
     private $isActive;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Groups({"current_user_offers"})
      * 
      */
     private $isLended;
