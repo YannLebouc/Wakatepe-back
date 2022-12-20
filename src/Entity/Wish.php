@@ -56,7 +56,7 @@ class Wish
     private $title;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", length=8)
      * 
      * @Groups({"wish_browse"})
      * @Groups({"wish_read"})
@@ -67,7 +67,7 @@ class Wish
      * @Groups({"current_user_inactive_ads"})
      * @Groups({"user_ads_browse"})
      * 
-     * @Assert\Positive
+     * 
      * @Assert\Length(max=5)
      */
     private $zipcode;
