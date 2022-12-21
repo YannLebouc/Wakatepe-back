@@ -149,6 +149,7 @@ class Offer
      * @Groups({"category_offers"})
      * @Groups({"category_advertisements"})
      * @Groups({"user_ads_browse"})
+     * @Groups({"offer_read"})
      */
     private $isReported;
 

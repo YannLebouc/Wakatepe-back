@@ -281,7 +281,7 @@ class WishController extends AbstractController
 
     /** Retrieves all the wishes containing a keyword in their title
      * 
-     * @Route("/api/wishes/results", name="app_api_wishes_research", methods={"GET"})
+     * @Route("/api/wishes/results", name="app_api_wishes_research", methods={"POST"})
      */
     public function wishesResearch(Request $request, WishRepository $wishRepository): JsonResponse
     {   
