@@ -122,6 +122,8 @@ class Category
      * @ORM\ManyToOne(targetEntity=MainCategory::class, inversedBy="categories")
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"category_advertisements"})
+     * @Groups({"offer_browse"})
+     * @Groups({"wish_browse"})
      */
     private $mainCategory;
 

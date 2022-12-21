@@ -23,9 +23,11 @@ class MainCategory
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * 
+     * @Groups({"offer_browse"})
      * @Groups({"mainCategories_categories"})
      * @Groups({"mainCategory_category_browse"})
-     * 
+     * @Groups({"category_advertisements"})
+     * @Groups({"wish_browse"})
      */
     private $id;
 
@@ -35,6 +37,8 @@ class MainCategory
      * @Groups({"mainCategories_categories"})
      * @Groups({"mainCategory_category_browse"})
      * @Groups({"category_advertisements"})
+     * @Groups({"offer_browse"})
+     * @Groups({"wish_browse"})
      * 
      * @Assert\NotBlank
      * @Assert\NotNull
