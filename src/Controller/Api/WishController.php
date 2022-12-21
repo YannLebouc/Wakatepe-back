@@ -251,7 +251,7 @@ class WishController extends AbstractController
     }
 
     /**
-     * Deletes an offer
+     * Deletes an wish
      * @Route("/api/wishes/{id<\d+>}", name="app_api_wishes_delete", methods={"DELETE"})
      * 
      * @OA\Response(
@@ -264,11 +264,17 @@ class WishController extends AbstractController
      *     description="Il n'existe pas de souhait pour cet ID"
      * )
      */
-    public function delete(?Wish $wish, Request $request, EntityManagerInterface $doctrine, SerializerInterface $serializerInterface): JsonResponse
+    public function delete(?Wish $wish, EntityManagerInterface $doctrine, ParameterBagInterface $parameterBag): JsonResponse
     {
         if (!$wish) {
             return $this->json(['erreur' => 'Il n\'existe pas de souhait pour cet ID']);
            }
+
+        $oldPicture = ($wish->getPicture() !== null) ? $wish->getPicture() : "";
+        if(str_contains($oldPicture, 'http://yann-lebouc.vpnuser.lan:8081/img/')) {
+            $pictureFile = str_replace('http://yann-lebouc.vpnuser.lan:8081/img/', "", $oldPicture);
+            unlink($parameterBag->get('public') . '/img/' . $pictureFile);
+        }
 
         $doctrine->remove($wish);
         $doctrine->flush();
@@ -329,15 +335,8 @@ class WishController extends AbstractController
         EntityManagerInterface $doctrine
     ): JsonResponse
     {   
-
         if (!$wish) {
             return $this->json(["erreur" => "La demande recherchée n'existe pas"], HttpFoundationResponse::HTTP_NOT_FOUND);
-        }
-
-        $oldPicture = ($wish->getPicture() !== null) ? $wish->getPicture() : "";
-        if(str_contains($oldPicture, 'http://yann-lebouc.vpnuser.lan:8081/img/')) {
-            $pictureFile = str_replace('http://yann-lebouc.vpnuser.lan:8081/img/', "", $oldPicture);
-            unlink($parameterBag->get('public') . '/img/' . $pictureFile);
         }
 
         try {
