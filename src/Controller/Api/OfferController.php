@@ -273,8 +273,8 @@ class OfferController extends AbstractController
         }
 
         $oldPicture = ($offer->getPicture() !== null) ? $offer->getPicture() : "";
-        if(str_contains($oldPicture, 'http://yann-lebouc.vpnuser.lan:8081/img/')) {
-            $pictureFile = str_replace('http://yann-lebouc.vpnuser.lan:8081/img/', "", $oldPicture);
+        if(str_contains($oldPicture, 'http://yannlebouc-server.eddi.cloud/projet-11-o-troc-back/public/img/')) {
+            $pictureFile = str_replace('http://yannlebouc-server.eddi.cloud/projet-11-o-troc-back/public/img/', "", $oldPicture);
             unlink($parameterBag->get('public') . '/img/' . $pictureFile);
         }
 
@@ -346,8 +346,8 @@ class OfferController extends AbstractController
             $imageName = uniqid() . '_' . $image->getClientOriginalName();
             $image->move($parameterBag->get('public') . '/img', $imageName);
         
-            $offer->setPicture('http://yann-lebouc.vpnuser.lan:8081/img/'.$imageName);
-            // $user->setPicture($parameterBag->get('public').'/img/'.$imageName);
+            $offer->setPicture('http://yannlebouc-server.eddi.cloud/projet-11-o-troc-back/public/img/'.$imageName);
+            // $offer->setPicture('http://yann-lebouc.vpnuser.lan:8081/img/'.$imageName);
 
             $doctrine->flush();
         } catch (\Exception $e) {
