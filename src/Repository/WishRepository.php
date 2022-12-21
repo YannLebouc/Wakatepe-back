@@ -127,8 +127,9 @@ class WishRepository extends ServiceEntityRepository
         $qb->select('w')
             ->from('App\Entity\Wish', 'w')
             ->where($qb->expr()->like('w.title', ':title'))
-            ->setParameter('title', '%'.$keyword.'%'
-        );
+            ->setParameter('title', '%'.$keyword.'%')
+            ->andWhere('w.isActive = :active')
+            ->setParameter('active', true);
             
         $query = $qb->getQuery();
 
