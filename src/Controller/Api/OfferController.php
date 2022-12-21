@@ -160,9 +160,7 @@ class OfferController extends AbstractController
         return $this->json(
             $newOffer,
             HttpFoundationResponse::HTTP_CREATED,
-            [
-                "Location" => $this->generateUrl("app_api_offers_read", ["id" => $newOffer->getId()])
-            ],
+            [],
             ["groups" => ["offer_read"]]
         );
     }
@@ -333,10 +331,15 @@ class OfferController extends AbstractController
         EntityManagerInterface $doctrine
     ): JsonResponse
     {   
-
         if (!$offer) {
             return $this->json(["erreur" => "L'offre recherchée n'existe pas"], HttpFoundationResponse::HTTP_NOT_FOUND);
         }
+
+        // $oldPicture = ($offer->getPicture() !== null) ? $offer->getPicture() : "";
+        // if(str_contains($oldPicture, 'http://yann-lebouc.vpnuser.lan:8081/img/')) {
+        //     $pictureFile = str_replace('http://yann-lebouc.vpnuser.lan:8081/img/', "", $oldPicture);
+        //     unlink($parameterBag->get('public') . '/img/' . $pictureFile);
+        // }
 
         try {
             $image = $request->files->get('file');

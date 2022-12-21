@@ -334,6 +334,12 @@ class WishController extends AbstractController
             return $this->json(["erreur" => "La demande recherchée n'existe pas"], HttpFoundationResponse::HTTP_NOT_FOUND);
         }
 
+        $oldPicture = ($wish->getPicture() !== null) ? $wish->getPicture() : "";
+        if(str_contains($oldPicture, 'http://yann-lebouc.vpnuser.lan:8081/img/')) {
+            $pictureFile = str_replace('http://yann-lebouc.vpnuser.lan:8081/img/', "", $oldPicture);
+            unlink($parameterBag->get('public') . '/img/' . $pictureFile);
+        }
+
         try {
             $image = $request->files->get('file');
             $imageName = uniqid() . '_' . $image->getClientOriginalName();

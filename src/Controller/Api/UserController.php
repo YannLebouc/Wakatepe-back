@@ -273,7 +273,7 @@ class UserController extends AbstractController
             );
         }
 
-        $newUser->setPicture('https://st3.depositphotos.com/19428878/35596/v/450/depositphotos_355964924-stock-illustration-default-avatar-profile-icon-vector.jpg');
+        $newUser->setPicture('http://yann-lebouc.vpnuser.lan:8081/assets/images/sbcf-default-avatar.png');
         $hashedPassword = $passwordHasher->hashPassword($newUser, $newUser->getPassword());
         $newUser->setPassword($hashedPassword);
 
@@ -538,11 +538,13 @@ class UserController extends AbstractController
             return $this->json(["erreur" => "L'utilisateur recherché n'existe pas"], HttpFoundationResponse::HTTP_NOT_FOUND);
         }
 
-        try {
-            $oldPicture = $user->getPicture();
+        $oldPicture = $user->getPicture();
+        if(str_contains($oldPicture, 'http://yann-lebouc.vpnuser.lan:8081/img/')) {
             $pictureFile = str_replace('http://yann-lebouc.vpnuser.lan:8081/img/', "", $oldPicture);
-            unlink($pictureFile);
+            unlink($parameterBag->get('public') . '/img/' . $pictureFile);
+        }
 
+        try {
             $image = $request->files->get('file');
             $imageName = uniqid() . '_' . $image->getClientOriginalName();
             $image->move($parameterBag->get('public') . '/img', $imageName);
