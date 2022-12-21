@@ -3,27 +3,19 @@
 namespace App\Form;
 
 use App\Entity\Category;
-use App\Entity\Wish;
+use App\Entity\Offer;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class WishType extends AbstractType
+class OfferTypeCustom extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            // ->add('title')
-            // ->add('zipcode')
-            // ->add('picture')
-            // ->add('description')
-            // ->add('isActive')
-            // ->add('type')
+
             ->add('isReported')
-            // ->add('createdAt')
-            // ->add('updatedAt')
-            // ->add('user')
             // ->add('categories', EntityType::class,[
             //     'class' => Category::class,
             //     'choice_label' => 'name',
@@ -36,7 +28,7 @@ class WishType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Wish::class,
+            'data_class' => Offer::class,
         ]);
     }
 }

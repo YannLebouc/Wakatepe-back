@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ProfileController!
+{% endblock %}
+
+{% block body %}
+
+	<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm bg-white position-relative">
+		<div class="col-4" style="background-image: url({{ user.picture }});"></div>
+		<div class="col-8 p-4 d-flex flex-column position-static">
+			<dl>
+				<dt>
+					id de l'utilisateur:
+				</dt>
+				<dd>
+					{{ user.id }}
+				</dd>
+				<dt>
+					alias :
+				</dt>
+				<dd>
+					{{ user.alias }}
+				</dd>
+				<dt>
+					n° de téléphone :
+				</dt>
+				<dd>
+					{{ user.phoneNumber }}
+				</dd>
+				<dt>
+					code postal :
+				</dt>
+				<dd>
+					{{ user.zipcode }}
+				</dd>
+				<dt>
+					prénom :
+				</dt>
+				<dd>
+					{{ user.firstname }}
+				</dd>
+				<dt>
+					nom :
+				</dt>
+				<dd>
+					{{ user.lastname }}
+				</dd>
+				<dt>
+					crée le :
+				</dt>
+				<dd>
+					{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s') : '' }}
+				</dd>
+				<dt>
+					mis à jour le :
+				</dt>
+				<dd>
+					{{ user.updatedAt ? user.updatedAt|date('Y-m-d H:i:s') : '' }}
+				</dd>
+			</dl>
+			<div class="d-flex align-items-center">
+				<a href="{{ path('app_backoffice_profile_edit') }}">Editer \</a>
+				<a href="{{ path('app_backoffice_profile_password') }}">Password \</a>
+			</div>
+
+		</div>
+	</div>
+{% endblock %}

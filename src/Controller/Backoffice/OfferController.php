@@ -4,6 +4,7 @@ namespace App\Controller\Backoffice;
 
 use App\Entity\Offer;
 use App\Form\OfferType;
+use App\Form\OfferTypeCustom;
 use App\Repository\OfferRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,37 +16,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class OfferController extends AbstractController
 {
-    /**
-     * @Route("/", name="app_backoffice_offer_index", methods={"GET"})
-     */
-    public function index(OfferRepository $offerRepository): Response
-    {
-        return $this->render('backoffice/offer/index.html.twig', [
-            'offers' => $offerRepository->findAll(),
-        ]);
-    }
-
-    /**
-     * @Route("/new", name="app_backoffice_offer_new", methods={"GET", "POST"})
-     */
-    public function new(Request $request, OfferRepository $offerRepository): Response
-    {
-        $offer = new Offer();
-        $form = $this->createForm(OfferType::class, $offer);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $offerRepository->add($offer, true);
-
-            return $this->redirectToRoute('app_backoffice_offer_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('backoffice/offer/new.html.twig', [
-            'offer' => $offer,
-            'form' => $form,
-        ]);
-    }
-
     /**
      * @Route("/{id}", name="app_backoffice_offer_show", methods={"GET"})
      */
@@ -64,12 +34,17 @@ class OfferController extends AbstractController
         $form = $this->createForm(OfferType::class, $offer);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $offerRepository->add($offer, true);
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $offerRepository->add($offer, true);
 
-            return $this->redirectToRoute('app_backoffice_offer_index', [], Response::HTTP_SEE_OTHER);
+                $this->addFlash('success', 'L\'offre a bien été modifiée');
+
+                return $this->redirectToRoute('app_backoffice_offer_index', [], Response::HTTP_SEE_OTHER);
+            }
+
+            $this->addFlash('danger', 'L\'offre n\'a pas été modifiée');
         }
-
         return $this->renderForm('backoffice/offer/edit.html.twig', [
             'offer' => $offer,
             'form' => $form,
@@ -81,10 +56,28 @@ class OfferController extends AbstractController
      */
     public function delete(Request $request, Offer $offer, OfferRepository $offerRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$offer->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $offer->getId(), $request->request->get('_token'))) {
             $offerRepository->remove($offer, true);
+
+            $this->addFlash('success', 'L\'offre a bien été supprimée');
         }
 
         return $this->redirectToRoute('app_backoffice_offer_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    /**
+     * @Route("/{id}/validate", name="app_backoffice_offer_validate", methods={"POST"})
+     */
+    public function validate(Request $request, Offer $offer, OfferRepository $offerRepository): Response
+    {
+        // if ($this->isCsrfTokenValid('validate' . $offer->getId(), $request->request->get('_token'))) {
+        // }
+        
+        $offer->setIsReported(false);
+        $offer->setUpdatedAt(new DateTime());
+        $offerRepository->add($offer, true);
+
+
+        return $this->redirectToRoute('app_backoffice_reported', [], Response::HTTP_SEE_OTHER);
     }
 }

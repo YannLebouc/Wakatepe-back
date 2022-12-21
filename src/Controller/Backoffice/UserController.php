@@ -4,6 +4,7 @@ namespace App\Controller\Backoffice;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Form\UserTypeEdit;
 use App\Repository\UserRepository;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -11,7 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 /**
  * @Route("/backoffice/user")
@@ -33,6 +33,8 @@ class UserController extends AbstractController
      */
     public function new(Request $request, UserRepository $userRepository, UserPasswordHasherInterface $userPasswordHasher): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
@@ -44,13 +46,12 @@ class UserController extends AbstractController
                 $user->setPassword($passwordHashed);
                 $userRepository->add($user, true);
 
-                $this->addFlash('success', 'l\'utilisateur a bien été ajouté');
+                $this->addFlash('success', 'L\'utilisateur a bien été ajouté');
 
                 return $this->redirectToRoute('app_backoffice_user_index', [], Response::HTTP_SEE_OTHER);
             }
 
-            $this->addFlash('danger', 'l\' utilisateur n\'a pas été ajouté');
-
+            $this->addFlash('danger', 'L\' utilisateur n\'a pas été ajouté');
         }
         return $this->renderForm('backoffice/user/new.html.twig', [
             'user' => $user,
@@ -73,11 +74,13 @@ class UserController extends AbstractController
      */
     public function edit(Request $request, User $user, UserRepository $userRepository): Response
     {
-        // $token->getUser();
+        $this->denyAccessUnlessGranted("ROLE_ADMIN");
+        
+        $form = $this->createForm(UserTypeEdit::class, $user);
+        if(!in_array('ROLE_ADMIN', $this->getUser()->getRoles())) {
+            $form->remove('roles');
+        }
 
-        // $this->denyAccessUnlessGranted('USER_EDIT', $token);
-
-        $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
@@ -85,12 +88,12 @@ class UserController extends AbstractController
                 $user->setUpdatedAt(new DateTime());
                 $userRepository->add($user, true);
 
-                $this->addFlash('success', 'l\'utilisateur a bien été modifié');
+                $this->addFlash('success', 'L\'utilisateur a bien été modifié');
 
                 return $this->redirectToRoute('app_backoffice_user_index', [], Response::HTTP_SEE_OTHER);
             }
 
-            $this->addFlash('danger', 'l\'utilisateur n\'a pas été modifié');
+            $this->addFlash('danger', 'L\'utilisateur n\'a pas été modifié');
         }
         return $this->renderForm('backoffice/user/edit.html.twig', [
             'user' => $user,
@@ -103,6 +106,8 @@ class UserController extends AbstractController
      */
     public function delete(Request $request, User $user, UserRepository $userRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
             $userRepository->remove($user, true);
         }
