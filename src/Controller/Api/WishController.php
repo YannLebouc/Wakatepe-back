@@ -295,7 +295,7 @@ class WishController extends AbstractController
         $wishes = [];
         foreach ($keywords as $keyword) {
             if (strlen($keyword) > 2) {
-                $results = $wishRepository->getSearchedWishes($keyword);
+                $results = $wishRepository->findSearchedWishes($keyword);
                 $wishes[] = $results;
             }
         }
