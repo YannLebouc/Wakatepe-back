@@ -20,6 +20,18 @@
                 <td>{{ offer.zipcode }}</td>
             </tr>
             <tr>
+                <th>User</th>
+                {# <td>{{ offer.user.alias }}</td> #}
+                <td><a href="{{ path('app_backoffice_user_show', {'id': offer.user.id}) }}">{{ offer.user.alias }}</a></td>
+            </tr>
+            {# <tr>
+                <th>Category</th>
+                <td>
+                {% for category in allCategories %}
+                {{offer.category.name}}
+                {% endfor %}
+                </td>
+            <tr> #}
                 <th>Picture</th>
                 <td>{{ offer.picture }}</td>
             </tr>
@@ -54,9 +66,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_backoffice_offer_index') }}">back to list</a>
+    <a href="{{ path('app_backoffice_offer_editcustom', {'id': offer.id}) }}">Editer</a></br>
 
-    <a href="{{ path('app_backoffice_offer_edit', {'id': offer.id}) }}">edit</a>
+    <a href="{{ path('app_backoffice_offer_index') }}">back to list</a>
 
     {{ include('backoffice/offer/_delete_form.html.twig') }}
 {% endblock %}

@@ -41,7 +41,6 @@ class OfferRepository extends ServiceEntityRepository
         }
     }
 
-
     /**
      * Retrieves a users inactive offers
      * @param [id] $id
@@ -59,7 +58,7 @@ class OfferRepository extends ServiceEntityRepository
 
         return $query->getResult();
     }
-    
+
      /**
      * Retrieves a categories active offers
      *

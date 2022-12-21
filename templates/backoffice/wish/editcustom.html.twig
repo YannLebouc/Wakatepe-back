@@ -6,8 +6,7 @@
     <h1>Edit Wish</h1>
 
     {{ include('backoffice/wish/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('app_backoffice_main') }}">back to list</a>
+    <a href="{{ path('app_backoffice_wish_index') }}">back to list</a>
 
     <table class="table">
         <tbody>
@@ -66,6 +65,6 @@
             </tr>
         </tbody>
     </table>
-
+    
     {{ include('backoffice/wish/_delete_form.html.twig') }}
 {% endblock %}
