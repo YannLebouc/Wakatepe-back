@@ -1,66 +1,68 @@
-            <nav class="navbar navbar-expand-lg">
-				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-					<li>
-						<a href="{{ path('app_backoffice_main')}}">
-							<span>O'troc\</span>
-						</a>
-					</li>
-					<li>
-						<a href="{{ path('app_backoffice_maincategory_index')}}">
-							<span>MainCatégories \</span>
-						</a>
-					</li>
-					<li>
-						<a href="{{ path('app_backoffice_category_index')}}">
-							<span>Catégories \</span>
-						</a>
-					</li>
-					{% if is_granted('ROLE_ADMIN') %}
-                    <li>
-						<a href="{{ path('app_backoffice_user_index')}}">
-							<span>Utilisateurs \</span>
-						</a>
-					</li>
-					{% endif %}
-					<li>
-						<a href="{{ path('app_backoffice_reported')}}">
-							<span>Annonces reportées \</span>
-						</a>
-					</li> 
-				</ul>
-				<div id="right">
-					{% if is_granted('IS_AUTHENTICATED_FULLY') %}
-					<ul>
-						<li>
-							<span class="mr-2">Bienvenue
-								<b>{{ app.user.alias }}</b>
-						</span>
-						</li>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	<div class="container-fluid">
+		<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+			<li>
+				<a class="nav-link" href="{{ path('app_backoffice_main')}}">
+					<h5>O'troc</h5>
+				</a>
+			</li>
+			<li>
+				<a class="nav-link" href="{{ path('app_backoffice_maincategory_index')}}">
+					<h5>MainCatégories</h5>
+				</a>
+			</li>
+			<li>
+				<a class="nav-link" href="{{ path('app_backoffice_category_index')}}">
+					<h5>Catégories</h5>
+				</a>
+			</li>
+			{% if is_granted('ROLE_ADMIN') %}
+				<li>
+					<a class="nav-link" href="{{ path('app_backoffice_user_index')}}">
+						<h5>Utilisateurs</h5>
+					</a>
+				</li>
+			{% endif %}
+			<li>
+				<a class="nav-link" href="{{ path('app_backoffice_reported')}}">
+					<h5>Annonces reportées</h5>
+				</a>
+			</li>
+		</ul>
+		<div id="right">
+			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+				{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 
-					{% else %}
-						<li>	
-							<span class="mr-2">Bienvenue</span>
-						</li>
+					<li>
+						<h5 class="nav-link">Bienvenue
+							<b>{{ app.user.alias }}</b>
+						</h5>
+					</li>
 
-					{% endif %}
-					{% if is_granted('IS_AUTHENTICATED_FULLY') %}
-						<li>
-							<a href="{{path('app_logout')}}">
-								<span>Déconnexion</span>
-						</a>
-						</li>
-                        <li>
-							<a href="{{path('app_backoffice_profile_show')}}">
-								<span>Profil</span>
-							</a>
-						</li>
 				{% else %}
-						<li>
-							<a href="{{path('app_login')}}">
-								<span>Connexion</span>
-							</a>
-						</li>
+					<li>
+						<h5 class="nav-link">Bienvenue</h5>
+					</li>
 				{% endif %}
-					</ul>
-				</div>
-			</nav>
+				{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+					<li>
+						<a class="nav-link" href="{{path('app_logout')}}">
+							<h5>Déconnexion</h5>
+						</a>
+					</li>
+					<li>
+						<a class="nav-link" href="{{path('app_backoffice_profile_show')}}">
+							<h5>Profil</h5>
+						</a>
+					</li>
+				{% else %}
+					<li>
+						<a class="nav-link" href="{{path('app_login')}}">
+							<h5>Connexion</h5>
+						</a>
+					</li>
+				{% endif %}
+			</ul>
+		</div>
+	</div>
+</nav>
