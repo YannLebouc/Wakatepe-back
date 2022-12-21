@@ -123,7 +123,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $phoneNumber;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", length=8)
      * 
      * @Groups({"users_read"})
      * @Groups({"current_user_offers"})
@@ -134,6 +134,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * 
      * @Assert\NotBlank
      * @Assert\NotNull
+     * 
      * @Assert\Length(max=5)
      */
     private $zipcode;

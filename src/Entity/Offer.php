@@ -60,7 +60,7 @@ class Offer
     private $title;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", length=8)
      * 
      * @Groups({"offer_browse"})
      * @Groups({"offer_read"})
@@ -71,7 +71,7 @@ class Offer
      * @Groups({"current_user_inactive_ads"})
      * @Groups({"user_ads_browse"})
      *       
-     * @Assert\Positive
+     * 
      * @Assert\Length(max=5)
      */
     private $zipcode;
