@@ -271,8 +271,8 @@ class WishController extends AbstractController
            }
 
         $oldPicture = ($wish->getPicture() !== null) ? $wish->getPicture() : "";
-        if(str_contains($oldPicture, 'http://yann-lebouc.vpnuser.lan:8081/img/')) {
-            $pictureFile = str_replace('http://yann-lebouc.vpnuser.lan:8081/img/', "", $oldPicture);
+        if(str_contains($oldPicture, 'http://yannlebouc-server.eddi.cloud/projet-11-o-troc-back/public/img/')) {
+            $pictureFile = str_replace('http://yannlebouc-server.eddi.cloud/projet-11-o-troc-back/public/img/', "", $oldPicture);
             unlink($parameterBag->get('public') . '/img/' . $pictureFile);
         }
 
@@ -344,7 +344,7 @@ class WishController extends AbstractController
             $imageName = uniqid() . '_' . $image->getClientOriginalName();
             $image->move($parameterBag->get('public') . '/img', $imageName);
         
-            $wish->setPicture('http://yann-lebouc.vpnuser.lan:8081/img/'.$imageName);
+            $wish->setPicture('http://yannlebouc-server.eddi.cloud/projet-11-o-troc-back/public/img/'.$imageName);
             // $user->setPicture($parameterBag->get('public').'/img/'.$imageName);
 
             $doctrine->flush();
