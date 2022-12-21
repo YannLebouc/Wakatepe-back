@@ -56,7 +56,7 @@ class Wish
     private $title;
 
     /**
-     * @ORM\Column(type="string", length=8)
+     * @ORM\Column(type="string", length=16)
      * 
      * @Groups({"wish_browse"})
      * @Groups({"wish_read"})
@@ -220,12 +220,12 @@ class Wish
         return $this;
     }
 
-    public function getZipcode(): ?int
+    public function getZipcode(): ?string
     {
         return $this->zipcode;
     }
 
-    public function setZipcode(int $zipcode): self
+    public function setZipcode(string $zipcode): self
     {
         $this->zipcode = $zipcode;
 
