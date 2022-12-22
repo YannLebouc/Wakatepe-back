@@ -274,7 +274,7 @@ class WishController extends AbstractController
         $oldPicture = ($wish->getPicture() !== null) ? $wish->getPicture() : "";
         if(str_contains($oldPicture, 'http://yannlebouc-server.eddi.cloud/projet-11-o-troc-back/public/img/')) {
             $pictureFile = str_replace('http://yannlebouc-server.eddi.cloud/projet-11-o-troc-back/public/img/', "", $oldPicture);
-            unlink($parameterBag->get('public') . '/img/' . $pictureFile);
+            unlink('/var/www/html/projet-11-o-troc-back/public/img' . $pictureFile);
         }
 
         $doctrine->remove($wish);
@@ -344,7 +344,7 @@ class WishController extends AbstractController
         try {
             $image = $request->files->get('file');
             $imageName = uniqid() . '_' . $image->getClientOriginalName();
-            $image->move($parameterBag->get('public') . '/img', $imageName);
+            $image->move('/var/www/html/projet-11-o-troc-back/public/img', $imageName);
         
             $wish->setPicture('http://yannlebouc-server.eddi.cloud/projet-11-o-troc-back/public/img/'.$imageName);
             // $user->setPicture($parameterBag->get('public').'/img/'.$imageName);

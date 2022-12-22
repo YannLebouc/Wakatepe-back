@@ -70,7 +70,7 @@ class Offer
      * @Groups({"nelmio_add_offer"})
      * @Groups({"current_user_inactive_ads"})
      * @Groups({"user_ads_browse"})
-     *       
+     * 
      * 
      * @Assert\Length(max=5)
      */
@@ -122,6 +122,9 @@ class Offer
     /**
      * @ORM\Column(type="boolean")
      * @Groups({"current_user_offers"})
+     * @Groups({"offer_read"})
+     * @Groups({"category_advertisements"})
+     * @Groups({"offer_browse"})
      * 
      */
     private $isLended;

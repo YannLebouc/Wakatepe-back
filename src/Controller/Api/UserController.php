@@ -541,7 +541,7 @@ class UserController extends AbstractController
         $oldPicture = $user->getPicture();
         if(str_contains($oldPicture, 'http://yannlebouc-server.eddi.cloud/projet-11-o-troc-back/public/img/')) {
             $pictureFile = str_replace('http://yannlebouc-server.eddi.cloud/projet-11-o-troc-back/public/img/', "", $oldPicture);
-            unlink($parameterBag->get('public') . '/img/' . $pictureFile);
+            unlink('/var/www/html/projet-11-o-troc-back/public/img/' . $pictureFile);
         }
 
         try {
