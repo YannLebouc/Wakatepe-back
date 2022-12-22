@@ -63,7 +63,7 @@ class OfferController extends AbstractController
             $this->addFlash('success', 'L\'offre a bien été supprimée');
         }
 
-        return $this->redirectToRoute('app_backoffice_offer_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_backoffice_reported_index', [], Response::HTTP_SEE_OTHER);
     }
 
     /**

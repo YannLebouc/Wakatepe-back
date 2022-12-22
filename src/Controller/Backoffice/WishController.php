@@ -41,7 +41,7 @@ class WishController extends AbstractController
 
                 $this->addFlash('success', 'La demande a bien été modifiée');
 
-                return $this->redirectToRoute('app_backoffice_wish_index', [], Response::HTTP_SEE_OTHER);
+                return $this->redirectToRoute('app_backoffice_reported_index', [], Response::HTTP_SEE_OTHER);
             }
 
             $this->addFlash('danger', 'La demande n\'a pas été modifiée');
