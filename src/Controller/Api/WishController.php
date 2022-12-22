@@ -381,8 +381,8 @@ class WishController extends AbstractController
 
     /** Allows a user to set a wish reported status to true or false
      * 
+     * 
      * @Route("/api/wishes/{id<\d+>}/reported", name="app_api_wishes_reported", methods={"PUT", "PATCH"})
-     * Undocumented function
      *
      * @param Wish|null $wish
      * @param EntityManagerInterface $doctrine
@@ -391,7 +391,7 @@ class WishController extends AbstractController
     public function isReported(?Wish $wish, EntityManagerInterface $doctrine): JsonResponse
     {   
         if (!$wish) {
-            return $this->json(["erreur" => "Il n\'existe pas d'offre' pour cet ID"]);
+            return $this->json(["erreur" => "Il n\'existe pas de demande pour cet ID"]);
         }
 
         $wish->setIsReported(true);
