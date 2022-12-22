@@ -547,7 +547,7 @@ class UserController extends AbstractController
         try {
             $image = $request->files->get('file');
             $imageName = uniqid() . '_' . $image->getClientOriginalName();
-            $image->move($parameterBag->get('public') . '/img', $imageName);
+            $image->move('/var/www/html/projet-11-o-troc-back/public/img', $imageName);
         
             $user->setPicture('http://yannlebouc-server.eddi.cloud/projet-11-o-troc-back/public/img/'.$imageName);
             // $user->setPicture($parameterBag->get('public').'/img/'.$imageName);
