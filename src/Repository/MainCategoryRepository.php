@@ -54,6 +54,19 @@ class MainCategoryRepository extends ServiceEntityRepository
 
     /**
      */
+    public function findAllCategoriesByMainCat($id)
+    {
+        $query = $this->getEntityManager()->createQuery("SELECT m, c
+        FROM App\Entity\MainCategory m
+        Join m.categories c
+        WHERE m.id = $id 
+        ");
+        $activeCategories = $query->getResult();
+        return $activeCategories;
+    }
+
+    /**
+     */
     public function findAllActiveAdvertisements($id)
     {
         $query = $this->getEntityManager()->createQuery('SELECT m, c, o, w

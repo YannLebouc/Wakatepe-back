@@ -28,6 +28,8 @@ class MainCategory
      * @Groups({"mainCategory_category_browse"})
      * @Groups({"category_advertisements"})
      * @Groups({"wish_browse"})
+     * @Groups({"maincat_categories"})
+     * 
      */
     private $id;
 
@@ -39,6 +41,7 @@ class MainCategory
      * @Groups({"category_advertisements"})
      * @Groups({"offer_browse"})
      * @Groups({"wish_browse"})
+     * @Groups({"maincat_categories"})
      * 
      * @Assert\NotBlank
      * @Assert\NotNull
@@ -50,7 +53,7 @@ class MainCategory
      * 
      * @Groups({"mainCategories_categories"})
      * @Groups({"mainCategory_category_browse"})
-     * 
+     * @Groups({"maincat_categories"})
      */
     private $slug;
 
@@ -69,6 +72,7 @@ class MainCategory
      * 
      * @Groups({"mainCategories_categories"})
      * @Groups({"mainCategory_categories_advertisements"})
+     * @Groups({"maincat_categories"})
      * 
      */
     private $categories;
