@@ -40,7 +40,6 @@ class CategoryController extends AbstractController
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                $category->setPicture('https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Michael_Youn_2018.jpg/220px-Michael_Youn_2018.jpg');
                 $newSlug = $customSlugger->slugToLower($category->getName());
                 $category->setSlug($newSlug);
                 $categoryRepository->add($category, true);
@@ -50,7 +49,7 @@ class CategoryController extends AbstractController
                 return $this->redirectToRoute('app_backoffice_category_index', [], Response::HTTP_SEE_OTHER);
             }
 
-            $this->addFlash('danger', 'la catégorie n\'a pas été ajoutée');
+            $this->addFlash('danger', 'La catégorie n\'a pas été ajoutée');
 
         }
         return $this->renderForm('backoffice/category/new.html.twig', [
@@ -84,7 +83,7 @@ class CategoryController extends AbstractController
                 $category->setSlug($newSlug);
                 $categoryRepository->add($category, true);
 
-                $this->addFlash('success', 'la catégorie a bien été modifiée');
+                $this->addFlash('success', 'La catégorie a bien été modifiée');
 
                 return $this->redirectToRoute('app_backoffice_category_index', [], Response::HTTP_SEE_OTHER);
             }

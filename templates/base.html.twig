@@ -8,10 +8,14 @@
 		<link
 		href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 		<!-- Bootstrap icons -->
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+		<link
+		rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+		<!-- otroc CSS -->
+		<link rel="stylesheet" href="{{ asset('assets/css/otroc.css') }}">
 
 		<title>
-			{% block title %}BackOffice-O'troc
+			{% block title %}
+			BackOffice-O'troc
 			{% endblock %}
 		</title>
 
@@ -26,17 +30,18 @@
 			{{ encore_entry_script_tags('app') }}
 		{% endblock %}
 	</head>
+	{{ include('backoffice/partials/_nav.html.twig') }}
 	<body>
-		<div class="container-fluid"> 
-
-       			{{ include('backoffice/partials/_nav.html.twig') }}
-		
-       			{{ include('backoffice/partials/_flash_message.html.twig') }}
-
-            {% block body %}{% endblock %}
-  
-       			{{ include('backoffice/partials/_nav.html.twig') }}
-
+		<div class="container-fluid">
+			{{ include('backoffice/partials/_flash_message.html.twig') }}
+			{% block body %}{% endblock %}
 		</div>
+
+		{# <footer>
+			{{ include('backoffice/partials/_nav.html.twig') }}
+		</footer> #}
+
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+
 	</body>
 </html>

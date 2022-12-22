@@ -1,13 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit MainCategory{% endblock %}
+{% block title %}
+	Modifier la main catégorie
+{% endblock %}
 
 {% block body %}
-    <h1>Edit MainCategory</h1>
-
-    {{ include('backoffice/maincategory/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('app_backoffice_maincategory_index') }}">back to list</a>
-
-    {{ include('backoffice/maincategory/_delete_form.html.twig') }}
+	<h1>Modifier la main catégorie</h1>
+	{{ include('backoffice/maincategory/_form.html.twig', {'button_label': 'Valider'}) }}
+	<a href="{{ path('app_backoffice_maincategory_index') }}" class="btn btn-secondary">Retour</a>
+	{{ include('backoffice/maincategory/_delete_form.html.twig') }}
 {% endblock %}

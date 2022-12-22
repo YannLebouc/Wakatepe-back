@@ -24,25 +24,13 @@ class CategoryType extends AbstractType
                     "placeholder" => "saisissez le nom de la catégorie",
                 ]
             ])
-            // ->add('picture', UrlType::class, 
-            // [
-            //     "label" => "URL de l'image de la catégorie :",
-            //     "attr" => [
-            //         "placeholder" => "http://...."
-            //     ]
-            // ])
-            ->add('isActive', ChoiceType::class,
+            ->add('picture', UrlType::class, 
             [
-                "placeholder" => "Active",
-                "label" => "Active",
-                "expanded" => true,
-                "multiple" => false,
-                "choices" => [
-                    "oui" => true,
-                    "non" => false
+                "label" => "URL de l'image de la catégorie :",
+                "attr" => [
+                    "placeholder" => "http://...."
                 ]
             ])
-
             ->add('mainCategory', EntityType::class,
             [
                 'class' => MainCategory::class,
