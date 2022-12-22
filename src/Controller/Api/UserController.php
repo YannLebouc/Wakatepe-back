@@ -272,7 +272,7 @@ class UserController extends AbstractController
             );
         }
 
-        $newUser->setPicture('http://yann-lebouc.vpnuser.lan:8081/assets/images/sbcf-default-avatar.png');
+        $newUser->setPicture('http://yannlebouc-server.eddi.cloud/projet-11-o-troc-back/public/assets/images/sbcf-default-avatar.png');
         $hashedPassword = $passwordHasher->hashPassword($newUser, $newUser->getPassword());
         $newUser->setPassword($hashedPassword);
 
