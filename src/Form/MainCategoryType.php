@@ -20,9 +20,6 @@ class MainCategoryType extends AbstractType
                     "placeholder" => "saisissez le nom de la main catégorie",
                 ]
             ])
-            // ->add('slug')
-            // ->add('createdAt')
-            // ->add('updatedAt')
         ;
     }
 

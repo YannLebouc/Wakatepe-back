@@ -31,7 +31,9 @@
                 <td>{{ user.id }}</td>
                 <td>
                     <a href="{{ path('app_backoffice_user_show', {'id': user.id}) }}">show</a>
+                    {% if is_granted('ROLE_ADMIN') %}
                     <a href="{{ path('app_backoffice_user_edit', {'id': user.id}) }}">edit</a>
+                    {% endif %}
                 </td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.roles ? user.roles|json_encode : '' }}</td>

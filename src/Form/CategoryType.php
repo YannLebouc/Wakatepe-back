@@ -24,7 +24,6 @@ class CategoryType extends AbstractType
                     "placeholder" => "saisissez le nom de la catégorie",
                 ]
             ])
-            // ->add('slug')
             // ->add('picture', UrlType::class, 
             // [
             //     "label" => "URL de l'image de la catégorie :",
@@ -43,10 +42,7 @@ class CategoryType extends AbstractType
                     "non" => false
                 ]
             ])
-            // ->add('createdAt')
-            // ->add('updatedAt')
-            // ->add('offer')
-            // ->add('wish')
+
             ->add('mainCategory', EntityType::class,
             [
                 'class' => MainCategory::class,

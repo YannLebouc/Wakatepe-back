@@ -104,8 +104,8 @@ class CategoryController extends AbstractController
         if (!$category) {
             return $this->json(['erreur' => 'la demande n\'a pas été trouvée'], HttpFoundationResponse::HTTP_NOT_FOUND);
    }   
-        $activeWishes = $wishRepository->activeWishes($category->getId()); 
-        $activeOffers = $offerRepository->activeOffers($category->getId());
+        $activeWishes = $wishRepository->findActiveWishes($category->getId()); 
+        $activeOffers = $offerRepository->findActiveOffers($category->getId());
 
         return $this->json(
             [

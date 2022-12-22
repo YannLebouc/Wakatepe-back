@@ -1,0 +1,66 @@
+            <nav class="navbar navbar-expand-lg">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<li>
+						<a href="{{ path('app_backoffice_main')}}">
+							<span>O'troc\</span>
+						</a>
+					</li>
+					<li>
+						<a href="{{ path('app_backoffice_maincategory_index')}}">
+							<span>MainCatégories \</span>
+						</a>
+					</li>
+					<li>
+						<a href="{{ path('app_backoffice_category_index')}}">
+							<span>Catégories \</span>
+						</a>
+					</li>
+					{% if is_granted('ROLE_ADMIN') %}
+                    <li>
+						<a href="{{ path('app_backoffice_user_index')}}">
+							<span>Utilisateurs \</span>
+						</a>
+					</li>
+					{% endif %}
+					<li>
+						<a href="{{ path('app_backoffice_reported')}}">
+							<span>Annonces reportées \</span>
+						</a>
+					</li> 
+				</ul>
+				<div id="right">
+					{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+					<ul>
+						<li>
+							<span class="mr-2">Bienvenue
+								<b>{{ app.user.alias }}</b>
+						</span>
+						</li>
+
+					{% else %}
+						<li>	
+							<span class="mr-2">Bienvenue</span>
+						</li>
+
+					{% endif %}
+					{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+						<li>
+							<a href="{{path('app_logout')}}">
+								<span>Déconnexion</span>
+						</a>
+						</li>
+                        <li>
+							<a href="{{path('app_backoffice_profile_show')}}">
+								<span>Profil</span>
+							</a>
+						</li>
+				{% else %}
+						<li>
+							<a href="{{path('app_login')}}">
+								<span>Connexion</span>
+							</a>
+						</li>
+				{% endif %}
+					</ul>
+				</div>
+			</nav>

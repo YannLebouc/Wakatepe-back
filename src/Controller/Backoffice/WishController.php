@@ -4,7 +4,9 @@ namespace App\Controller\Backoffice;
 
 use App\Entity\Wish;
 use App\Form\WishType;
+use App\Form\WishTypeCustom;
 use App\Repository\WishRepository;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,37 +17,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class WishController extends AbstractController
 {
-    /**
-     * @Route("/", name="app_backoffice_wish_index", methods={"GET"})
-     */
-    public function index(WishRepository $wishRepository): Response
-    {
-        return $this->render('backoffice/wish/index.html.twig', [
-            'wishes' => $wishRepository->findAll(),
-        ]);
-    }
-
-    /**
-     * @Route("/new", name="app_backoffice_wish_new", methods={"GET", "POST"})
-     */
-    public function new(Request $request, WishRepository $wishRepository): Response
-    {
-        $wish = new Wish();
-        $form = $this->createForm(WishType::class, $wish);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $wishRepository->add($wish, true);
-
-            return $this->redirectToRoute('app_backoffice_wish_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('backoffice/wish/new.html.twig', [
-            'wish' => $wish,
-            'form' => $form,
-        ]);
-    }
-
     /**
      * @Route("/{id}", name="app_backoffice_wish_show", methods={"GET"})
      */
@@ -64,12 +35,17 @@ class WishController extends AbstractController
         $form = $this->createForm(WishType::class, $wish);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $wishRepository->add($wish, true);
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $wishRepository->add($wish, true);
 
-            return $this->redirectToRoute('app_backoffice_wish_index', [], Response::HTTP_SEE_OTHER);
+                $this->addFlash('success', 'La demande a bien été modifiée');
+
+                return $this->redirectToRoute('app_backoffice_wish_index', [], Response::HTTP_SEE_OTHER);
+            }
+
+            $this->addFlash('danger', 'La demande n\'a pas été modifiée');
         }
-
         return $this->renderForm('backoffice/wish/edit.html.twig', [
             'wish' => $wish,
             'form' => $form,
@@ -81,10 +57,26 @@ class WishController extends AbstractController
      */
     public function delete(Request $request, Wish $wish, WishRepository $wishRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$wish->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $wish->getId(), $request->request->get('_token'))) {
             $wishRepository->remove($wish, true);
         }
 
-        return $this->redirectToRoute('app_backoffice_wish_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_backoffice_reported', [], Response::HTTP_SEE_OTHER);
+    }
+
+    /**
+     * @Route("/{id}/validate", name="app_backoffice_wish_validate", methods={"POST"})
+     */
+    public function validate(Request $request, Wish $wish, WishRepository $wishRepository): Response
+    {
+        // if ($this->isCsrfTokenValid('validate' . $wish->getId(), $request->request->get('_token'))) {
+        // }
+        
+        $wish->setIsReported(false);
+        $wish->setUpdatedAt(new DateTime());
+        $wishRepository->add($wish, true);
+
+
+        return $this->redirectToRoute('app_backoffice_reported', [], Response::HTTP_SEE_OTHER);
     }
 }

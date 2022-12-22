@@ -47,7 +47,7 @@ class WishRepository extends ServiceEntityRepository
      */
 
 
-    public function userInactiveWishes($id) : array
+    public function findUserInactiveWishes($id) : array
     {   
         $query = $this->getEntityManager()->createQuery(
             "SELECT w FROM App\Entity\Wish w
@@ -65,12 +65,30 @@ class WishRepository extends ServiceEntityRepository
      * @param [id] $id
      * @return array
      */
-    public function activeWishes($id) : array
+    public function findActiveWishes($id) : array
     {   
         $query = $this->getEntityManager()->createQuery(
             "SELECT w FROM App\Entity\Wish w
             JOIN w.categories c
             WHERE c.id = $id 
+            AND w.isActive = true
+            ");
+
+        return $query->getResult();
+    }
+    
+     /**
+     * Retrieves a users active wishes
+     *
+     * @param [id] $id
+     * @return array
+     */
+    public function findUserActiveWishes($id) : array
+    {   
+        $query = $this->getEntityManager()->createQuery(
+            "SELECT w FROM App\Entity\Wish w
+            JOIN w.user u
+            WHERE u.id = $id 
             AND w.isActive = true
             ");
 
@@ -101,7 +119,7 @@ class WishRepository extends ServiceEntityRepository
      * @param [mixed] $keyword
      * @return void
      */
-    public function getSearchedWishes($keyword)
+    public function findSearchedWishes($keyword)
     {
         
         $qb = $this->getEntityManager()->createQueryBuilder();
@@ -109,8 +127,9 @@ class WishRepository extends ServiceEntityRepository
         $qb->select('w')
             ->from('App\Entity\Wish', 'w')
             ->where($qb->expr()->like('w.title', ':title'))
-            ->setParameter('title', '%'.$keyword.'%'
-        );
+            ->setParameter('title', '%'.$keyword.'%')
+            ->andWhere('w.isActive = :active')
+            ->setParameter('active', true);
             
         $query = $qb->getQuery();
 

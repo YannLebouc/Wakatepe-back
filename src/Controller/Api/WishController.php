@@ -232,6 +232,7 @@ class WishController extends AbstractController
            );
        }
 
+       $wish->setIsReported(null);
        $wish->setUpdatedAt(new DateTime());
        $doctrine->flush();
 
@@ -287,7 +288,7 @@ class WishController extends AbstractController
 
     /** Retrieves all the wishes containing a keyword in their title
      * 
-     * @Route("/api/wishes/results", name="app_api_wishes_research", methods={"GET"})
+     * @Route("/api/wishes/results", name="app_api_wishes_research", methods={"POST"})
      */
     public function wishesResearch(Request $request, WishRepository $wishRepository): JsonResponse
     {   
@@ -301,7 +302,7 @@ class WishController extends AbstractController
         $wishes = [];
         foreach ($keywords as $keyword) {
             if (strlen($keyword) > 2) {
-                $results = $wishRepository->getSearchedWishes($keyword);
+                $results = $wishRepository->findSearchedWishes($keyword);
                 $wishes[] = $results;
             }
         }
@@ -317,6 +318,7 @@ class WishController extends AbstractController
             ]
         );
     }
+
 
     /**
      * Undocumented function
@@ -353,5 +355,48 @@ class WishController extends AbstractController
         }
 
         return $this->json(['success' => 'Image correctement importée'], HttpFoundationResponse::HTTP_OK);
+  }
+    /** Allows a user to set a wish active status to true or false
+    * 
+    * @Route("/api/wishes/{id<\d+>}/active", name="app_api_wishes_active", methods={"PUT", "PATCH"})
+    * Undocumented function
+    *
+    * @param Wish|null $wish
+    * @param EntityManagerInterface $doctrine
+    * @return JsonResponse
+    */
+    public function isActive(?Wish $wish, EntityManagerInterface $doctrine): JsonResponse
+    {   
+        if (!$wish) {
+            return $this->json(["erreur" => "Il n\'existe pas d'offre' pour cet ID"]);
+        }
+
+        $isActive = !($wish->isIsActive());
+
+        $wish->setIsActive($isActive);
+        $doctrine->flush();
+
+        return $this->json(['success' => 'Modification prise en compte'], HttpFoundationResponse::HTTP_PARTIAL_CONTENT);
+    }
+
+    /** Allows a user to set a wish reported status to true or false
+     * 
+     * @Route("/api/wishes/{id<\d+>}/reported", name="app_api_wishes_reported", methods={"PUT", "PATCH"})
+     * Undocumented function
+     *
+     * @param Wish|null $wish
+     * @param EntityManagerInterface $doctrine
+     * @return JsonResponse
+     */
+    public function isReported(?Wish $wish, EntityManagerInterface $doctrine): JsonResponse
+    {   
+        if (!$wish) {
+            return $this->json(["erreur" => "Il n\'existe pas d'offre' pour cet ID"]);
+        }
+
+        $wish->setIsReported(true);
+        $doctrine->flush();
+
+        return $this->json(['success' => 'Modification prise en compte'], HttpFoundationResponse::HTTP_PARTIAL_CONTENT);
     }
 }

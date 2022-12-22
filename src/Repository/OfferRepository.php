@@ -41,14 +41,13 @@ class OfferRepository extends ServiceEntityRepository
         }
     }
 
-
     /**
      * Retrieves a users inactive offers
      * @param [id] $id
      * @return array
      */
 
-    public function userInactiveOffers($id) : array
+    public function findUserInactiveOffers($id) : array
     {   
         $query = $this->getEntityManager()->createQuery(
             "SELECT o FROM App\Entity\Offer o
@@ -59,19 +58,37 @@ class OfferRepository extends ServiceEntityRepository
 
         return $query->getResult();
     }
-    
+
      /**
      * Retrieves a categories active offers
      *
      * @param [id] $id
      * @return array
      */
-    public function activeOffers($id) : array
+    public function findActiveOffers($id) : array
     {   
         $query = $this->getEntityManager()->createQuery(
             "SELECT o FROM App\Entity\Offer o
             JOIN o.categories c
             WHERE c.id = $id 
+            AND o.isActive = true
+            ");
+
+        return $query->getResult();
+    }
+
+     /**
+     * Retrieves a users active offers
+     *
+     * @param [id] $id
+     * @return array
+     */
+    public function findUsersActiveOffers($id) : array
+    {   
+        $query = $this->getEntityManager()->createQuery(
+            "SELECT o FROM App\Entity\Offer o
+            JOIN o.user u
+            WHERE u.id = $id 
             AND o.isActive = true
             ");
 
@@ -84,7 +101,7 @@ class OfferRepository extends ServiceEntityRepository
      * @param [mixed] $keyword
      * @return void
      */
-    public function getSearchedOffers($keyword)
+    public function findSearchedOffers($keyword)
     {
         
         $qb = $this->getEntityManager()->createQueryBuilder();
@@ -92,8 +109,9 @@ class OfferRepository extends ServiceEntityRepository
         $qb->select('o')
             ->from('App\Entity\Offer', 'o')
             ->where($qb->expr()->like('o.title', ':title'))
-            ->setParameter('title', '%'.$keyword.'%'
-        );
+            ->setParameter('title', '%'.$keyword.'%')
+            ->andWhere('o.isActive = :active')
+            ->setParameter('active', true);
             
         $query = $qb->getQuery();
         return $query->getResult();

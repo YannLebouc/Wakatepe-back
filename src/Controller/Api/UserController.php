@@ -53,10 +53,10 @@ class UserController extends AbstractController
      *     description="Nous avons eu un problème lors de la récupération de votre profil, merci de vous reconnecter"
      * )
      * 
-     * @param UserRepository $userRepository
+     * @param OfferRepository $offerRepository
      * @return JsonResponse
      */
-    public function getMyOffers(UserRepository $userRepository): JsonResponse
+    public function getMyOffers(OfferRepository $offerRepository): JsonResponse
     {
         $user = $this->getUser();
 
@@ -64,7 +64,7 @@ class UserController extends AbstractController
             return $this->json(['erreur' => 'Erreur lors de la récupération du profil, merci de vous reconnecter'], HttpFoundationResponse::HTTP_NOT_FOUND);
         }
 
-        $offers = $userRepository->userActiveOffers($user->getId());
+        $offers = $offerRepository->findUsersActiveOffers($user->getId());
 
         return $this->json(
             $offers,
@@ -98,10 +98,10 @@ class UserController extends AbstractController
      *     description="Nous avons eu un problème lors de la récupération de votre profil, merci de vous reconnecter"
      * )     
      * 
-     * @param UserRepository $userRepository
+     * @param WishRepository $wishRepository
      * @return JsonResponse
      */
-    public function getMyWishes(UserRepository $userRepository): JsonResponse
+    public function getMyWishes(WishRepository $wishRepository): JsonResponse
     {
 
         $user = $this->getUser();
@@ -110,7 +110,7 @@ class UserController extends AbstractController
             return $this->json(['erreur' => 'Erreur lors de la récupération du profil, merci de vous reconnecter'], HttpFoundationResponse::HTTP_NOT_FOUND);
         }
 
-        $wishes = $userRepository->userActiveOffers($user->getId());
+        $wishes = $wishRepository->findUserActiveWishes($user->getId());
 
         return $this->json(
             $wishes,
@@ -155,8 +155,8 @@ class UserController extends AbstractController
             return $this->json(['erreur' => 'Erreur lors de la récupération du profil, merci de vous reconnecter'], HttpFoundationResponse::HTTP_NOT_FOUND);
         }
 
-        $wishes = $wishRepository->userInactiveWishes($user->getId());
-        $offers = $offerRepository->userInactiveOffers($user->getId());
+        $wishes = $wishRepository->findUserInactiveWishes($user->getId());
+        $offers = $offerRepository->findUserInactiveOffers($user->getId());
 
         return $this->json(
             [
@@ -174,7 +174,6 @@ class UserController extends AbstractController
             ]
         );
     }
-
     /**
      * Retrieves a list of the offers belonging to a user thanks to its ID
      * @Route("/api/users/{id<\d+>}/offers", name="app_api_users_offers", methods={"GET"})
@@ -298,7 +297,7 @@ class UserController extends AbstractController
      *     description="Retrieves the informations from a particular user from his ID",
      *     @OA\JsonContent(
      *        type="array",
-     *        @OA\Items(ref=@Model(type=User::class, groups={"user_offer_browse"}))
+     *        @OA\Items(ref=@Model(type=User::class, groups={"user_ads_browse"}))
      *     )
      * )
      * 
@@ -322,7 +321,7 @@ class UserController extends AbstractController
             [
                 "groups" =>
                 [
-                    "user_offer_browse"
+                    "user_ads_browse"
                 ]
             ]
         );
@@ -516,6 +515,7 @@ class UserController extends AbstractController
         );
     }
 
+
      /**
       * Undocumented function
       * @Route("/api/users/current/pictures", name="app_api_user_add_picture", methods={"POST"})
@@ -558,5 +558,23 @@ class UserController extends AbstractController
         }
 
         return $this->json(['success' => 'Image correctement importée'], HttpFoundationResponse::HTTP_OK);
+    }
+
+    /**
+     * @Route("/api/users/current", name="app_api_users_delete", methods={"DELETE"})
+     */
+    public function delete(EntityManagerInterface $doctrine): JsonResponse
+    {
+        $user = $this->getUser();
+
+        try {
+            $doctrine->remove($user);
+        } catch (\Exception $e) {
+            return $this->json(['erreur' => 'Il y a eu une erreur lors de la suppression'], HttpFoundationResponse::HTTP_BAD_REQUEST);
+        }
+        
+        $doctrine->flush();
+        
+        return $this->json(['success' => 'L\'utilisateur a bien été supprimé'], HttpFoundationResponse::HTTP_OK);
     }
 }
