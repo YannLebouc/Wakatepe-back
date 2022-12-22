@@ -125,6 +125,7 @@ class Offer
      * @Groups({"offer_read"})
      * @Groups({"category_advertisements"})
      * @Groups({"offer_browse"})
+     * @Groups({"user_ads_browse"})
      * 
      */
     private $isLended;
