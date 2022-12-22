@@ -34,22 +34,19 @@ class AppFixtures extends Fixture
         //     'permanent'
         // ];
 
-        // $users = [];
-        // for ($i = 0; $i < 10; $i++) {
-        //     $user = new User();
-        //     $user->setEmail('otroc' . $i . '@oclock.io');
-        //     $user->setPassword('$2y$13$KZqO0hqpmYtiMYAEJMKKVefvwf4D/GcIGuT6TQHj7xFX7kl71BKFa');
-        //     $user->setRoles(['ROLE_ADMIN', 'ROLE_MANAGER']);
-        //     $user->setAlias('User' . $i);
-        //     $user->setFirstname('firstname' . $i);
-        //     $user->setLastname('lastname' . $i);
-        //     $user->setZipcode('33600');
-        //     $user->setPicture('https://upload.wikimedia.org/wikipedia/commons/1/1e/Michel_Sardou_2014.jpg');
-        //     $user->setCreatedAt(new DateTime());
 
-        //     $manager->persist($user);
-        //     $users[] = $user;
-        // }
+            $user = new User();
+            $user->setEmail('otroc5@oclock.io');
+            $user->setPassword('$2y$13$KZqO0hqpmYtiMYAEJMKKVefvwf4D/GcIGuT6TQHj7xFX7kl71BKFa');
+            $user->setRoles(['ROLE_ADMIN', 'ROLE_MANAGER']);
+            $user->setAlias('User');
+            $user->setFirstname('firstname');
+            $user->setLastname('lastname');
+            $user->setZipcode('33600');
+            $user->setPicture('https://upload.wikimedia.org/wikipedia/commons/1/1e/Michel_Sardou_2014.jpg');
+            $user->setCreatedAt(new DateTime());
+
+            $manager->persist($user);
 
         // $offers = [];
         // for ($i = 0; $i <= 30; $i++) {
