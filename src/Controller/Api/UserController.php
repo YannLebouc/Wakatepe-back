@@ -24,6 +24,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use OpenApi\Annotations as OA;
 use Nelmio\ApiDocBundle\Annotation\Model;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 use Symfony\Component\Security\Core\Security as CoreSecurity;
 
@@ -271,7 +272,7 @@ class UserController extends AbstractController
             );
         }
 
-        $newUser->setPicture('https://upload.wikimedia.org/wikipedia/commons/1/1e/Michel_Sardou_2014.jpg');
+        $newUser->setPicture('http://yann-lebouc.vpnuser.lan:8081/assets/images/sbcf-default-avatar.png');
         $hashedPassword = $passwordHasher->hashPassword($newUser, $newUser->getPassword());
         $newUser->setPassword($hashedPassword);
 
@@ -354,7 +355,7 @@ class UserController extends AbstractController
         if (!$user) {
             return $this->json(['erreur' => 'Erreur lors de la récupération du profil, merci de vous reconnecter'], HttpFoundationResponse::HTTP_NOT_FOUND);
         }
-
+        
         return $this->json(
             $user,
             HttpFoundationResponse::HTTP_OK,
@@ -512,6 +513,51 @@ class UserController extends AbstractController
             ['Validation' => 'Votre mot de passe a bien été modifié.'],
             HttpFoundationResponse::HTTP_PARTIAL_CONTENT
         );
+    }
+
+
+     /**
+      * Undocumented function
+      * @Route("/api/users/current/pictures", name="app_api_user_add_picture", methods={"POST"})
+      * 
+      * @param User|null $user
+      * @param Request $request
+      * @param ParameterBagInterface $parameterBag
+      * @param EntityManagerInterface $doctrine
+      * @return JsonResponse
+      */
+    public function uploadProfilePicture(
+        Request $request, 
+        ParameterBagInterface $parameterBag, 
+        EntityManagerInterface $doctrine): JsonResponse
+    {   
+
+        $user = $this->getUser();
+
+        if (!$user) {
+            return $this->json(["erreur" => "L'utilisateur recherché n'existe pas"], HttpFoundationResponse::HTTP_NOT_FOUND);
+        }
+
+        $oldPicture = $user->getPicture();
+        if(str_contains($oldPicture, 'http://yannlebouc-server.eddi.cloud/projet-11-o-troc-back/public/img/')) {
+            $pictureFile = str_replace('http://yannlebouc-server.eddi.cloud/projet-11-o-troc-back/public/img/', "", $oldPicture);
+            unlink($parameterBag->get('public') . '/img/' . $pictureFile);
+        }
+
+        try {
+            $image = $request->files->get('file');
+            $imageName = uniqid() . '_' . $image->getClientOriginalName();
+            $image->move($parameterBag->get('public') . '/img', $imageName);
+        
+            $user->setPicture('http://yannlebouc-server.eddi.cloud/projet-11-o-troc-back/public/img/'.$imageName);
+            // $user->setPicture($parameterBag->get('public').'/img/'.$imageName);
+
+            $doctrine->flush();
+        } catch (\Exception $e) {
+            return $this->json(['erreur' => 'Il y a un eu problème lors de la sauvegarde de l\'image'], HttpFoundationResponse::HTTP_UNSUPPORTED_MEDIA_TYPE);
+        }
+
+        return $this->json(['success' => 'Image correctement importée'], HttpFoundationResponse::HTTP_OK);
     }
 
     /**

@@ -19,6 +19,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use OpenApi\Annotations as OA;
 use Nelmio\ApiDocBundle\Annotation\Model;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 /**
  * @OA\Tag(name="O'troc API : Wish")
@@ -251,7 +252,7 @@ class WishController extends AbstractController
     }
 
     /**
-     * Deletes an offer
+     * Deletes an wish
      * @Route("/api/wishes/{id<\d+>}", name="app_api_wishes_delete", methods={"DELETE"})
      * 
      * @OA\Response(
@@ -264,11 +265,17 @@ class WishController extends AbstractController
      *     description="Il n'existe pas de souhait pour cet ID"
      * )
      */
-    public function delete(?Wish $wish, Request $request, EntityManagerInterface $doctrine, SerializerInterface $serializerInterface): JsonResponse
+    public function delete(?Wish $wish, EntityManagerInterface $doctrine, ParameterBagInterface $parameterBag): JsonResponse
     {
         if (!$wish) {
             return $this->json(['erreur' => 'Il n\'existe pas de souhait pour cet ID']);
            }
+
+        $oldPicture = ($wish->getPicture() !== null) ? $wish->getPicture() : "";
+        if(str_contains($oldPicture, 'http://yannlebouc-server.eddi.cloud/projet-11-o-troc-back/public/img/')) {
+            $pictureFile = str_replace('http://yannlebouc-server.eddi.cloud/projet-11-o-troc-back/public/img/', "", $oldPicture);
+            unlink($parameterBag->get('public') . '/img/' . $pictureFile);
+        }
 
         $doctrine->remove($wish);
         $doctrine->flush();
@@ -312,6 +319,43 @@ class WishController extends AbstractController
         );
     }
 
+
+    /**
+     * Undocumented function
+     * @Route("/api/wishes/{id<\d+>}/pictures", name="app_api_wish_add_picture", methods={"POST"})
+     * 
+     * @param Wish|null $wish
+     * @param Request $request
+     * @param ParameterBagInterface $parameterBag
+     * @param EntityManagerInterface $doctrine
+     * @return JsonResponse
+     */
+    public function uploadWishPicture(
+        ?Wish $wish,
+        Request $request,
+        ParameterBagInterface $parameterBag,
+        EntityManagerInterface $doctrine
+    ): JsonResponse
+    {   
+        if (!$wish) {
+            return $this->json(["erreur" => "La demande recherchée n'existe pas"], HttpFoundationResponse::HTTP_NOT_FOUND);
+        }
+
+        try {
+            $image = $request->files->get('file');
+            $imageName = uniqid() . '_' . $image->getClientOriginalName();
+            $image->move($parameterBag->get('public') . '/img', $imageName);
+        
+            $wish->setPicture('http://yannlebouc-server.eddi.cloud/projet-11-o-troc-back/public/img/'.$imageName);
+            // $user->setPicture($parameterBag->get('public').'/img/'.$imageName);
+
+            $doctrine->flush();
+        } catch (\Exception $e) {
+            return $this->json(['erreur' => 'Il y a un eu problème lors de la sauvegarde de l\'image'], HttpFoundationResponse::HTTP_UNSUPPORTED_MEDIA_TYPE);
+        }
+
+        return $this->json(['success' => 'Image correctement importée'], HttpFoundationResponse::HTTP_OK);
+  }
     /** Allows a user to set a wish active status to true or false
     * 
     * @Route("/api/wishes/{id<\d+>}/active", name="app_api_wishes_active", methods={"PUT", "PATCH"})

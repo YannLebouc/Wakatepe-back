@@ -86,7 +86,7 @@ class Offer
      * @Groups({"current_user_inactive_ads"})
      * @Groups({"user_ads_browse"})
      *       
-     * @Assert\Image
+     * 
      * @Groups({"category_offers"})
      * @Groups({"category_advertisements"})      
      */

@@ -169,7 +169,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $lastname;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * 
      * @Groups({"wish_read"})
      * @Groups({"offer_read"})
