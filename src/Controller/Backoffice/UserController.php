@@ -41,7 +41,7 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                $user->setPicture('https://upload.wikimedia.org/wikipedia/commons/1/1e/Michel_Sardou_2014.jpg');
+                $user->setPicture('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png');
                 $passwordHashed = $userPasswordHasher->hashPassword($user, $user->getPassword());
                 $user->setPassword($passwordHashed);
                 $userRepository->add($user, true);

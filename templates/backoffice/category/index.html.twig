@@ -38,12 +38,6 @@
 					<dd>
 						{{ category.mainCategory.name }}
 					</dd>
-					{# <dt>
-											catégorie active :
-										</dt>
-										<dd>
-											{{ category.isActive ? 'Yes' : 'No' }}
-										</dd> #}
 					<dt>
 						crée le :
 					</dt>
@@ -57,23 +51,22 @@
 						{{ category.updatedAt ? category.updatedAt|date('Y-m-d H:i:s') : '' }}
 					</dd>
 				</dl>
-
-<nav class="navbar navbar-expand-lg navbar-light">
-	<div class="container-fluid">
-		<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-					<li>
-					<a href="{{ path('app_backoffice_category_show', {'id': category.id}) }}" class="btn btn-primary">Détail</a>
-					</li>
-					<li>
-					<a href="{{ path('app_backoffice_category_edit', {'id': category.id}) }}" class="btn btn-warning">Modifier</a>
-					</li>
-					<li>
-					<a href="{{ path('app_backoffice_category_delete', {'id': category.id}) }}" class="btn btn-danger">Supprimer</a>
-					</li>
-					</ul>
-				</div>
-			</nav>
+				<nav class="navbar navbar-expand-lg navbar-light">
+					<div class="container-fluid">
+						<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+							<li>
+								<a href="{{ path('app_backoffice_category_show', {'id': category.id}) }}" class="btn btn-primary">Détail</a>
+							</li>
+							<li>
+								<a href="{{ path('app_backoffice_category_edit', {'id': category.id}) }}" class="btn btn-warning">Modifier</a>
+							</li>
+							<li>
+								<a href="{{ path('app_backoffice_category_delete', {'id': category.id}) }}" class="btn btn-danger">Supprimer</a>
+							</li>
+						</ul>
+					</div>
+				</nav>
+			</div>
 		</div>
 	{% endfor %}
-	<a href="{{ path('app_backoffice_category_new') }}" class="btn btn-success">Ajouter une catégorie</a>
 {% endblock %}

@@ -1,11 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New MainCategory{% endblock %}
+{% block title %}
+	Ajouter une main categorie
+{% endblock %}
 
 {% block body %}
-    <h1>Create new MainCategory</h1>
+	<h1>Ajouter une main categorie</h1>
 
-    {{ include('backoffice/maincategory/_form.html.twig') }}
+	{{ include('backoffice/maincategory/_form.html.twig') }}
 
-    <a href="{{ path('app_backoffice_maincategory_index') }}" class="btn btn-secondary">Retour</a>
+	<a href="{{ path('app_backoffice_maincategory_index') }}" class="btn btn-secondary">Retour</a>
 {% endblock %}

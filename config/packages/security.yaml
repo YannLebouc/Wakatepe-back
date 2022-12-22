@@ -48,8 +48,8 @@ security:
     access_control:
         - { path: ^/api/login, roles: PUBLIC_ACCESS }
         - { path: ^/api/users, roles: PUBLIC_ACCESS, methods: [POST] }
-        - { path: /backoffice, roles: [ ROLE_MANAGER ] }
         - { path: /backoffice/user, roles: [ ROLE_ADMIN ] }
+        - { path: /backoffice, roles: [ ROLE_MANAGER ] }
 
     role_hierarchy:
         ROLE_MANAGER: [ROLE_USER]
