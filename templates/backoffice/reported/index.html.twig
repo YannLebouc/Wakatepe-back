@@ -84,7 +84,10 @@
 	{% endfor %}
 	{% for wish in wishes %}
 		<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm bg-white position-relative">
-			<div class="col-4 otroc_picture" style="background-image: url({{ wish.picture }});"></div>
+			<div class="col-4 otroc_picture"> 
+				<img src="{{wish.picture}}" alt="Photo de {{wish.title}}">
+			</div>
+		</div>
 			<div class="col-8 p-4 d-flex flex-column position-static">
 				<dl>
 					<dt>
