@@ -35,6 +35,7 @@ class Category
      * @Groups({"nelmio_add_wish"})
      * @Groups({"category_browse"})
      * @Groups({"maincat_categories"})
+     * @Groups({"user_ads_browse"})
      * 
      */
     private $id;
@@ -56,6 +57,8 @@ class Category
      * @Groups({"category_advertisements"})
      * @Groups({"nelmio_add_offer"})
      * @Groups({"maincat_categories"})
+     * @Groups({"user_ads_browse"})
+     * 
      * 
      * @Assert\NotBlank
      * @Assert\NotNull
@@ -127,6 +130,7 @@ class Category
      * @Groups({"category_advertisements"})
      * @Groups({"offer_browse"})
      * @Groups({"wish_browse"})
+     * @Groups({"user_ads_browse"})
      */
     private $mainCategory;
 
