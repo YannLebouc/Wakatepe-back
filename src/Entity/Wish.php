@@ -185,6 +185,7 @@ class Wish
      * @Groups({"current_user_wishes"})
      * @Groups({"nelmio_add_wish"})
      * @Groups({"category_advertisements"})
+     * @Groups({"user_ads_browse"})
      * @OA\Property(type="array", @OA\Items(type="integer"))
      */
     private $categories;
