@@ -10,6 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response as HttpFoundationResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use OpenApi\Annotations as OA;
+use Nelmio\ApiDocBundle\Annotation\Model;
 
 
 class CategoryController extends AbstractController
@@ -19,13 +21,26 @@ class CategoryController extends AbstractController
      * 
      * @Route("/api/categories/{id<\d+>}/offers", name="app_api_category_offers", methods={"GET"})
      *
+     * @OA\Response(
+     *     response="200",
+     *     description="Returns JSON containing the offers of a particular category",
+     *     @OA\JsonContent(
+     *        type="array",
+     *        @OA\Items(ref=@Model(type=Category::class, groups={"category_offers"}))
+     *     )
+     * )
+     * 
+     * @OA\Response(
+     *     response=404,
+     *     description="la catégorie n\'a pas été trouvée"
+     * )
      * @param Category|null $category
      * @return jsonResponse
      */
     public function getCategoryOffers(?Category $category, CategoryRepository $categoryRepository): JsonResponse
     {
         if (!$category) {
-            return $this->json(['erreur' => 'la demande n\'a pas été trouvée'], HttpFoundationResponse::HTTP_NOT_FOUND);
+            return $this->json(['erreur' => 'la categorie n\'a pas été trouvée'], HttpFoundationResponse::HTTP_NOT_FOUND);
         }
         $categoryId = $category->getId();
         $offers = $categoryRepository->findAllOffers($categoryId);
@@ -48,6 +63,19 @@ class CategoryController extends AbstractController
      * 
      * @Route("/api/categories/{id<\d+>}/wishes", name="app_api_category_wishes", methods={"GET"})
      *
+     * @OA\Response(
+     *     response="200",
+     *     description="Returns JSON containing the wishes of a particular category",
+     *     @OA\JsonContent(
+     *        type="array",
+     *        @OA\Items(ref=@Model(type=Category::class, groups={"category_wishes"}))
+     *     )
+     * )
+     * 
+     * @OA\Response(
+     *     response=404,
+     *     description="la catégorie n\'a pas été trouvée"
+     * )
      * @param Category|null $category
      * @return jsonResponse
      */
@@ -76,6 +104,15 @@ class CategoryController extends AbstractController
      * Retrieves a list of active categories
      * 
      * @Route("/api/categories/active", name="app_api_categories_active", methods={"GET"})
+     * 
+     * @OA\Response(
+     *     response="200",
+     *     description="Returns JSON infp of all the active categories",
+     *     @OA\JsonContent(
+     *        type="array",
+     *        @OA\Items(ref=@Model(type=Category::class, groups={"category_browse"}))
+     *     )
+     * )
      */
     public function findAllActiveCategories(CategoryRepository $categoryRepository): JsonResponse
     {
