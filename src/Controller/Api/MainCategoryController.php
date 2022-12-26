@@ -8,9 +8,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response as HttpFoundationResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use Nelmio\ApiDocBundle\Annotation\Security;
+use OpenApi\Annotations as OA;
+use Nelmio\ApiDocBundle\Annotation\Model;
 
 
-
+/**
+ * @OA\Tag(name="O'troc API : MainCategory")
+ * @Security(name="bearerAuth")
+ */
 class MainCategoryController extends AbstractController
 {
 
@@ -19,6 +25,15 @@ class MainCategoryController extends AbstractController
      * 
      * @Route("/api/maincategories/categories", name="app_api_maincategories_categories", methods={"GET"})
      *
+     * @OA\Response(
+     *     response="200",
+     *     description="Retrieves the active categories of every maincategory",
+     *     @OA\JsonContent(
+     *        type="array",
+     *        @OA\Items(ref=@Model(type=MainCategory::class, groups={"mainCategories_categories"}))
+     *     )
+     * )
+     * 
      * @param MainCategoryRepository $mainCategoryRepository
      * @return JsonResponse
      */
@@ -43,6 +58,14 @@ class MainCategoryController extends AbstractController
      * 
      * @Route("/api/maincategories/{id<\d+>}/categories/advertisements", name="app_api_maincategory_categories_ advertisements", methods={"GET"})
      *
+     * @OA\Response(
+     *     response="200",
+     *     description="Retrieves offers, wishes and categories of a particular maincategory",
+     *     @OA\JsonContent(
+     *        type="array",
+     *        @OA\Items(ref=@Model(type=MainCategory::class, groups={"mainCategory_categories_advertisements"}))
+     *     )
+     * )
      * @param MainCategory|null $mainCategory
      * @return JsonResponse
      */
@@ -71,6 +94,19 @@ class MainCategoryController extends AbstractController
 
     /** retrieves all the categories belonging to a maincategorie
      * @Route("/api/maincategories/{id<\d+>}/categories", name="app_api_maincat_categories", methods={"GET"})
+     * @OA\Response(
+     *     response="200",
+     *     description="Retrieves the active categories of a particular maincategory",
+     *     @OA\JsonContent(
+     *        type="array",
+     *        @OA\Items(ref=@Model(type=MainCategory::class, groups={"maincat_categories"}))
+     *     )
+     * )
+     * 
+     * @OA\Response(
+     *     response=404,
+     *     description="la maincategory n\'a pas été trouvée"
+     * )
      */
     public function getCategoriesFromMainCategory(?MainCategory $mainCategory, MainCategoryRepository $mainCategoryRepository): JsonResponse
     {
