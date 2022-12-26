@@ -69,13 +69,13 @@ class UserTypeEdit extends AbstractType
                 "placeholder" => "Saisissez votre nom",
             ]    
         ])
-        ->add('picture', UrlType::class,
-        [
-            "label" => "Image de profil :",
-            "attr" => [
-                "placeholder" => "Saisissez l'url de l'image",
-            ]   
-        ])
+        // ->add('picture', UrlType::class,
+        // [
+        //     "label" => "Image de profil :",
+        //     "attr" => [
+        //         "placeholder" => "Saisissez l'url de l'image",
+        //     ]   
+        // ])
     ;
     }
 

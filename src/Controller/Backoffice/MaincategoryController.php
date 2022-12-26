@@ -58,8 +58,11 @@ class MaincategoryController extends AbstractController
     /**
      * @Route("/{id}", name="app_backoffice_maincategory_show", methods={"GET"})
      */
-    public function show(MainCategory $mainCategory): Response
+    public function show(?MainCategory $mainCategory): Response
     {
+        if (!$mainCategory) {
+            throw $this->createNotFoundException("La main catégorie demandée n'a pas été trouvée");}
+
         return $this->render('backoffice/maincategory/show.html.twig', [
             'main_category' => $mainCategory,
         ]);
@@ -68,8 +71,11 @@ class MaincategoryController extends AbstractController
     /**
      * @Route("/{id}/edit", name="app_backoffice_maincategory_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, MainCategory $mainCategory, MainCategoryRepository $mainCategoryRepository, CustomSlugger $customSlugger): Response
+    public function edit(Request $request, ?MainCategory $mainCategory, MainCategoryRepository $mainCategoryRepository, CustomSlugger $customSlugger): Response
     {
+        if (!$mainCategory) {
+            throw $this->createNotFoundException("la main catégorie demandée n'a pas été trouvée");}
+
         $form = $this->createForm(MainCategoryType::class, $mainCategory);
         $form->handleRequest($request);
 
@@ -97,8 +103,11 @@ class MaincategoryController extends AbstractController
     /**
      * @Route("/{id}", name="app_backoffice_maincategory_delete", methods={"POST"})
      */
-    public function delete(Request $request, MainCategory $mainCategory, MainCategoryRepository $mainCategoryRepository): Response
+    public function delete(Request $request, ?MainCategory $mainCategory, MainCategoryRepository $mainCategoryRepository): Response
     {
+        if (!$mainCategory) {
+            throw $this->createNotFoundException("La main catégorie demandée n'a pas été trouvée");}
+
         if ($this->isCsrfTokenValid('delete' . $mainCategory->getId(), $request->request->get('_token'))) {
             $mainCategoryRepository->remove($mainCategory, true);
 

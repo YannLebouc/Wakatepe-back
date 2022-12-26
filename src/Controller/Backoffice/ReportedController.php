@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ReportedController extends AbstractController
 {
     /**
-     * @Route("/backoffice/reported", name="app_backoffice_reported", methods={"GET"})
+     * @Route("/backoffice/reported", name="app_backoffice_reported_index", methods={"GET"})
      */
     public function index(OfferRepository $offerRepository, WishRepository $wishRepository): Response
     {
