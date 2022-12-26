@@ -291,15 +291,20 @@ class OfferController extends AbstractController
     /** Retrieves all the offers containing a keyword in their title
      * 
      * @Route("/api/offers/results", name="app_api_offers_research", methods={"POST"})
+     * @OA\Response(
+     *     response="200",
+     *     description="Returns JSON info of the offers",
+     *     @OA\JsonContent(
+     *        type="array",
+     *        @OA\Items(ref=@Model(type=Offer::class, groups={"offer_browse"}))
+     *     )
+     * )
      */
     public function offersResearch(Request $request, OfferRepository $offerRepository): JsonResponse
     {   
         
-        // Nom de la clé "search"
 
-        // Je veux récupérer l'input envoyé (string)
         $requestContent = $request->getContent();
-        // exploser la string et aller chercher les offres dont le titre contient les morceaux de string
         $keywords = explode(" ", $requestContent);
         $offers = [];
         foreach ($keywords as $keyword) {
@@ -322,19 +327,30 @@ class OfferController extends AbstractController
     }
 
     /**
-     * Undocumented function
+     * Method used to upload a picture for an offer 
      * @Route("/api/offers/{id<\d+>}/pictures", name="app_api_offer_add_picture", methods={"POST"})
+     * 
+     * @OA\Response(
+     *     response="200",
+     *     description="Validates the upload of the picture",
+     * )
+     * @OA\Response(
+     *     response=415,
+     *     description="Il y a un eu problème lors de la sauvegarde de l\'image"
+     * )
+     * @OA\Response(
+     *     response=404,
+     *     description="Il n\'existe pas d'offre' pour cet ID"
+     * )
      * 
      * @param Offer|null $offer
      * @param Request $request
-     * @param ParameterBagInterface $parameterBag
      * @param EntityManagerInterface $doctrine
      * @return JsonResponse
      */
     public function uploadOfferPicture(
         ?Offer $offer,
         Request $request,
-        ParameterBagInterface $parameterBag,
         EntityManagerInterface $doctrine
     ): JsonResponse
     {   
@@ -362,6 +378,14 @@ class OfferController extends AbstractController
     * 
     * @Route("/api/offers/{id<\d+>}/lend", name="app_api_offers_lended", methods={"PUT", "PATCH"})
     *
+    * @OA\Response(
+    *     response=404,
+    *     description="Il n\'existe pas d'offre' pour cet ID"
+    * )
+    * @OA\Response(
+    *     response=206,
+    *     description="Validates the update of the isLended property"
+    * )
     * @param Offer|null $offer
     * @param EntityManagerInterface $doctrine
     * @return JsonResponse
@@ -384,6 +408,14 @@ class OfferController extends AbstractController
     * 
     * @Route("/api/offers/{id<\d+>}/active", name="app_api_offers_active", methods={"PUT", "PATCH"})
     *
+    * @OA\Response(
+    *     response=404,
+    *     description="Il n\'existe pas d'offre' pour cet ID"
+    * )
+    * @OA\Response(
+    *     response=206,
+    *     description="Validates the update of the isActive property"
+    * )
     * @param Offer|null $offer
     * @param EntityManagerInterface $doctrine
     * @return JsonResponse
@@ -406,6 +438,14 @@ class OfferController extends AbstractController
     * 
     * @Route("/api/offers/{id<\d+>}/reported", name="app_api_offers_reported", methods={"PUT", "PATCH"})
     *
+    * @OA\Response(
+    *     response=404,
+    *     description="Il n\'existe pas d'offre' pour cet ID"
+    * )
+    * @OA\Response(
+    *     response=206,
+    *     description="Validates the update of the isReported property"
+    * )
     * @param Offer|null $offer
     * @param EntityManagerInterface $doctrine
     * @return JsonResponse
