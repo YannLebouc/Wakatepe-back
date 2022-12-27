@@ -29,9 +29,12 @@ class CategoryController extends AbstractController
 
     /**
      * @Route("/new", name="app_backoffice_category_new", methods={"GET", "POST"})
-     * 
+     *
+     * @param Request $request
+     * @param CategoryRepository $categoryRepository
+     * @param CustomSlugger $customSlugger
+     * @return Response
      */
-
     public function new(Request $request, CategoryRepository $categoryRepository, CustomSlugger $customSlugger): Response
     {
         $category = new Category();
@@ -58,8 +61,12 @@ class CategoryController extends AbstractController
         ]);
     }
 
+
     /**
      * @Route("/{id}", name="app_backoffice_category_show", methods={"GET"})
+     *
+     * @param Category|null $category
+     * @return Response
      */
     public function show(?Category $category): Response
     {
@@ -73,6 +80,12 @@ class CategoryController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="app_backoffice_category_edit", methods={"GET", "POST"})
+     *
+     * @param Request $request
+     * @param Category|null $category
+     * @param CategoryRepository $categoryRepository
+     * @param CustomSlugger $customSlugger
+     * @return Response
      */
     public function edit(Request $request, ?Category $category, CategoryRepository $categoryRepository, CustomSlugger $customSlugger): Response
     {
@@ -104,6 +117,11 @@ class CategoryController extends AbstractController
 
     /**
      * @Route("/{id}", name="app_backoffice_category_delete", methods={"POST"})
+     *
+     * @param Request $request
+     * @param Category|null $category
+     * @param CategoryRepository $categoryRepository
+     * @return Response
      */
     public function delete(Request $request, ?Category $category, CategoryRepository $categoryRepository): Response
     {

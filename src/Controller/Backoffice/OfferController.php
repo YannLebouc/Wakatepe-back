@@ -4,7 +4,6 @@ namespace App\Controller\Backoffice;
 
 use App\Entity\Offer;
 use App\Form\OfferType;
-use App\Form\OfferTypeCustom;
 use App\Repository\OfferRepository;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,6 +18,9 @@ class OfferController extends AbstractController
 {
     /**
      * @Route("/{id}", name="app_backoffice_offer_show", methods={"GET"})
+     *
+     * @param Offer|null $offer
+     * @return Response
      */
     public function show(?Offer $offer): Response
     {
@@ -32,6 +34,11 @@ class OfferController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="app_backoffice_offer_edit", methods={"GET", "POST"})
+     *
+     * @param Request $request
+     * @param Offer|null $offer
+     * @param OfferRepository $offerRepository
+     * @return Response
      */
     public function edit(Request $request, ?Offer $offer, OfferRepository $offerRepository): Response
     {
@@ -60,6 +67,11 @@ class OfferController extends AbstractController
 
     /**
      * @Route("/{id}", name="app_backoffice_offer_delete", methods={"POST"})
+     *
+     * @param Request $request
+     * @param Offer|null $offer
+     * @param OfferRepository $offerRepository
+     * @return Response
      */
     public function delete(Request $request, ?Offer $offer, OfferRepository $offerRepository): Response
     {
@@ -77,6 +89,11 @@ class OfferController extends AbstractController
 
     /**
      * @Route("/{id}/validate", name="app_backoffice_offer_validate", methods={"POST"})
+     *
+     * @param Request $request
+     * @param Offer|null $offer
+     * @param OfferRepository $offerRepository
+     * @return Response
      */
     public function validate(Request $request, ?Offer $offer, OfferRepository $offerRepository): Response
     {

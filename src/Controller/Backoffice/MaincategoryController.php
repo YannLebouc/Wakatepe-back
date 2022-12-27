@@ -19,6 +19,9 @@ class MaincategoryController extends AbstractController
 {
     /**
      * @Route("/", name="app_backoffice_maincategory_index", methods={"GET"})
+     *
+     * @param MainCategoryRepository $mainCategoryRepository
+     * @return Response
      */
     public function index(MainCategoryRepository $mainCategoryRepository): Response
     {
@@ -29,6 +32,11 @@ class MaincategoryController extends AbstractController
 
     /**
      * @Route("/new", name="app_backoffice_maincategory_new", methods={"GET", "POST"})
+     *
+     * @param Request $request
+     * @param MainCategoryRepository $mainCategoryRepository
+     * @param CustomSlugger $customSlugger
+     * @return Response
      */
     public function new(Request $request, MainCategoryRepository $mainCategoryRepository, CustomSlugger $customSlugger): Response
     {
@@ -57,6 +65,9 @@ class MaincategoryController extends AbstractController
 
     /**
      * @Route("/{id}", name="app_backoffice_maincategory_show", methods={"GET"})
+     *
+     * @param MainCategory|null $mainCategory
+     * @return Response
      */
     public function show(?MainCategory $mainCategory): Response
     {
@@ -70,6 +81,12 @@ class MaincategoryController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="app_backoffice_maincategory_edit", methods={"GET", "POST"})
+     *
+     * @param Request $request
+     * @param MainCategory|null $mainCategory
+     * @param MainCategoryRepository $mainCategoryRepository
+     * @param CustomSlugger $customSlugger
+     * @return Response
      */
     public function edit(Request $request, ?MainCategory $mainCategory, MainCategoryRepository $mainCategoryRepository, CustomSlugger $customSlugger): Response
     {
@@ -102,6 +119,11 @@ class MaincategoryController extends AbstractController
 
     /**
      * @Route("/{id}", name="app_backoffice_maincategory_delete", methods={"POST"})
+     *
+     * @param Request $request
+     * @param MainCategory|null $mainCategory
+     * @param MainCategoryRepository $mainCategoryRepository
+     * @return Response
      */
     public function delete(Request $request, ?MainCategory $mainCategory, MainCategoryRepository $mainCategoryRepository): Response
     {

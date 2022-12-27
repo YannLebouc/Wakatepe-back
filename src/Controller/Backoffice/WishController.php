@@ -4,7 +4,6 @@ namespace App\Controller\Backoffice;
 
 use App\Entity\Wish;
 use App\Form\WishType;
-use App\Form\WishTypeCustom;
 use App\Repository\WishRepository;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,6 +18,9 @@ class WishController extends AbstractController
 {
     /**
      * @Route("/{id}", name="app_backoffice_wish_show", methods={"GET"})
+     *
+     * @param Wish|null $wish
+     * @return Response
      */
     public function show(?Wish $wish): Response
     {
@@ -32,6 +34,11 @@ class WishController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="app_backoffice_wish_edit", methods={"GET", "POST"})
+     *
+     * @param Request $request
+     * @param Wish|null $wish
+     * @param WishRepository $wishRepository
+     * @return Response
      */
     public function edit(Request $request, ?Wish $wish, WishRepository $wishRepository): Response
     {
@@ -60,6 +67,11 @@ class WishController extends AbstractController
 
     /**
      * @Route("/{id}", name="app_backoffice_wish_delete", methods={"POST"})
+     *
+     * @param Request $request
+     * @param Wish|null $wish
+     * @param WishRepository $wishRepository
+     * @return Response
      */
     public function delete(Request $request, ?Wish $wish, WishRepository $wishRepository): Response
     {
@@ -75,6 +87,11 @@ class WishController extends AbstractController
 
     /**
      * @Route("/{id}/validate", name="app_backoffice_wish_validate", methods={"POST"})
+     *
+     * @param Request $request
+     * @param Wish $wish
+     * @param WishRepository $wishRepository
+     * @return Response
      */
     public function validate(Request $request, Wish $wish, WishRepository $wishRepository): Response
     {
