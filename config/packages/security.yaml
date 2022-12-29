@@ -48,6 +48,11 @@ security:
     access_control:
         - { path: ^/api/login, roles: PUBLIC_ACCESS }
         - { path: ^/api/users, roles: PUBLIC_ACCESS, methods: [POST] }
+        - { path: ^/api/offers/results, roles: PUBLIC_ACCESS, methods: [POST] }
+        - { path: ^/api/wishes/results, roles: PUBLIC_ACCESS, methods: [POST] }
+        - { path: ^/api/users, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api/offers, roles: IS_AUTHENTICATED_FULLY, methods: [POST, PATCH, PUT, DELETE] }
+        - { path: ^/api/wishes, roles: IS_AUTHENTICATED_FULLY, methods: [POST, PATCH, PUT, DELETE] }
         - { path: /backoffice/user, roles: [ ROLE_ADMIN ] }
         - { path: /backoffice, roles: [ ROLE_MANAGER ] }
 

@@ -30,6 +30,8 @@ class OfferController extends AbstractController
      * Retrieves a list of the active offers
      * @Route("/api/offers", name="app_api_offers_browse", methods={"GET"})
      *
+     *
+     * 
      * @OA\Response(
      *     response="200",
      *     description="Retrieves the active offers",
