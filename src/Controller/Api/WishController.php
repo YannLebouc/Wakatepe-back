@@ -289,15 +289,21 @@ class WishController extends AbstractController
     /** Retrieves all the wishes containing a keyword in their title
      * 
      * @Route("/api/wishes/results", name="app_api_wishes_research", methods={"POST"})
+     * 
+     * @OA\Response(
+     *     response="200",
+     *     description="Returns JSON info of the wishes",
+     *     @OA\JsonContent(
+     *        type="array",
+     *        @OA\Items(ref=@Model(type=Wish::class, groups={"wish_browse"}))
+     *     )
+     * )
      */
     public function wishesResearch(Request $request, WishRepository $wishRepository): JsonResponse
     {   
         
-        // Nom de la clé "search"
 
-        // Je veux récupérer l'input envoyé (string)
         $requestContent = $request->getContent();
-        // exploser la string et aller chercher les offres dont le titre contient les morceaux de string
         $keywords = explode(" ", $requestContent);
         $wishes = [];
         foreach ($keywords as $keyword) {
@@ -321,19 +327,30 @@ class WishController extends AbstractController
 
 
     /**
-     * Undocumented function
+     * Method used to upload a picture for a wish 
      * @Route("/api/wishes/{id<\d+>}/pictures", name="app_api_wish_add_picture", methods={"POST"})
      * 
+     * 
+     * @OA\Response(
+     *     response="200",
+     *     description="Validates the upload of the picture",
+     * )
+     * @OA\Response(
+     *     response=415,
+     *     description="Il y a un eu problème lors de la sauvegarde de l\'image"
+     * )
+     * @OA\Response(
+     *     response=404,
+     *     description="Il n\'existe pas de demande pour cet ID"
+     * ) 
      * @param Wish|null $wish
      * @param Request $request
-     * @param ParameterBagInterface $parameterBag
      * @param EntityManagerInterface $doctrine
      * @return JsonResponse
      */
     public function uploadWishPicture(
         ?Wish $wish,
         Request $request,
-        ParameterBagInterface $parameterBag,
         EntityManagerInterface $doctrine
     ): JsonResponse
     {   
@@ -359,7 +376,15 @@ class WishController extends AbstractController
     /** Allows a user to set a wish active status to true or false
     * 
     * @Route("/api/wishes/{id<\d+>}/active", name="app_api_wishes_active", methods={"PUT", "PATCH"})
-    * Undocumented function
+    *
+    * @OA\Response(
+    *     response=404,
+    *     description="Il n\'existe pas de demande pour cet ID"
+    * )
+    * @OA\Response(
+    *     response=206,
+    *     description="Validates the update of the isActive property"
+    * )
     *
     * @param Wish|null $wish
     * @param EntityManagerInterface $doctrine
@@ -384,6 +409,14 @@ class WishController extends AbstractController
      * 
      * @Route("/api/wishes/{id<\d+>}/reported", name="app_api_wishes_reported", methods={"PUT", "PATCH"})
      *
+     * @OA\Response(
+     *     response=404,
+     *     description="Il n\'existe pas de demande pour cet ID"
+     * )
+     * @OA\Response(
+     *     response=206,
+     *     description="Validates the update of the isReported property"
+     * )
      * @param Wish|null $wish
      * @param EntityManagerInterface $doctrine
      * @return JsonResponse

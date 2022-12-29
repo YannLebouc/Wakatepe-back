@@ -476,6 +476,23 @@ class UserController extends AbstractController
 
     /** Allows a user to edit its password
      * @Route("/api/users/current/password", name="app_api_users_edit_password", methods={"PUT", "PATCH"})
+     * @OA\Response(
+     *     response="206",
+     *     description="Validates the modification of the password",
+     * )
+     * 
+     * @OA\Response(
+     *     response=400,
+     *     description="Les données JSON envoyées n'ont pas pu être intérpêtées"
+     * )
+     * @OA\Response(
+     *     response=417,
+     *     description="La confirmation de mot de passe a échoué"
+     * )
+     * @OA\Response(
+     *     response=406,
+     *     description="Le mot de passe actuel est incorrect"
+     * )
      */
     public function editPassword(
         Request $request, 
@@ -499,11 +516,11 @@ class UserController extends AbstractController
         $passwordConfirmation = (key_exists('passwordconfirmation', $dataArray)) ? $dataArray['passwordconfirmation'] : null;
 
         if($newPassword !== $passwordConfirmation) {
-            return $this->json(['erreur' => 'Il y a eu une erreur lors de la confirmation du mot de passe, merci de réessayer'], HttpFoundationResponse::HTTP_BAD_REQUEST);
+            return $this->json(['erreur' => 'Il y a eu une erreur lors de la confirmation du mot de passe, merci de réessayer'], HttpFoundationResponse::HTTP_EXPECTATION_FAILED);
         }
 
         if(!$passwordHasher->isPasswordValid($user, $currentPassword)) {
-            return $this->json(['erreur' => 'Mot de passe actuel incorrect'], HttpFoundationResponse::HTTP_BAD_REQUEST);
+            return $this->json(['erreur' => 'Mot de passe actuel incorrect'], HttpFoundationResponse::HTTP_NOT_ACCEPTABLE);
         }
 
         $user->setPassword($passwordHasher->hashPassword($user, $newPassword));
@@ -516,19 +533,29 @@ class UserController extends AbstractController
     }
 
 
-     /**
-      * Undocumented function
-      * @Route("/api/users/current/pictures", name="app_api_user_add_picture", methods={"POST"})
-      * 
-      * @param User|null $user
-      * @param Request $request
-      * @param ParameterBagInterface $parameterBag
-      * @param EntityManagerInterface $doctrine
-      * @return JsonResponse
-      */
+    /**
+     * Allows a user to edit/upload his profile picture
+     * @Route("/api/users/current/pictures", name="app_api_user_add_picture", methods={"POST"})
+     * 
+     * @OA\Response(
+     *     response=404,
+     *     description="L'utilisateur recherché n'existe pas"
+     * )
+     * @OA\Response(
+     *     response=415,
+     *     description="Il y a un eu problème lors de la sauvegarde de l'image"
+     * )
+     * @OA\Response(
+     *     response=200,
+     *     description="Image correctement importée"
+     * )
+     * 
+     * @param Request $request
+     * @param EntityManagerInterface $doctrine
+     * @return JsonResponse
+     */
     public function uploadProfilePicture(
         Request $request, 
-        ParameterBagInterface $parameterBag, 
         EntityManagerInterface $doctrine): JsonResponse
     {   
 
@@ -550,7 +577,6 @@ class UserController extends AbstractController
             $image->move('/var/www/html/projet-11-o-troc-back/public/img', $imageName);
         
             $user->setPicture('http://yannlebouc-server.eddi.cloud/projet-11-o-troc-back/public/img/'.$imageName);
-            // $user->setPicture($parameterBag->get('public').'/img/'.$imageName);
 
             $doctrine->flush();
         } catch (\Exception $e) {
@@ -560,8 +586,17 @@ class UserController extends AbstractController
         return $this->json(['success' => 'Image correctement importée'], HttpFoundationResponse::HTTP_OK);
     }
 
-    /**
+    /** Allows a user to delete its profile
      * @Route("/api/users/current", name="app_api_users_delete", methods={"DELETE"})
+     * 
+     * @OA\Response(
+     *     response=400,
+     *     description="Il y a eu une erreur lors de la suppression"
+     * )
+     * @OA\Response(
+     *     response=200,
+     *     description="L'utilisateur a bien été supprimé"
+     * )
      */
     public function delete(EntityManagerInterface $doctrine): JsonResponse
     {
