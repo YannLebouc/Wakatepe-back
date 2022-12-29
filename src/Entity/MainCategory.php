@@ -29,6 +29,7 @@ class MainCategory
      * @Groups({"category_advertisements"})
      * @Groups({"wish_browse"})
      * @Groups({"maincat_categories"})
+     * @Groups({"user_ads_browse"})
      * 
      */
     private $id;
@@ -42,6 +43,7 @@ class MainCategory
      * @Groups({"offer_browse"})
      * @Groups({"wish_browse"})
      * @Groups({"maincat_categories"})
+     * @Groups({"user_ads_browse"})
      * 
      * @Assert\NotBlank
      * @Assert\NotNull

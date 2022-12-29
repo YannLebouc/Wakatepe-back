@@ -125,6 +125,7 @@ class Offer
      * @Groups({"offer_read"})
      * @Groups({"category_advertisements"})
      * @Groups({"offer_browse"})
+     * @Groups({"user_ads_browse"})
      * 
      */
     private $isLended;
@@ -203,6 +204,7 @@ class Offer
      * @Groups({"current_user_offers"})
      * @Groups({"nelmio_add_offer"})
      * @Groups({"category_advertisements"})
+     * @Groups({"user_ads_browse"})
      * @OA\Property(type="array", @OA\Items(type="integer"))
      */
     private $categories;
