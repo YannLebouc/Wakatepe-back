@@ -7,7 +7,9 @@
 {% block body %}
 	<h1>Profil</h1>
 	<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm bg-white position-relative">
-		<div class="col-4 otroc_picture" style="background-image: url({{ user.picture }});"></div>
+		<div class="col-4">
+			<img class="img-fluid" src="{{user.picture}}" alt="Photo de {{user.alias}}">
+		</div>
 		<div class="col-8 p-4 d-flex flex-column position-static">
 			<dl>
 				<dt>
@@ -61,7 +63,8 @@
 			</dl>
 			<div class="d-flex align-items-center">
 				<a href="{{ path('app_backoffice_profile_edit') }}" class="btn btn-warning">Modifier infos</a>
-				<a href="{{ path('app_backoffice_profile_password') }}" class="btn btn-danger" > Modifier password</a>
+				<a href="{{ path('app_backoffice_profile_password') }}" class="btn btn-danger">
+					Modifier password</a>
 			</div>
 
 		</div>

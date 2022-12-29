@@ -10,7 +10,8 @@
 
 	{% for category in categories %}
 		<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm bg-white position-relative">
-			<div class="col-4 otroc_picture" style="background-image: url({{ category.picture }});">
+			<div class="col-4"> 
+				<img class="img-fluid" src="{{category.picture}}" alt="Photo de {{category.name}}">
 			</div>
 			<div class="col-8 p-4 d-flex flex-column position-static">
 				<dl>

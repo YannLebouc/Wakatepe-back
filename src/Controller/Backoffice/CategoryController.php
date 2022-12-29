@@ -29,9 +29,12 @@ class CategoryController extends AbstractController
 
     /**
      * @Route("/new", name="app_backoffice_category_new", methods={"GET", "POST"})
-     * 
+     *
+     * @param Request $request
+     * @param CategoryRepository $categoryRepository
+     * @param CustomSlugger $customSlugger
+     * @return Response
      */
-
     public function new(Request $request, CategoryRepository $categoryRepository, CustomSlugger $customSlugger): Response
     {
         $category = new Category();
@@ -58,11 +61,18 @@ class CategoryController extends AbstractController
         ]);
     }
 
+
     /**
      * @Route("/{id}", name="app_backoffice_category_show", methods={"GET"})
+     *
+     * @param Category|null $category
+     * @return Response
      */
-    public function show(Category $category): Response
+    public function show(?Category $category): Response
     {
+        if (!$category) {
+            throw $this->createNotFoundException("La catégorie demandée n'a pas été trouvée");}
+
         return $this->render('backoffice/category/show.html.twig', [
             'category' => $category,
         ]);
@@ -70,9 +80,18 @@ class CategoryController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="app_backoffice_category_edit", methods={"GET", "POST"})
+     *
+     * @param Request $request
+     * @param Category|null $category
+     * @param CategoryRepository $categoryRepository
+     * @param CustomSlugger $customSlugger
+     * @return Response
      */
-    public function edit(Request $request, Category $category, CategoryRepository $categoryRepository, CustomSlugger $customSlugger): Response
+    public function edit(Request $request, ?Category $category, CategoryRepository $categoryRepository, CustomSlugger $customSlugger): Response
     {
+        if (!$category) {
+            throw $this->createNotFoundException("La catégorie demandée n'a pas été trouvée");}
+
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
 
@@ -98,9 +117,17 @@ class CategoryController extends AbstractController
 
     /**
      * @Route("/{id}", name="app_backoffice_category_delete", methods={"POST"})
+     *
+     * @param Request $request
+     * @param Category|null $category
+     * @param CategoryRepository $categoryRepository
+     * @return Response
      */
-    public function delete(Request $request, Category $category, CategoryRepository $categoryRepository): Response
+    public function delete(Request $request, ?Category $category, CategoryRepository $categoryRepository): Response
     {
+        if (!$category) {
+            throw $this->createNotFoundException("La catégorie demandée n'a pas été trouvée");}
+
         if ($this->isCsrfTokenValid('delete' . $category->getId(), $request->request->get('_token'))) {
             $categoryRepository->remove($category, true);
         }

@@ -11,9 +11,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
-
 
 /**
  * @Route("/backoffice/profile")
@@ -22,6 +19,8 @@ class ProfileController extends AbstractController
 {
     /**
      * @Route("/show", name="app_backoffice_profile_show", methods={"GET"})
+     *
+     * @return Response
      */
     public function show(): Response
     {
@@ -35,6 +34,10 @@ class ProfileController extends AbstractController
  
     /**
      * @Route("/edit", name="app_backoffice_profile_edit", methods={"GET", "POST"})
+     *
+     * @param Request $request
+     * @param UserRepository $userRepository
+     * @return void
      */
     public function edit(Request $request, UserRepository $userRepository)
     {
@@ -67,6 +70,11 @@ class ProfileController extends AbstractController
 
     /**
      * @Route("/password", name="app_backoffice_profile_password", methods={"GET", "POST"})
+     *
+     * @param Request $request
+     * @param UserRepository $userRepository
+     * @param UserPasswordHasherInterface $userPasswordHasher
+     * @return void
      */
     public function editPassword(Request $request, UserRepository $userRepository, UserPasswordHasherInterface $userPasswordHasher)
     {

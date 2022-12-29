@@ -20,6 +20,9 @@ class UserController extends AbstractController
 {
     /**
      * @Route("/", name="app_backoffice_user_index", methods={"GET"})
+     *
+     * @param UserRepository $userRepository
+     * @return Response
      */
     public function index(UserRepository $userRepository): Response
     {
@@ -30,6 +33,11 @@ class UserController extends AbstractController
 
     /**
      * @Route("/new", name="app_backoffice_user_new", methods={"GET", "POST"})
+     *
+     * @param Request $request
+     * @param UserRepository $userRepository
+     * @param UserPasswordHasherInterface $userPasswordHasher
+     * @return Response
      */
     public function new(Request $request, UserRepository $userRepository, UserPasswordHasherInterface $userPasswordHasher): Response
     {
@@ -61,9 +69,15 @@ class UserController extends AbstractController
 
     /**
      * @Route("/{id}", name="app_backoffice_user_show", methods={"GET"})
+     *
+     * @param User|null $user
+     * @return Response
      */
-    public function show(User $user): Response
+    public function show(?User $user): Response
     {
+        if (!$user) {
+            throw $this->createNotFoundException("L'utilisateur demandé n'a pas été trouvé");}
+
         return $this->render('backoffice/user/show.html.twig', [
             'user' => $user,
         ]);
@@ -71,10 +85,18 @@ class UserController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="app_backoffice_user_edit", methods={"GET", "POST"})
+     *
+     * @param Request $request
+     * @param User|null $user
+     * @param UserRepository $userRepository
+     * @return Response
      */
-    public function edit(Request $request, User $user, UserRepository $userRepository): Response
+    public function edit(Request $request, ?User $user, UserRepository $userRepository): Response
     {
         $this->denyAccessUnlessGranted("ROLE_ADMIN");
+
+        if (!$user) {
+            throw $this->createNotFoundException("L'utilisateur demandé n'a pas été trouvé");}
         
         $form = $this->createForm(UserTypeEdit::class, $user);
         if(!in_array('ROLE_ADMIN', $this->getUser()->getRoles())) {
@@ -103,10 +125,18 @@ class UserController extends AbstractController
 
     /**
      * @Route("/{id}", name="app_backoffice_user_delete", methods={"POST"})
+     *
+     * @param Request $request
+     * @param User|null $user
+     * @param UserRepository $userRepository
+     * @return Response
      */
-    public function delete(Request $request, User $user, UserRepository $userRepository): Response
+    public function delete(Request $request, ?User $user, UserRepository $userRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        if (!$user) {
+            throw $this->createNotFoundException("L'utilisateur demandé n'a pas été trouvé");}
 
         if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
             $userRepository->remove($user, true);

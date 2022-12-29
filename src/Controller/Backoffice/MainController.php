@@ -10,6 +10,8 @@ class MainController extends AbstractController
 {
     /**
      * @Route("/backoffice/main", name="app_backoffice_main")
+     *
+     * @return Response
      */
     public function index(): Response
     {

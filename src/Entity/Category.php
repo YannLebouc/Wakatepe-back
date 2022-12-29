@@ -60,7 +60,7 @@ class Category
      * @Groups({"user_ads_browse"})
      * 
      * 
-     * @Assert\NotBlank
+     * @Assert\NotBlank(message="Il faut remplir cette case")
      * @Assert\NotNull
      */
     private $name;
@@ -85,6 +85,9 @@ class Category
      * @ORM\Column(type="string", length=255)
      * @Groups({"category_browse"})
      * @Groups({"maincat_categories"})
+     * 
+     * @Assert\NotBlank
+     * @Assert\NotNull
      */
     private $picture;
 
@@ -130,6 +133,8 @@ class Category
      * @Groups({"category_advertisements"})
      * @Groups({"offer_browse"})
      * @Groups({"wish_browse"})
+     * 
+     * @Assert\NotNull
      * @Groups({"user_ads_browse"})
      */
     private $mainCategory;

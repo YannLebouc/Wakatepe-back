@@ -4,7 +4,6 @@ namespace App\Controller\Backoffice;
 
 use App\Entity\Wish;
 use App\Form\WishType;
-use App\Form\WishTypeCustom;
 use App\Repository\WishRepository;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,9 +18,15 @@ class WishController extends AbstractController
 {
     /**
      * @Route("/{id}", name="app_backoffice_wish_show", methods={"GET"})
+     *
+     * @param Wish|null $wish
+     * @return Response
      */
-    public function show(Wish $wish): Response
+    public function show(?Wish $wish): Response
     {
+        if (!$wish) {
+            throw $this->createNotFoundException("La demande demandée n'a pas été trouvée");}
+
         return $this->render('backoffice/wish/show.html.twig', [
             'wish' => $wish,
         ]);
@@ -29,9 +34,17 @@ class WishController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="app_backoffice_wish_edit", methods={"GET", "POST"})
+     *
+     * @param Request $request
+     * @param Wish|null $wish
+     * @param WishRepository $wishRepository
+     * @return Response
      */
-    public function edit(Request $request, Wish $wish, WishRepository $wishRepository): Response
+    public function edit(Request $request, ?Wish $wish, WishRepository $wishRepository): Response
     {
+        if (!$wish) {
+            throw $this->createNotFoundException("La demande demandée n'a pas été trouvée");}
+
         $form = $this->createForm(WishType::class, $wish);
         $form->handleRequest($request);
 
@@ -54,29 +67,45 @@ class WishController extends AbstractController
 
     /**
      * @Route("/{id}", name="app_backoffice_wish_delete", methods={"POST"})
+     *
+     * @param Request $request
+     * @param Wish|null $wish
+     * @param WishRepository $wishRepository
+     * @return Response
      */
-    public function delete(Request $request, Wish $wish, WishRepository $wishRepository): Response
+    public function delete(Request $request, ?Wish $wish, WishRepository $wishRepository): Response
     {
+        if (!$wish) {
+            throw $this->createNotFoundException("La demande demandée n'a pas été trouvée");}
+
         if ($this->isCsrfTokenValid('delete' . $wish->getId(), $request->request->get('_token'))) {
             $wishRepository->remove($wish, true);
         }
 
-        return $this->redirectToRoute('app_backoffice_reported', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_backoffice_reported_index', [], Response::HTTP_SEE_OTHER);
     }
 
     /**
      * @Route("/{id}/validate", name="app_backoffice_wish_validate", methods={"POST"})
+     *
+     * @param Request $request
+     * @param Wish $wish
+     * @param WishRepository $wishRepository
+     * @return Response
      */
     public function validate(Request $request, Wish $wish, WishRepository $wishRepository): Response
     {
-        // if ($this->isCsrfTokenValid('validate' . $wish->getId(), $request->request->get('_token'))) {
-        // }
+        if (!$wish) {
+            throw $this->createNotFoundException("La demande demandée n'a pas été trouvée");}
+            
+        if ($this->isCsrfTokenValid('validate' . $wish->getId(), $request->request->get('_token'))) {
+        }
         
         $wish->setIsReported(false);
         $wish->setUpdatedAt(new DateTime());
         $wishRepository->add($wish, true);
 
 
-        return $this->redirectToRoute('app_backoffice_reported', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_backoffice_reported_index', [], Response::HTTP_SEE_OTHER);
     }
 }

@@ -103,6 +103,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * 
      * @Assert\NotBlank
      * @Assert\NotNull
+     * @Assert\Length(min=3)
      */
     private $alias;
 
