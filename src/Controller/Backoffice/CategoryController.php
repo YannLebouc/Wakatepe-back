@@ -101,7 +101,7 @@ class CategoryController extends AbstractController
                 $newSlug = $customSlugger->slugToLower($category->getName());
                 $category->setSlug($newSlug);
                 $categoryRepository->add($category, true);
-
+                
                 $this->addFlash('success', 'La catégorie a bien été modifiée');
 
                 return $this->redirectToRoute('app_backoffice_category_index', [], Response::HTTP_SEE_OTHER);
